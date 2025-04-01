@@ -19,6 +19,8 @@
             <th>Username</th>
             <th>FirstName</th>
             <th>LastName </th>
+            <th>Update </th>
+            <th>Delete </th>
         </tr>
 <!--        </thead>-->
         <tbody>
@@ -28,16 +30,15 @@
             <td th:text="${user.firstName}"></td>
             <td th:text="${user.lastName}"></td>
             <td>
-                <form th:action="@{/updateUser}" method="post" class="d-inline">
+                <form action="/users/updateForm" class="d-inline">
                     <input type="hidden" name="id" th:value="${user.id}">
-                    <button type="submit" class="btn btn-danger btn-sm"
-                            onclick="return confirm('Are you sure you want to delete this user?');">Update</button>
+                    <button type="submit" class="btn btn-danger btn-sm">Update</button>
                 </form>
             </td>
             <td>
-                <form th:action="@{/deleteUser}" method="post" class="d-inline">
+                <form th:action="@{/delete}" method="post" class="d-inline">
                     <input type="hidden" name="id" th:value="${user.id}">
-                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this user?');">Delete</button>
                 </form>
             </td>
 

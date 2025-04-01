@@ -35,8 +35,19 @@ public class UserController {
 		return "users/usersList";
 	}
 
-//	@GetMapping("/update")
-//	public String getUpdateUserForm(Model model, @RequestBody User user) {
-//		model.addAttribute("user", new)
-//	}
+	@GetMapping("/updateForm")
+	public String getUpdateUserForm(Model model, @RequestParam int id) {
+		User user = userService.findUserById(id);
+		model.addAttribute("user", user);
+		model.addAttribute("userId", id);
+		return "users/updateUserForm";
+	}
+
+	@PostMapping("/update")
+	public String updateUser(@RequestParam int id, @ModelAttribute User user) {
+		User userToUpdate = userService.findUserById(id);
+		userToUpdate = userService.updateUser(user);
+
+		return "redirect:/users";
+	}
 }
