@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create User</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+<div class="d-flex flex-column align-items-center">
+
+  <div class="card shadow p-3" style="margin-top: 50px">
+
+    <h4 style="margin: 30px 0; text-align: center;">Create a new user</h4>
+
+    <form action="/users" method="post" th:object="${user}">
+<!--      <label for="id">User id</label><br>-->
+<!--      <input type="text" id="id" th:field="*{id}" class="form-control bg-dark text-white text-start"><br>-->
+
+      <label for="username">User name</label><br>
+      <input type="text" id="username" th:field="*{username}" class="form-control bg-dark text-white text-start"><br>
+<!--      <p th:if="${#fields.hasErrors('username')}" style="color:red"> Invalid username</p>-->
+
+      <label for="firstname">First name</label><br>
+      <input type="text" id="firstname" th:field="*{firstName}" class="form-control bg-dark text-white text-start"><br>
+<!--      <p th:if="${#fields.hasErrors('firstName')}" style="color:red"> Invalid first name</p>-->
+
+      <label for="lastname">Last name</label><br>
+      <input type="text" id="lastname" th:field="*{lastName}" class="form-control bg-dark text-white text-start"><br>
+      <!--      <p th:if="${#fields.hasErrors('lastName')}" style="color:red"> Invalid last name</p>-->
+
+      <div class="d-flex flex-row justify-content-between" style="margin-top:20px">
+        <button type="button" class="btn btn-secondary" onclick="window.location.href='/mvc/customers'"><i class="bi bi-arrow-left" style="margin-right:5px"></i>Back</button>
+        <input type="submit" value="Create" class="btn btn-success">
+      </div>
+    </form>
+
+  </div>
+
+</div>
+
+</body>
+</html>
