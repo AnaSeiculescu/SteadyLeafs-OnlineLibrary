@@ -37,7 +37,7 @@ public class UserController {
 
 	@GetMapping("/updateForm")
 	public String getUpdateUserForm(Model model, @RequestParam int id) {
-		User user = userService.findUserById(id);
+		User user = userService.getUserById(id);
 		model.addAttribute("user", user);
 		model.addAttribute("userId", id);
 		return "users/updateUserForm";
@@ -45,8 +45,15 @@ public class UserController {
 
 	@PostMapping("/update")
 	public String updateUser(@RequestParam int id, @ModelAttribute User user) {
-		User userToUpdate = userService.findUserById(id);
+		User userToUpdate = userService.getUserById(id);
 		userToUpdate = userService.updateUser(user);
+
+		return "redirect:/users";
+	}
+
+	@PostMapping("/delete")
+	public String deleteUser(@RequestParam int id) {
+		userService.deleteUser(id);
 
 		return "redirect:/users";
 	}

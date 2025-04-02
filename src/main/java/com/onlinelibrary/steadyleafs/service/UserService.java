@@ -27,10 +27,16 @@ public class UserService {
 		return userRepository.save(userToUpdate.mapToUpdate(user));
 	}
 
-	public User findUserById(int id) {
+	public User getUserById(Integer id) {
 		User user = userRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("User with id " + id + " does not exists"));
 		return user;
+	}
+
+	public void deleteUser(Integer id) {
+		getUserById(id);
+		userRepository.deleteById(id);
+
 	}
 
 }
