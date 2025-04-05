@@ -17,8 +17,8 @@
 
     <form action="/users/update" method="post" th:object="${user}">
 
-      <label for="username">User name</label><br>
-      <input type="text" id="username" name="username" th:field="*{username}" class="form-control bg-dark text-white text-start"><br>
+      <label for="email">User email</label><br>
+      <input type="text" id="email" name="email" th:field="*{email}" class="form-control bg-dark text-white text-start"><br>
       <label for="firstName">User first name</label><br>
       <input type="text" id="firstName" name="firstName" th:field="*{firstName}" class="form-control bg-dark text-white text-start"><br>
       <label for="lastName">User last name</label><br>
