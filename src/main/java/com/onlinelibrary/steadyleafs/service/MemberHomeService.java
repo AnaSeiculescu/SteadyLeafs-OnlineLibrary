@@ -15,7 +15,7 @@ public class MemberHomeService {
 
 	private final MemberHomeRepository memberHomeRepository;
 
-	public List<Member> getAllMyBooks() {
+	public List<Book> getAllMyBooks() {
 		return memberHomeRepository.findAll();
 	}
 

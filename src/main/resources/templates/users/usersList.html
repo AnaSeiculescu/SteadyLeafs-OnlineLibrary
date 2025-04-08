@@ -17,8 +17,7 @@
         <tr>
             <th>ID</th>
             <th>Email</th>
-            <th>FirstName</th>
-            <th>LastName </th>
+            <th>Role</th>
             <th>Update </th>
             <th>Delete </th>
         </tr>
@@ -27,8 +26,7 @@
         <tr th:each="user : ${userList}">
             <td th:text="${user.id}"></td>
             <td th:text="${user.email}"></td>
-            <td th:text="${user.firstName}"></td>
-            <td th:text="${user.lastName}"></td>
+            <td th:text="${user.role}"></td>
             <td>
                 <form th:action="@{/users/updateForm}" class="d-inline">
                     <input type="hidden" name="id" th:value="${user.id}">

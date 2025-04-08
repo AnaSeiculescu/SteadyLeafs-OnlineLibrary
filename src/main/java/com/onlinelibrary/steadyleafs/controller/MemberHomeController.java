@@ -20,8 +20,8 @@ public class MemberHomeController {
 
 	@GetMapping()
 	public String getMemberHomePage(Model model) {
-		List<Book> borrowedBooks = memberHomeService.getAllMyBooks();
-		model.addAttribute("borrowedBooks", borrowedBooks);
+//		List<Book> borrowedBooks = memberHomeService.getAllMyBooks();
+//		model.addAttribute("borrowedBooks", borrowedBooks);
 		return "members/memberHome";
 	}
 
