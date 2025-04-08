@@ -14,7 +14,6 @@ import java.util.List;
 public class MemberHomeService {
 
 	private final MemberHomeRepository memberHomeRepository;
-	private Member member = new Member(1, "Ana", "Seicu", null);
 
 	public List<Member> getAllMyBooks() {
 		return memberHomeRepository.findAll();

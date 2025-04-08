@@ -10,12 +10,5 @@ import java.util.List;
 @Repository
 public interface MemberHomeRepository extends JpaRepository<Member, Integer> {
 
-	public Member createMember() {
-		Member newMember = new Member();
-		newMember.setFirstName(firstName);
-		newMember.setLastName(lastName);
-
-		// Save the new member to the repository
-		return memberHomeRepository.save(newMember);
-	}
+//	List<Book> findBorrowedBookByIdIn(List<Integer> bookIds);
 }
