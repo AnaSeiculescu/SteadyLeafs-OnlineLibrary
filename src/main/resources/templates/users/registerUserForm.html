@@ -14,19 +14,19 @@
 
   <div class="card shadow p-3" style="margin-top: 50px">
 
-    <h4 style="margin: 30px 0; text-align: center;">Create a new user</h4>
+    <h4 style="margin: 30px 0; text-align: center;">Register as a new user</h4>
 
-    <form action="/users" method="post" th:object="${user}">
+    <form action="/users" method="post" th:object="${userRegistrationDto}">
 <!--      <label for="id">User id</label><br>-->
 <!--      <input type="text" id="id" th:field="*{id}" class="form-control bg-dark text-white text-start"><br>-->
 
-      <label for="email">User name</label><br>
+      <label for="email">Email</label><br>
       <input type="text" id="email" th:field="*{email}" class="form-control bg-dark text-white text-start"><br>
 <!--      <p th:if="${#fields.hasErrors('email')}" style="color:red"> Invalid email</p>-->
 
-<!--      <label for="firstname">First name</label><br>-->
-<!--      <input type="text" id="firstname" th:field="*{firstName}" class="form-control bg-dark text-white text-start"><br>-->
-<!--&lt;!&ndash;      <p th:if="${#fields.hasErrors('firstName')}" style="color:red"> Invalid first name</p>&ndash;&gt;-->
+      <label for="password">Password</label><br>
+      <input type="password" id="password" th:field="*{password}" class="form-control bg-dark text-white text-start"><br>
+<!--      <p th:if="${#fields.hasErrors('firstName')}" style="color:red"> Invalid first name</p>-->
 
 <!--      <label for="lastname">Last name</label><br>-->
 <!--      <input type="text" id="lastname" th:field="*{lastName}" class="form-control bg-dark text-white text-start"><br>-->

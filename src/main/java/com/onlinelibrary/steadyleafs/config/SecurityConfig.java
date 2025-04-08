@@ -15,7 +15,7 @@ public class SecurityConfig {
 
 	@Bean
 	public PasswordEncoder delegatingPasswordEncoder() {
-		return  new BCryptPasswordEncoder();
+		return new BCryptPasswordEncoder();
 	}
 
 	@Bean
@@ -28,6 +28,7 @@ public class SecurityConfig {
 						.requestMatchers("/").permitAll()
 						.requestMatchers("/memberHome").permitAll()
 						.requestMatchers("/users").permitAll()
+						.requestMatchers("/users/create").permitAll()
 						.requestMatchers("/books/**").permitAll()
 						.requestMatchers("/users/delete").hasRole("ADMIN")
 						.requestMatchers("/users/update").hasRole("ADMIN")
