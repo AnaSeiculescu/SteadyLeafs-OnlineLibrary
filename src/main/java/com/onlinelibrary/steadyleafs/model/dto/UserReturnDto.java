@@ -2,8 +2,6 @@ package com.onlinelibrary.steadyleafs.model.dto;
 
 import com.onlinelibrary.steadyleafs.model.Member;
 import com.onlinelibrary.steadyleafs.model.User;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

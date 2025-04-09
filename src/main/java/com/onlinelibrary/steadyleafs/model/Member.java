@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,11 +24,24 @@ public class Member {
 	private String firstName;
 	private String lastName;
 
-	@OneToMany(mappedBy = "borrowedBy", cascade = CascadeType.ALL)
-	private List<Book> borrowedBooks;
+	@OneToOne
+	@JoinColumn(name =  "user_id")
+	private User user;
 
-	public Member(String firstName, String lastName) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-	}
+	@OneToMany(mappedBy = "borrowedBy", cascade = CascadeType.ALL)
+	private List<Book> borrowedBooks = new ArrayList<>();
+
+//	public Member(String firstName, String lastName) {
+//		this.firstName = firstName;
+//		this.lastName = lastName;
+//	}
+
+//	public Member mapToUpdate(Member memberUpdated) {
+//		Member member = new Member();
+//		member.setId(memberUpdated.getId());
+//		member.setFirstName(memberUpdated.getFirstName());
+//		member.setPassword(memberUpdated.getPassword());
+//		user.setRole(userUpdated.getRole());
+//		return member;
+//	}
 }

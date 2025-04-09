@@ -13,18 +13,16 @@ import lombok.Setter;
 public class UserUpdateDto {
 	private int id;
 	private String email;
-	private String password;
 	private String role;
 
 	public User mapToUser(User user) {
 		user.setEmail(this.email);
-		user.setPassword(this.password);
 		user.setRole(this.role);
 		return user;
 	}
 
 	public static UserUpdateDto mapFromUser(User user) {
-		UserUpdateDto userUpdateDto = new UserUpdateDto(user.getId(), user.getEmail(), user.getPassword(), user.getRole());
+		UserUpdateDto userUpdateDto = new UserUpdateDto(user.getId(), user.getEmail(), user.getRole());
 		return userUpdateDto;
 	}
 }

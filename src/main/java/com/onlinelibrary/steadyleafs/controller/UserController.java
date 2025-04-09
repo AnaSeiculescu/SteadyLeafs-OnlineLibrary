@@ -1,6 +1,5 @@
 package com.onlinelibrary.steadyleafs.controller;
 
-import com.onlinelibrary.steadyleafs.config.SecurityConfig;
 import com.onlinelibrary.steadyleafs.model.User;
 import com.onlinelibrary.steadyleafs.model.dto.RegistrationDto;
 import com.onlinelibrary.steadyleafs.model.dto.UserReturnDto;
@@ -8,7 +7,6 @@ import com.onlinelibrary.steadyleafs.model.dto.UserUpdateDto;
 import com.onlinelibrary.steadyleafs.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,8 +20,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
 	private final UserService userService;
-//	@Autowired
-//	SecurityConfig securityConfig;
 
 	@GetMapping()
 	public String getAllUsers(Model model) {
@@ -61,8 +57,6 @@ public class UserController {
 
 	@PostMapping("/update")
 	public String updateUser(@ModelAttribute UserUpdateDto userUpdateDto, BindingResult bindingResult) {
-//		UserUpdateDto userToUpdate = userService.getUserById(userUpdateDto.getId());
-//		userToUpdate = userService.updateUser(userUpdateDto);
 
 		UserUpdateDto userToUpdate = UserUpdateDto.mapFromUser(userService.getUserById(userUpdateDto.getId()));
 		userService.updateUser(userUpdateDto);
