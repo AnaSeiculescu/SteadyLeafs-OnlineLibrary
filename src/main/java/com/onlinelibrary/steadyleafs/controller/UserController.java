@@ -2,7 +2,7 @@ package com.onlinelibrary.steadyleafs.controller;
 
 import com.onlinelibrary.steadyleafs.config.SecurityConfig;
 import com.onlinelibrary.steadyleafs.model.User;
-import com.onlinelibrary.steadyleafs.model.dto.UserRegistrationDto;
+import com.onlinelibrary.steadyleafs.model.dto.RegistrationDto;
 import com.onlinelibrary.steadyleafs.model.dto.UserReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.UserUpdateDto;
 import com.onlinelibrary.steadyleafs.service.UserService;
@@ -22,8 +22,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
 	private final UserService userService;
-	@Autowired
-	SecurityConfig securityConfig;
+//	@Autowired
+//	SecurityConfig securityConfig;
 
 	@GetMapping()
 	public String getAllUsers(Model model) {
@@ -35,17 +35,17 @@ public class UserController {
 	@GetMapping("/register")
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public String getCreateUserForm(Model model) {
-		UserRegistrationDto userRegistrationDto = new UserRegistrationDto();
-		model.addAttribute("userRegistrationDto", userRegistrationDto);
+		RegistrationDto registrationDto = new RegistrationDto();
+		model.addAttribute("registrationDto", registrationDto);
 		return "users/registerUserForm";
 	}
 
 	@PostMapping()
-	public String createUser(Model model, @ModelAttribute @Valid UserRegistrationDto userRegistrationDto, BindingResult bindingResult) {
+	public String createUser(Model model, @ModelAttribute @Valid RegistrationDto registrationDto, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return "/users/registration";
 		}
-		userService.createUser(userRegistrationDto.mapToUser(securityConfig.delegatingPasswordEncoder()));
+		userService.createUser(registrationDto);
 		model.addAttribute("userList", userService.getAllUsers());
 		return "users/usersList";
 	}

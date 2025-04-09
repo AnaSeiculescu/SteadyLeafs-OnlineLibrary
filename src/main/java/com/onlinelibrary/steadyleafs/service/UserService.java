@@ -1,10 +1,14 @@
 package com.onlinelibrary.steadyleafs.service;
 
+import com.onlinelibrary.steadyleafs.config.SecurityConfig;
 import com.onlinelibrary.steadyleafs.model.User;
+import com.onlinelibrary.steadyleafs.model.dto.RegistrationDto;
 import com.onlinelibrary.steadyleafs.model.dto.UserReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.UserUpdateDto;
+import com.onlinelibrary.steadyleafs.repository.MemberRepository;
 import com.onlinelibrary.steadyleafs.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +17,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
 	private final UserRepository userRepository;
+	private final MemberRepository memberRepository;
+	@Autowired
+	SecurityConfig securityConfig;
 
 	public List<UserReturnDto> getAllUsers() {
 		List<User> usersFromDatabase = userRepository.findAll();
@@ -22,8 +29,10 @@ public class UserService {
 				.toList();
 	}
 
-	public void createUser(User user) {
-		userRepository.save(user);
+	public void createUser(RegistrationDto registrationDto) {
+		userRepository.save(registrationDto.mapToUser(securityConfig.delegatingPasswordEncoder()));
+		memberRepository.save(registrationDto.mapToMember());
+		
 	}
 
 	public User getUserById(Integer id) {
