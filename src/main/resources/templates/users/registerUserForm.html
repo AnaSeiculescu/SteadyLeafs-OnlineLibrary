@@ -14,7 +14,7 @@
 
   <div class="card shadow p-3" style="margin-top: 50px">
 
-    <h4 style="margin: 30px 0; text-align: center;">Register as a new user</h4>
+    <h4 style="margin: 30px 0; text-align: center;">Register as a new member</h4>
 
     <form action="/users" method="post" th:object="${userRegistrationDto}">
 <!--      <label for="id">User id</label><br>-->
@@ -28,9 +28,13 @@
       <input type="password" id="password" th:field="*{password}" class="form-control bg-dark text-white text-start"><br>
 <!--      <p th:if="${#fields.hasErrors('firstName')}" style="color:red"> Invalid first name</p>-->
 
-<!--      <label for="lastname">Last name</label><br>-->
-<!--      <input type="text" id="lastname" th:field="*{lastName}" class="form-control bg-dark text-white text-start"><br>-->
-<!--      &lt;!&ndash;      <p th:if="${#fields.hasErrors('lastName')}" style="color:red"> Invalid last name</p>&ndash;&gt;-->
+        <label for="firstname">First name</label><br>
+        <input type="text" id="firstname" th:field="*{firstName}" class="form-control bg-dark text-white text-start"><br>
+        <!--      <p th:if="${#fields.hasErrors('lastName')}" style="color:red"> Invalid last name</p>-->
+
+      <label for="lastname">Last name</label><br>
+      <input type="text" id="lastname" th:field="*{lastName}" class="form-control bg-dark text-white text-start"><br>
+      <!--      <p th:if="${#fields.hasErrors('lastName')}" style="color:red"> Invalid last name</p>-->
 
       <div class="d-flex flex-row justify-content-between" style="margin-top:20px">
         <button type="button" class="btn btn-secondary" onclick="window.location.href='/users'"><i class="bi bi-arrow-left" style="margin-right:5px"></i>Back</button>

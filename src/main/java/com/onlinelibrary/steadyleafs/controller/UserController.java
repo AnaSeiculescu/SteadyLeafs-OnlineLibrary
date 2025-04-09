@@ -3,12 +3,13 @@ package com.onlinelibrary.steadyleafs.controller;
 import com.onlinelibrary.steadyleafs.config.SecurityConfig;
 import com.onlinelibrary.steadyleafs.model.User;
 import com.onlinelibrary.steadyleafs.model.dto.UserRegistrationDto;
+import com.onlinelibrary.steadyleafs.model.dto.UserReturnDto;
+import com.onlinelibrary.steadyleafs.model.dto.UserUpdateDto;
 import com.onlinelibrary.steadyleafs.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,16 +24,15 @@ public class UserController {
 	private final UserService userService;
 	@Autowired
 	SecurityConfig securityConfig;
-//	private PasswordEncoder passwordEncoder;
 
 	@GetMapping()
 	public String getAllUsers(Model model) {
-		List<User> userList = userService.getAllUsers();
+		List<UserReturnDto> userList = userService.getAllUsers();
 		model.addAttribute("userList", userList);
 		return "users/usersList";
 	}
 
-	@GetMapping("/create")
+	@GetMapping("/register")
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public String getCreateUserForm(Model model) {
 		UserRegistrationDto userRegistrationDto = new UserRegistrationDto();
@@ -53,15 +53,19 @@ public class UserController {
 	@GetMapping("/updateForm")
 	public String getUpdateUserForm(Model model, @RequestParam int id) {
 		User user = userService.getUserById(id);
-		model.addAttribute("user", user);
+		UserUpdateDto userUpdateDto = UserUpdateDto.mapFromUser(user);
+		model.addAttribute("userUpdateDto", userUpdateDto);
 		model.addAttribute("userId", id);
 		return "users/updateUserForm";
 	}
 
 	@PostMapping("/update")
-	public String updateUser(@RequestParam int id, @ModelAttribute User user) {
-		User userToUpdate = userService.getUserById(id);
-		userToUpdate = userService.updateUser(user);
+	public String updateUser(@ModelAttribute UserUpdateDto userUpdateDto, BindingResult bindingResult) {
+//		UserUpdateDto userToUpdate = userService.getUserById(userUpdateDto.getId());
+//		userToUpdate = userService.updateUser(userUpdateDto);
+
+		UserUpdateDto userToUpdate = UserUpdateDto.mapFromUser(userService.getUserById(userUpdateDto.getId()));
+		userService.updateUser(userUpdateDto);
 
 		return "redirect:/users";
 	}

@@ -15,10 +15,14 @@
     <h4 style="margin: 30px 0; text-align: center;">Update a user</h4>
     <p th:text="'Updating user with id: ' + ${userId}"/>
 
-    <form action="/users/update" method="post" th:object="${user}">
+    <form action="/users/update" method="post" th:object="${userUpdateDto}">
 
       <label for="email">User email</label><br>
       <input type="text" id="email" name="email" th:field="*{email}" class="form-control bg-dark text-white text-start"><br>
+      <label for="password">User password</label><br>
+      <input type="text" id="password" name="password" th:field="*{password}" class="form-control bg-dark text-white text-start"><br>
+      <label for="role">User role</label><br>
+      <input type="text" id="role" name="role" th:field="*{role}" class="form-control bg-dark text-white text-start"><br>
 <!--      <label for="firstName">User first name</label><br>-->
 <!--      <input type="text" id="firstName" name="firstName" th:field="*{firstName}" class="form-control bg-dark text-white text-start"><br>-->
 <!--      <label for="lastName">User last name</label><br>-->
