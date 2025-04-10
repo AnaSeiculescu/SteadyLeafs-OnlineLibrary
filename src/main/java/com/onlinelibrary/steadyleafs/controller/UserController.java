@@ -25,6 +25,7 @@ public class UserController {
 	public String getAllUsers(Model model) {
 		List<UserReturnDto> userList = userService.getAllUsers();
 		model.addAttribute("userList", userList);
+
 		return "users/usersList";
 	}
 
@@ -33,6 +34,7 @@ public class UserController {
 	public String getCreateUserForm(Model model) {
 		RegistrationDto registrationDto = new RegistrationDto();
 		model.addAttribute("registrationDto", registrationDto);
+
 		return "users/registerUserForm";
 	}
 
@@ -43,6 +45,7 @@ public class UserController {
 		}
 		userService.createUser(registrationDto);
 		model.addAttribute("userList", userService.getAllUsers());
+
 		return "users/usersList";
 	}
 
@@ -52,12 +55,12 @@ public class UserController {
 		UserUpdateDto userUpdateDto = UserUpdateDto.mapFromUser(user);
 		model.addAttribute("userUpdateDto", userUpdateDto);
 		model.addAttribute("userId", id);
+
 		return "users/updateUserForm";
 	}
 
 	@PostMapping("/update")
 	public String updateUser(@ModelAttribute UserUpdateDto userUpdateDto, BindingResult bindingResult) {
-
 		UserUpdateDto userToUpdate = UserUpdateDto.mapFromUser(userService.getUserById(userUpdateDto.getId()));
 		userService.updateUser(userUpdateDto);
 

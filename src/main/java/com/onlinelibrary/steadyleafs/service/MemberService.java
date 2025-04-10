@@ -5,12 +5,14 @@ import com.onlinelibrary.steadyleafs.model.dto.MemberReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.MemberUpdateDto;
 import com.onlinelibrary.steadyleafs.repository.MemberRepository;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class MemberService {
 
 	private final MemberRepository memberRepository;
