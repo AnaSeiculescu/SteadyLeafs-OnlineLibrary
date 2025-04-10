@@ -24,6 +24,9 @@ public class User {
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private Member member;
 
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	private Librarian librarian;
+
 //	public User mapToUpdate(User userUpdated) {
 //		User user = new User();
 //		user.setId(userUpdated.getId());

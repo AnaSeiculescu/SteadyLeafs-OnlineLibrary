@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name="members")
+@Table(name="librarians")
 @Setter
 @Getter
 @AllArgsConstructor
@@ -18,5 +18,9 @@ public class Librarian {
 
 	private String firstName;
 	private String lastName;
+
+	@OneToOne
+	@JoinColumn(name =  "user_id")
+	private User user;
 
 }
