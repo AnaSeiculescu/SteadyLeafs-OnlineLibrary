@@ -29,6 +29,8 @@ public class SecurityConfig {
 				.httpBasic(Customizer.withDefaults())
 				.formLogin(form -> form
 						.loginPage("/login")
+						.loginProcessingUrl("/login")
+						.failureHandler(new CustomAuthenticationFailureHandler())
 						.successHandler(customSuccessHandler)
 						.permitAll())
 				.authorizeHttpRequests(authorize -> authorize
