@@ -64,6 +64,7 @@ public class UserController {
 		UserUpdateDto userToUpdate = UserUpdateDto.mapFromUser(userService.getUserById(userUpdateDto.getId()));
 		userService.updateUser(userUpdateDto);
 
+
 		return "redirect:/users";
 	}
 

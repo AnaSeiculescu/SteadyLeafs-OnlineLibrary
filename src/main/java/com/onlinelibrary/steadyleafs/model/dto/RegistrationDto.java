@@ -40,7 +40,7 @@ public class RegistrationDto {
 	public Member mapToMember() {
 		member.setFirstName(this.firstName);
 		member.setLastName(this.lastName);
-		member.setUser(user);
+		member.setUser(this.user);
 		member.setBorrowedBooks(new ArrayList<>());
 		return member;
 	}
