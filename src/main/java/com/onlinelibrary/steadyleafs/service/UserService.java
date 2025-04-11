@@ -1,12 +1,11 @@
 package com.onlinelibrary.steadyleafs.service;
 
 import com.onlinelibrary.steadyleafs.config.SecurityConfig;
-import com.onlinelibrary.steadyleafs.model.Librarian;
+import com.onlinelibrary.steadyleafs.model.Member;
 import com.onlinelibrary.steadyleafs.model.User;
 import com.onlinelibrary.steadyleafs.model.dto.RegistrationDto;
 import com.onlinelibrary.steadyleafs.model.dto.UserReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.UserUpdateDto;
-import com.onlinelibrary.steadyleafs.repository.LibrarianRepository;
 import com.onlinelibrary.steadyleafs.repository.MemberRepository;
 import com.onlinelibrary.steadyleafs.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +19,9 @@ import java.util.List;
 public class UserService {
 	private final UserRepository userRepository;
 	private final MemberRepository memberRepository;
-	private final LibrarianRepository librarianRepository;
+	private final MemberService memberService;
+	private final LibrarianService librarianService;
+
 	@Autowired
 	SecurityConfig securityConfig;
 
@@ -57,6 +58,10 @@ public class UserService {
 //		if(updatedUser.getRole().equals("LIBRARIAN")){
 //			librarianRepository.save(new Librarian());
 //		}
+
+		Member memberByUserId = memberService.getMemberByUserId(userUpdateDto.getId());
+		librarianService.createLibrarian(memberByUserId);
+		memberRepository.delete(memberByUserId);
 
 		return UserUpdateDto.mapFromUser(updatedUser);
 	}

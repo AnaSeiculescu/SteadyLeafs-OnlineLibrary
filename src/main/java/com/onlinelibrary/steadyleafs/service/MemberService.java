@@ -44,6 +44,13 @@ public class MemberService {
 		return member;
 	}
 
+	public Member getMemberByUserId(Integer userId) {
+		Member member = memberRepository.findByUserId(userId)
+				.orElseThrow(() -> new RuntimeException("Member with user id: " + userId + " not found"));
+
+		return member;
+	}
+
 	public void deleteUser(Integer id) {
 		getMemberById(id);
 		memberRepository.deleteById(id);
