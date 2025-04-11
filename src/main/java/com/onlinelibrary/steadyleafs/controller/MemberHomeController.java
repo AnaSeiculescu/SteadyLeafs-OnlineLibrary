@@ -22,7 +22,7 @@ public class MemberHomeController {
 	public String getMemberHomePage(Model model) {
 //		List<Book> borrowedBooks = memberHomeService.getAllMyBooks();
 //		model.addAttribute("borrowedBooks", borrowedBooks);
-		return "members/memberHome";
+		return "members/home";
 	}
 
 	@GetMapping("/seeAllBooks")

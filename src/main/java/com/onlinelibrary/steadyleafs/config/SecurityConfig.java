@@ -23,29 +23,25 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	public SecurityFilterChain filterChain (HttpSecurity http) throws Exception {
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
 				.csrf(c -> c.disable())
 				.httpBasic(Customizer.withDefaults())
 				.formLogin(form -> form
 						.loginPage("/login")
-//						.loginProcessingUrl("/login")
 						.successHandler(customSuccessHandler)
 						.permitAll())
-//				.formLogin(form -> form
-//						.loginPage("/login-librarian")
-//						.successHandler(customSuccessHandler)
-//						.permitAll())
 				.authorizeHttpRequests(authorize -> authorize
-						.requestMatchers("/").permitAll()
-						.requestMatchers("/memberHome").permitAll()
-						.requestMatchers("/users/**").permitAll()
-						.requestMatchers("/librarians/**").permitAll()
+								.requestMatchers("/").permitAll()
+								.requestMatchers("/login-member", "/login-librarian").permitAll()
+								.requestMatchers("/memberHome").permitAll()
+								.requestMatchers("/users/**").permitAll()
+								.requestMatchers("/librarians/**").permitAll()
 //						.requestMatchers("/users/create").permitAll()
-						.requestMatchers("/books/**").permitAll()
+								.requestMatchers("/books/**").permitAll()
 //						.requestMatchers("/users/delete").hasRole("ADMIN")
 //						.requestMatchers("/users/update").hasRole("ADMIN")
-						.anyRequest().authenticated()
+								.anyRequest().authenticated()
 
 				);
 		return http.build();

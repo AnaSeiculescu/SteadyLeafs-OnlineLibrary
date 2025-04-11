@@ -23,14 +23,13 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		String redirectURL = "/users";
 
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-//		GrantedAuthority authority = authentication.getAuthorities().stream().findFirst().orElse(null);
 
 		for (GrantedAuthority authority : authorities) {
 			if (authority.getAuthority().equals("ROLE_MEMBER")) {
-				redirectURL = "/members/home";
+				redirectURL = "/memberHome";
 				break;
 			} else if (authority.getAuthority().equals("ROLE_LIBRARIAN")) {
-				redirectURL = "/librarians/home";
+				redirectURL = "/librarians/members";
 				break;
 			}
 		}
