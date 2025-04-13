@@ -4,8 +4,6 @@ import com.onlinelibrary.steadyleafs.model.Member;
 import com.onlinelibrary.steadyleafs.model.dto.MemberReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.MemberUpdateDto;
 import com.onlinelibrary.steadyleafs.repository.MemberRepository;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,9 +22,9 @@ public class MemberService {
 				.toList();
 	}
 
-//	public void createMember(Member member) {
-//		memberRepository.save(member);
-//	}
+	public void createMember(Member member) {
+		memberRepository.save(member);
+	}
 
 	public MemberUpdateDto updateMember(MemberUpdateDto memberUpdateDto) {
 		Member memberToUpdate = memberRepository.findById(memberUpdateDto.getId())
@@ -51,7 +49,7 @@ public class MemberService {
 		return member;
 	}
 
-	public void deleteUser(Integer id) {
+	public void deleteMember(Integer id) {
 		getMemberById(id);
 		memberRepository.deleteById(id);
 

@@ -61,7 +61,7 @@ public class UserController {
 
 	@PostMapping("/update")
 	public String updateUser(@ModelAttribute UserUpdateDto userUpdateDto, BindingResult bindingResult) {
-		UserUpdateDto userToUpdate = UserUpdateDto.mapFromUser(userService.getUserById(userUpdateDto.getId()));
+//		UserUpdateDto userToUpdate = UserUpdateDto.mapFromUser(userService.getUserById(userUpdateDto.getId()));
 		userService.updateUser(userUpdateDto);
 
 

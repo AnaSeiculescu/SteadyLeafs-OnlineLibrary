@@ -58,7 +58,7 @@ public class LibrarianService {
 //		return UserUpdateDto.mapFromUser(updatedUser);
 //	}
 //
-//	public void deleteUser(Integer id) {
+//	public void deleteMember(Integer id) {
 //		getUserById(id);
 //		userRepository.deleteById(id);
 //	}

@@ -1,12 +1,9 @@
 package com.onlinelibrary.steadyleafs.controller;
 
 import com.onlinelibrary.steadyleafs.model.Member;
-import com.onlinelibrary.steadyleafs.model.User;
 import com.onlinelibrary.steadyleafs.model.dto.*;
 import com.onlinelibrary.steadyleafs.service.MemberService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -49,7 +46,7 @@ public class MemberController {
 
 	@PostMapping("/delete")
 	public String deleteMember(@RequestParam int id) {
-		memberService.deleteUser(id);
+		memberService.deleteMember(id);
 
 		return "redirect:/librarians/members";
 	}

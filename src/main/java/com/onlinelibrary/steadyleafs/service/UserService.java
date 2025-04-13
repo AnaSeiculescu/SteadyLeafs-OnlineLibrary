@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
 	private final UserRepository userRepository;
-	private final MemberRepository memberRepository;
+//	private final MemberRepository memberRepository;
 	private final MemberService memberService;
 	private final LibrarianService librarianService;
 
@@ -35,7 +35,7 @@ public class UserService {
 
 	public void createUser(RegistrationDto registrationDto) {
 		userRepository.save(registrationDto.mapToUser(securityConfig.delegatingPasswordEncoder()));
-		memberRepository.save(registrationDto.mapToMember());
+		memberService.createMember(registrationDto.mapToMember());
 		
 	}
 
@@ -49,19 +49,14 @@ public class UserService {
 		User userToUpdate = userRepository.findById(userUpdateDto.getId())
 				.orElseThrow(() -> new RuntimeException("User with id " + userUpdateDto.getId() + " does not exists"));
 
+		userToUpdate.setMember(null);
+
 		User updatedUser = userUpdateDto.mapToUser(userToUpdate);
 		userRepository.save(updatedUser);
 
-		// aici ar trebui sa pot folosi un librarianService, care creeaza librarians, si adauga in librarianRepo
-		// daca noul rol este diferit de "MEMBER" atunci membrul trebuie sters din repository-ul de member si adaugat in librarians
-
-//		if(updatedUser.getRole().equals("LIBRARIAN")){
-//			librarianRepository.save(new Librarian());
-//		}
-
 		Member memberByUserId = memberService.getMemberByUserId(userUpdateDto.getId());
 		librarianService.createLibrarian(memberByUserId);
-		memberRepository.delete(memberByUserId);
+		memberService.deleteMember(memberByUserId.getId());
 
 		return UserUpdateDto.mapFromUser(updatedUser);
 	}
