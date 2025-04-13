@@ -2,8 +2,10 @@ package com.onlinelibrary.steadyleafs.controller;
 
 import com.onlinelibrary.steadyleafs.model.Book;
 import com.onlinelibrary.steadyleafs.model.User;
+import com.onlinelibrary.steadyleafs.repository.UserRepository;
 import com.onlinelibrary.steadyleafs.service.BookService;
 import com.onlinelibrary.steadyleafs.service.MemberHomeService;
+import com.onlinelibrary.steadyleafs.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,11 +19,14 @@ import java.util.List;
 public class MemberHomeController {
 	private final BookService bookService;
 	private final MemberHomeService memberHomeService;
+	private final UserService userService;
 
 	@GetMapping()
 	public String getMemberHomePage(Model model) {
 //		List<Book> borrowedBooks = memberHomeService.getAllMyBooks();
 //		model.addAttribute("borrowedBooks", borrowedBooks);
+		User currentUser = userService.getLoggedInUser();
+		model.addAttribute("currentUser", currentUser);
 		return "members/home";
 	}
 

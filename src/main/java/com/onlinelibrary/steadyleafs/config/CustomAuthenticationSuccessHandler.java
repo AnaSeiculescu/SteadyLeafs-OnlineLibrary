@@ -20,7 +20,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 										Authentication authentication) throws IOException, ServletException {
 
 		System.out.println("🎉 User successfully authenticated: " + authentication.getName());
-		String redirectURL = "/users";
+		String redirectURL = "/";
 
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
