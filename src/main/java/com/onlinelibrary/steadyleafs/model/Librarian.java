@@ -22,7 +22,7 @@ public class Librarian {
 	private String lastName;
 
 	@OneToOne
-	@JoinColumn(name =  "user_id")
+	@JoinColumn(name = "user_id")
 	private User user;
 
 	public Librarian mapFromMember(Member member) {

@@ -25,10 +25,12 @@ public class Member {
 	private String lastName;
 
 	@OneToOne
-	@JoinColumn(name =  "user_id")
+	@JoinColumn(name = "user_id")
 	private User user;
 
 	@OneToMany(mappedBy = "borrowedBy", cascade = CascadeType.ALL)
 	private List<Book> borrowedBooks = new ArrayList<>();
+
+
 
 }

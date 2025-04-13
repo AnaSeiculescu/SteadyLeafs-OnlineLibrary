@@ -6,7 +6,6 @@ import com.onlinelibrary.steadyleafs.model.User;
 import com.onlinelibrary.steadyleafs.model.dto.RegistrationDto;
 import com.onlinelibrary.steadyleafs.model.dto.UserReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.UserUpdateDto;
-import com.onlinelibrary.steadyleafs.repository.MemberRepository;
 import com.onlinelibrary.steadyleafs.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
 	private final UserRepository userRepository;
-//	private final MemberRepository memberRepository;
 	private final MemberService memberService;
 	private final LibrarianService librarianService;
 
@@ -49,16 +47,23 @@ public class UserService {
 		User userToUpdate = userRepository.findById(userUpdateDto.getId())
 				.orElseThrow(() -> new RuntimeException("User with id " + userUpdateDto.getId() + " does not exists"));
 
-		userToUpdate.setMember(null);
+		if (userUpdateDto.getRole().equals("LIBRARIAN")) {
+			convertMemberToLibrarian(userToUpdate);
+		}
 
 		User updatedUser = userUpdateDto.mapToUser(userToUpdate);
 		userRepository.save(updatedUser);
 
-		Member memberByUserId = memberService.getMemberByUserId(userUpdateDto.getId());
-		librarianService.createLibrarian(memberByUserId);
-		memberService.deleteMember(memberByUserId.getId());
-
 		return UserUpdateDto.mapFromUser(updatedUser);
+	}
+
+	public void convertMemberToLibrarian(User user) {
+		Member member = user.getMember();
+		user.setMember(null);
+		userRepository.save(user);
+
+		librarianService.createLibrarian(member);
+		memberService.deleteMember(member.getId());
 	}
 
 	public void deleteUser(Integer id) {
