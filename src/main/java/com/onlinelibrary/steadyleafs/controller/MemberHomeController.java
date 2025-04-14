@@ -24,19 +24,26 @@ public class MemberHomeController {
 	private final BookService bookService;
 	private final MemberHomeService memberHomeService;
 
-	@GetMapping()
-	public String getMemberHomePage(Model model, Authentication authentication) {
-
+	private User getLoggedInUser(Authentication authentication) {
 		MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
 		User currentUser = userDetails.getUser();
+		return currentUser;
+	}
+
+	private Member getLoggedInMember(Authentication authentication) {
+		User currentUser = getLoggedInUser(authentication);
 		Member member = currentUser.getMember();
+		Member currentMember = memberHomeService.getMemberWithBorrowedBooks(member.getId());
+		return currentMember;
+	}
 
-//		MemberReturnDto currentMember = new MemberReturnDto().mapFromMember(member);
-
-		Member memberWithBooks = memberHomeService.getMemberWithBorrowedBooks(member.getId());
+	@GetMapping()
+	public String getMemberHomePage(Model model, Authentication authentication) {
+		User currentUser = getLoggedInUser(authentication);
+		Member currentMember = getLoggedInMember(authentication);
 
 		model.addAttribute("currentUser", currentUser);
-		model.addAttribute("currentMember", memberWithBooks);
+		model.addAttribute("currentMember", currentMember);
 
 		return "members/home";
 	}
@@ -49,8 +56,12 @@ public class MemberHomeController {
 	}
 
 	@PostMapping("/add")
-	public String BorrowBook(Model model, @ModelAttribute Book book) {
-		memberHomeService.borrowBook(book);
+	public String BorrowBook(Model model, @ModelAttribute Book book, Authentication authentication) {
+		Member currentMember = getLoggedInMember(authentication);
+
+		memberHomeService.borrowBook(book, currentMember);
+
+		model.addAttribute("bookList", currentMember.getBorrowedBooks());
 
 		return "redirect:/memberHome";
 	}
