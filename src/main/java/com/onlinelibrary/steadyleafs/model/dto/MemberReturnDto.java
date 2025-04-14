@@ -20,7 +20,7 @@ public class MemberReturnDto {
 	private String firstName;
 	private String lastName;
 	private User user;
-	private List<Book> borrowedBooks = new ArrayList<>();
+	private List<Book> borrowedBooks;
 
 	public MemberReturnDto mapFromMember(Member member) {
 		MemberReturnDto memberReturnDto = new MemberReturnDto();
@@ -28,7 +28,7 @@ public class MemberReturnDto {
 		memberReturnDto.setFirstName(member.getFirstName());
 		memberReturnDto.setLastName(member.getLastName());
 		memberReturnDto.setUser(member.getUser());
-		memberReturnDto.setBorrowedBooks(member.getBorrowedBooks());
+		memberReturnDto.setBorrowedBooks(new ArrayList<>(member.getBorrowedBooks()));
 
 		return memberReturnDto;
 	}

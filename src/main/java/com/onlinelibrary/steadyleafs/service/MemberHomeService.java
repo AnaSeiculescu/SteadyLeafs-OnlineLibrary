@@ -4,6 +4,9 @@ import com.onlinelibrary.steadyleafs.model.Book;
 import com.onlinelibrary.steadyleafs.model.Member;
 import com.onlinelibrary.steadyleafs.model.User;
 import com.onlinelibrary.steadyleafs.repository.MemberHomeRepository;
+import com.onlinelibrary.steadyleafs.repository.MemberRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,7 @@ import java.util.List;
 public class MemberHomeService {
 
 	private final MemberHomeRepository memberHomeRepository;
+	private final MemberRepository memberRepository;
 
 	public List<Book> getAllMyBooks() {
 		return memberHomeRepository.findAll();
@@ -34,7 +38,11 @@ public class MemberHomeService {
 	public void returnMyBook(Integer id) {
 		getMyBookById(id);
 		memberHomeRepository.deleteById(id);
+	}
 
+	public Member getMemberWithBorrowedBooks(int memberId) {
+		return memberRepository.findByIdWithBorrowedBooks(memberId)
+				.orElseThrow(() -> new RuntimeException("Member not found"));
 	}
 
 }

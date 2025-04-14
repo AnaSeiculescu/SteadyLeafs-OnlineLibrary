@@ -3,6 +3,7 @@ package com.onlinelibrary.steadyleafs.controller;
 import com.onlinelibrary.steadyleafs.model.Book;
 import com.onlinelibrary.steadyleafs.model.Member;
 import com.onlinelibrary.steadyleafs.model.User;
+import com.onlinelibrary.steadyleafs.model.dto.MemberReturnDto;
 import com.onlinelibrary.steadyleafs.service.BookService;
 import com.onlinelibrary.steadyleafs.service.MemberHomeService;
 import com.onlinelibrary.steadyleafs.service.MyUserDetails;
@@ -24,17 +25,18 @@ public class MemberHomeController {
 	private final MemberHomeService memberHomeService;
 
 	@GetMapping()
-	@Transactional
 	public String getMemberHomePage(Model model, Authentication authentication) {
-//		List<Book> borrowedBooks = memberHomeService.getAllMyBooks();
-//		model.addAttribute("borrowedBooks", borrowedBooks);
 
 		MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
 		User currentUser = userDetails.getUser();
-		Member currentMember = currentUser.getMember();
+		Member member = currentUser.getMember();
+
+//		MemberReturnDto currentMember = new MemberReturnDto().mapFromMember(member);
+
+		Member memberWithBooks = memberHomeService.getMemberWithBorrowedBooks(member.getId());
 
 		model.addAttribute("currentUser", currentUser);
-		model.addAttribute("currentMember", currentMember);
+		model.addAttribute("currentMember", memberWithBooks);
 
 		return "members/home";
 	}
