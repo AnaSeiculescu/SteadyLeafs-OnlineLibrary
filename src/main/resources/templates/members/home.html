@@ -9,8 +9,9 @@
 </head>
 <body>
 
-<div class="container table.responsive w-50 d-flex flex-column align-items-center">
+<div class="container table.responsive w-50 d-flex flex-column align-items-center" sec:authorize="isAuthenticated()">
     <h2 class="text-center mb-4" style="margin-top:50px">Welcome, <span th:text="${currentUser.email}"></span></h2>
+<!--    <h2 class="text-center mb-4" style="margin-top:50px">Welcome, <span sec:authentication="email"></span></h2>-->
     <table border="1" class="table table-hover table-light shadow p-3 mb-5 rounded" style="text-align:center">
 
         <tr>
@@ -21,7 +22,7 @@
         </tr>
 
         <tbody>
-        <tr th:each="book : ${currentUser.borrowedBooks}">
+        <tr th:each="book : ${currentMember.borrowedBooks}">
             <td th:text="${book.title}"></td>
             <td th:text="${book.author}"></td>
             <td th:text="${book.status}"></td>

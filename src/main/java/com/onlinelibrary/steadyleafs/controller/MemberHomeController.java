@@ -1,12 +1,15 @@
 package com.onlinelibrary.steadyleafs.controller;
 
 import com.onlinelibrary.steadyleafs.model.Book;
+import com.onlinelibrary.steadyleafs.model.Member;
 import com.onlinelibrary.steadyleafs.model.User;
-import com.onlinelibrary.steadyleafs.repository.UserRepository;
 import com.onlinelibrary.steadyleafs.service.BookService;
 import com.onlinelibrary.steadyleafs.service.MemberHomeService;
-import com.onlinelibrary.steadyleafs.service.UserService;
+import com.onlinelibrary.steadyleafs.service.MyUserDetails;
+import com.onlinelibrary.steadyleafs.service.MyUserDetailsService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,14 +22,20 @@ import java.util.List;
 public class MemberHomeController {
 	private final BookService bookService;
 	private final MemberHomeService memberHomeService;
-	private final UserService userService;
 
 	@GetMapping()
-	public String getMemberHomePage(Model model) {
+	@Transactional
+	public String getMemberHomePage(Model model, Authentication authentication) {
 //		List<Book> borrowedBooks = memberHomeService.getAllMyBooks();
 //		model.addAttribute("borrowedBooks", borrowedBooks);
-		User currentUser = userService.getLoggedInUser();
+
+		MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
+		User currentUser = userDetails.getUser();
+		Member currentMember = currentUser.getMember();
+
 		model.addAttribute("currentUser", currentUser);
+		model.addAttribute("currentMember", currentMember);
+
 		return "members/home";
 	}
 
