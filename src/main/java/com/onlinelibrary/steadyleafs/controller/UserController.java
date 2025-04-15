@@ -30,7 +30,6 @@ public class UserController {
 	}
 
 	@GetMapping("/register")
-	@ResponseStatus(value = HttpStatus.CREATED)
 	public String getCreateUserForm(Model model) {
 		RegistrationDto registrationDto = new RegistrationDto();
 		model.addAttribute("registrationDto", registrationDto);
@@ -39,14 +38,14 @@ public class UserController {
 	}
 
 	@PostMapping()
-	public String createUser(Model model, @ModelAttribute @Valid RegistrationDto registrationDto, BindingResult bindingResult) {
+//	@ResponseStatus(value = HttpStatus.CREATED)
+	public String createUser(@ModelAttribute @Valid RegistrationDto registrationDto, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return "/users/registerUserForm";
 		}
 		userService.createUser(registrationDto);
-		model.addAttribute("userList", userService.getAllUsers());
 
-		return "redirect:/users";
+		return "redirect:/login-member";
 	}
 
 	@GetMapping("/updateForm")

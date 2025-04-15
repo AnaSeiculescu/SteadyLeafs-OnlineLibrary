@@ -34,7 +34,6 @@ public class UserService {
 	public void createUser(RegistrationDto registrationDto) {
 		userRepository.save(registrationDto.mapToUser(securityConfig.delegatingPasswordEncoder()));
 		memberService.createMember(registrationDto.mapToMember());
-		
 	}
 
 	public User getUserById(Integer id) {
