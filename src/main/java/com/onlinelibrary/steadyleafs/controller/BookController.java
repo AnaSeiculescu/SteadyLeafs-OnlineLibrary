@@ -34,7 +34,7 @@ public class BookController {
 	public String createBook(Model model, @ModelAttribute Book book) {
 		bookService.createBook(book);
 		model.addAttribute("bookList", bookService.getAllBooks());
-		return "books/allBooks";
+		return "redirect:/books";
 	}
 
 	@GetMapping("/updateForm")

@@ -30,7 +30,7 @@
       <td th:text="${book.title}"></td>
       <td th:text="${book.author}"></td>
       <td th:text="${book.status}"></td>
-      <td th:text="${book.borrowedBy}"></td>
+      <td th:text="${book.borrowedBy != null ? book.borrowedBy.id : 'Not borrowed'}"></td>
       <td>
 
         <form th:action="@{/books/updateForm}" class="d-inline">

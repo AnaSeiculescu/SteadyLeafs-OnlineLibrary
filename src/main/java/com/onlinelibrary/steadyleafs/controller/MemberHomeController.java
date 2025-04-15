@@ -3,12 +3,9 @@ package com.onlinelibrary.steadyleafs.controller;
 import com.onlinelibrary.steadyleafs.model.Book;
 import com.onlinelibrary.steadyleafs.model.Member;
 import com.onlinelibrary.steadyleafs.model.User;
-import com.onlinelibrary.steadyleafs.model.dto.MemberReturnDto;
 import com.onlinelibrary.steadyleafs.service.BookService;
 import com.onlinelibrary.steadyleafs.service.MemberHomeService;
 import com.onlinelibrary.steadyleafs.service.MyUserDetails;
-import com.onlinelibrary.steadyleafs.service.MyUserDetailsService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -52,23 +49,23 @@ public class MemberHomeController {
 	public String getAllBooks(Model model) {
 		List<Book> bookList = bookService.getAllBooks();
 		model.addAttribute("bookList", bookList);
+
 		return "books/allBooksForMembers";
 	}
 
 	@PostMapping("/add")
 	public String BorrowBook(Model model, @ModelAttribute Book book, Authentication authentication) {
 		Member currentMember = getLoggedInMember(authentication);
-
 		memberHomeService.borrowBook(book, currentMember);
-
 		model.addAttribute("bookList", currentMember.getBorrowedBooks());
 
 		return "redirect:/memberHome";
 	}
 
 	@PostMapping("/delete")
-	public String returnMyBook(@RequestParam int id) {
-		memberHomeService.returnMyBook(id);
+	public String returnMyBook(@ModelAttribute Book book, Authentication authentication) {
+		Member currentMember = getLoggedInMember(authentication);
+		memberHomeService.returnMyBook(book.getId());
 
 		return "redirect:/memberHome";
 	}

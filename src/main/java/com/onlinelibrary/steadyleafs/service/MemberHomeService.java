@@ -14,13 +14,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberHomeService {
 
-	private final MemberHomeRepository memberHomeRepository;
+//	private final MemberHomeRepository memberHomeRepository;
 	private final MemberRepository memberRepository;
 	private final BookRepository bookRepository;
 
-	public List<Book> getAllMyBooks() {
-		return memberHomeRepository.findAll();
-	}
+//	public List<Book> getAllMyBooks() {
+//		return memberHomeRepository.findAll();
+//	}
 
 	public void borrowBook(Book book, Member member) {
 		Book bookToUpdate = bookRepository.findById(book.getId())
@@ -35,14 +35,22 @@ public class MemberHomeService {
 	}
 
 	public Book getMyBookById(Integer id) {
-		Book book = memberHomeRepository.findById(id)
+		Book book = bookRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Book with id " + id + " does not exists in your List"));
 		return book;
 	}
 
 	public void returnMyBook(Integer id) {
-		getMyBookById(id);
-		memberHomeRepository.deleteById(id);
+		Book bookToReturn = getMyBookById(id);
+		Member member = bookToReturn.getBorrowedBy();
+
+		bookToReturn.getBorrowedBy().getBorrowedBooks().remove(bookToReturn);
+
+		bookToReturn.setBorrowedBy(null);
+		bookToReturn.setStatus("available");
+
+		memberRepository.save(member);
+		bookRepository.save(bookToReturn);
 	}
 
 	public Member getMemberWithBorrowedBooks(int memberId) {
@@ -50,9 +58,9 @@ public class MemberHomeService {
 				.orElseThrow(() -> new RuntimeException("Member not found"));
 	}
 
-	public Member getCurrentMember(int memberId) {
-		return memberRepository.findById(memberId)
-				.orElseThrow(() -> new RuntimeException("Member not found"));
-	}
+//	public Member getCurrentMember(int memberId) {
+//		return memberRepository.findById(memberId)
+//				.orElseThrow(() -> new RuntimeException("Member not found"));
+//	}
 
 }

@@ -41,12 +41,12 @@ public class UserController {
 	@PostMapping()
 	public String createUser(Model model, @ModelAttribute @Valid RegistrationDto registrationDto, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-			return "/users/registration";
+			return "/users/registerUserForm";
 		}
 		userService.createUser(registrationDto);
 		model.addAttribute("userList", userService.getAllUsers());
 
-		return "users/usersList";
+		return "redirect:/users";
 	}
 
 	@GetMapping("/updateForm")
