@@ -17,6 +17,14 @@ public class BookService {
 		return bookRepository.findAll();
 	}
 
+	public List<Book> getAvailableBooks() {
+		return bookRepository.findByBorrowedByIsNull();
+	}
+
+	public List<Book> getLoanedBooks() {
+		return bookRepository.findByBorrowedByIsNotNull();
+	}
+
 	public void createBook(Book book) {
 		bookRepository.save(book);
 	}
@@ -37,6 +45,5 @@ public class BookService {
 	public void deleteBook(Integer id) {
 		getBookById(id);
 		bookRepository.deleteById(id);
-
 	}
 }

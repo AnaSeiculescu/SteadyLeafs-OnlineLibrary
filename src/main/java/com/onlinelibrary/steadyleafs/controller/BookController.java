@@ -24,6 +24,20 @@ public class BookController {
 		return "books/allBooks";
 	}
 
+	@GetMapping()
+	public String getAvailableBooks(Model model) {
+		List<Book> bookList = bookService.getAvailableBooks();
+		model.addAttribute("availableBookList", bookList);
+		return "books/availableBooks";
+	}
+
+	@GetMapping()
+	public String getLoanedBooks(Model model) {
+		List<Book> bookList = bookService.getLoanedBooks();
+		model.addAttribute("loanedBookList", bookList);
+		return "books/loanedBooks";
+	}
+
 	@GetMapping("/create")
 	public String getCreateBookForm(Model model) {
 		model.addAttribute("book", new Book());
@@ -59,4 +73,5 @@ public class BookController {
 
 		return "redirect:/books";
 	}
+
 }
