@@ -1,9 +1,7 @@
 package com.onlinelibrary.steadyleafs.controller;
 
 import com.onlinelibrary.steadyleafs.model.Book;
-import com.onlinelibrary.steadyleafs.model.User;
 import com.onlinelibrary.steadyleafs.service.BookService;
-import com.onlinelibrary.steadyleafs.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,14 +22,14 @@ public class BookController {
 		return "books/allBooks";
 	}
 
-	@GetMapping()
+	@GetMapping("/available")
 	public String getAvailableBooks(Model model) {
 		List<Book> bookList = bookService.getAvailableBooks();
 		model.addAttribute("availableBookList", bookList);
-		return "books/availableBooks";
+		return "librarians/books/availableBooks";
 	}
 
-	@GetMapping()
+	@GetMapping("/loaned")
 	public String getLoanedBooks(Model model) {
 		List<Book> bookList = bookService.getLoanedBooks();
 		model.addAttribute("loanedBookList", bookList);
