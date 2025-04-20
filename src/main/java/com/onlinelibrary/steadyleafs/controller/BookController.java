@@ -33,7 +33,7 @@ public class BookController {
 	public String getLoanedBooks(Model model) {
 		List<Book> bookList = bookService.getLoanedBooks();
 		model.addAttribute("loanedBookList", bookList);
-		return "books/loanedBooks";
+		return "librarians/books/loanedBooks";
 	}
 
 	@GetMapping("/create")
