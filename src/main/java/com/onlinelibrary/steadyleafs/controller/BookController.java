@@ -39,7 +39,7 @@ public class BookController {
 	@GetMapping("/create")
 	public String getCreateBookForm(Model model) {
 		model.addAttribute("book", new Book());
-		return "books/createBookForm";
+		return "librarians/books/createBookForm";
 	}
 
 	@PostMapping()
@@ -54,7 +54,7 @@ public class BookController {
 		Book book = bookService.getBookById(id);
 		model.addAttribute("book", book);
 		model.addAttribute("userId", id);
-		return "books/updateBookForm";
+		return "librarians/books/updateBookForm";
 	}
 
 	@PostMapping("/update")
