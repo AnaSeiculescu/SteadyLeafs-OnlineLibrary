@@ -50,7 +50,7 @@ public class MemberHomeController {
 		List<Book> bookList = bookService.getAllBooks();
 		model.addAttribute("bookList", bookList);
 
-		return "books/allBooksForMembers";
+		return "members/books/allBooksForMembers";
 	}
 
 	@PostMapping("/add")

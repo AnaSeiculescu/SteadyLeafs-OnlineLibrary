@@ -15,7 +15,7 @@
         <h4 style="margin: 30px 0; text-align: center;">Update a member</h4>
         <p th:text="'Updating member with id: ' + ${memberId}"/>
 
-        <form action="/librarians/members/update" method="post" th:object="${memberUpdateDto}">
+        <form action="/members/update" method="post" th:object="${memberUpdateDto}">
 
             <label for="firstName">Member first name</label><br>
             <input type="text" id="firstName" name="firstName" th:field="*{firstName}" class="form-control bg-dark text-white text-start"><br>

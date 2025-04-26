@@ -19,7 +19,7 @@ public class BookController {
 	public String getAllBooks(Model model) {
 		List<Book> bookList = bookService.getAllBooks();
 		model.addAttribute("bookList", bookList);
-		return "books/allBooks";
+		return "librarians/books/allBooks";
 	}
 
 	@GetMapping("/available")

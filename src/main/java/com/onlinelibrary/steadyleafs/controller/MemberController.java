@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/librarians/members")
+@RequestMapping("/members")
 @RequiredArgsConstructor
 public class MemberController {
 
@@ -23,7 +23,7 @@ public class MemberController {
 		List<MemberReturnDto> memberList = memberService.getAllMembers();
 		model.addAttribute("memberList", memberList);
 
-		return "librarians/memberList";
+		return "librarians/members/memberList";
 	}
 
 	@GetMapping("/updateForm")
@@ -33,7 +33,7 @@ public class MemberController {
 		model.addAttribute("memberUpdateDto", memberUpdateDto);
 		model.addAttribute("memberId", id);
 
-		return "librarians/updateMemberForm";
+		return "librarians/members/updateMemberForm";
 	}
 
 	@PostMapping("/update")
@@ -41,14 +41,14 @@ public class MemberController {
 		MemberUpdateDto userToUpdate = MemberUpdateDto.mapFromMember(memberService.getMemberById(memberUpdateDto.getId()));
 		memberService.updateMember(memberUpdateDto);
 
-		return "redirect:/librarians/members";
+		return "redirect:/members";
 	}
 
 	@PostMapping("/delete")
 	public String deleteMember(@RequestParam int id) {
 		memberService.deleteMember(id);
 
-		return "redirect:/librarians/members";
+		return "redirect:/members";
 	}
 
 }

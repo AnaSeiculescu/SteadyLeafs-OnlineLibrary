@@ -39,10 +39,12 @@ public class SecurityConfig {
 								.requestMatchers("/memberHome").permitAll()
 								.requestMatchers("/users/**").permitAll()
 								.requestMatchers("/librarians/**").permitAll()
+								.requestMatchers("/members/**").permitAll()
 //						.requestMatchers("/users/create").permitAll()
 								.requestMatchers("/books/**").permitAll()
 //						.requestMatchers("/users/delete").hasRole("ADMIN")
 //						.requestMatchers("/users/update").hasRole("ADMIN")
+								.requestMatchers("/*").permitAll()
 								.anyRequest().authenticated()
 
 				);
