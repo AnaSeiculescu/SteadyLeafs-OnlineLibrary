@@ -24,7 +24,7 @@ public class Member {
 	private String firstName;
 	private String lastName;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	private User user;
 
