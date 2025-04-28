@@ -38,10 +38,10 @@ public class MemberHomeController {
 
 	@GetMapping()
 	public String getMemberHomePage(Model model, Authentication authentication) {
-		User currentUser = userService.getLoggedInUser(authentication);
+//		User currentUser = userService.getLoggedInUser(authentication);
 		Member currentMember = getLoggedInMember(authentication);
 
-		model.addAttribute("currentUser", currentUser);
+//		model.addAttribute("currentUser", currentUser);
 		model.addAttribute("currentMember", currentMember);
 
 		return "members/home";

@@ -2,7 +2,6 @@ package com.onlinelibrary.steadyleafs.controller;
 
 import com.onlinelibrary.steadyleafs.model.Book;
 import com.onlinelibrary.steadyleafs.model.Librarian;
-import com.onlinelibrary.steadyleafs.model.Member;
 import com.onlinelibrary.steadyleafs.model.User;
 import com.onlinelibrary.steadyleafs.model.dto.MemberReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.MemberUpdateDto;
@@ -73,11 +72,11 @@ public class LibrarianHomeController {
 		return "librarians/books/createBookForm";
 	}
 
-	@PostMapping("/books")
+	@PostMapping()
 	public String createBook(Model model, @ModelAttribute Book book) {
 		bookService.createBook(book);
 		model.addAttribute("bookList", bookService.getAllBooks());
-		return "redirect:/librarianHome/books";
+		return "redirect:/librarianHome";
 	}
 
 	@GetMapping("/books/updateForm")
@@ -93,14 +92,14 @@ public class LibrarianHomeController {
 		Book bookToUpdate = bookService.getBookById(id);
 		bookToUpdate = bookService.updateBook(book);
 
-		return "redirect:/librarianHome/books";
+		return "redirect:/librarianHome";
 	}
 
 	@PostMapping("/books/delete")
 	public String deleteBook(@RequestParam int id) {
 		bookService.deleteBook(id);
 
-		return "redirect:/librarianHome/books";
+		return "redirect:/librarianHome";
 	}
 
 	@GetMapping("/members")
@@ -111,25 +110,27 @@ public class LibrarianHomeController {
 		return "librarians/members/memberList";
 	}
 
-	@GetMapping("members/updateForm")
+	@GetMapping("/members/updateForm")
 	public String getUpdateMemberForm(Model model, @RequestParam int id) {
-		Member member = memberService.getMemberById(id);
-		MemberUpdateDto memberUpdateDto = MemberUpdateDto.mapFromMember(member);
-		model.addAttribute("memberUpdateDto", memberUpdateDto);
+		MemberReturnDto memberReturnDto = memberService.getMemberById(id);
+
+//		MemberUpdateDto memberUpdateDto = MemberUpdateDto.mapFromMember(memberReturnDto);
+
+		model.addAttribute("memberUpdateDto", memberReturnDto);
 		model.addAttribute("memberId", id);
 
 		return "librarians/members/updateMemberForm";
 	}
 
-	@PostMapping("members/update")
+	@PostMapping("/members/update")
 	public String updateMember(@ModelAttribute MemberUpdateDto memberUpdateDto, BindingResult bindingResult) {
-		MemberUpdateDto userToUpdate = MemberUpdateDto.mapFromMember(memberService.getMemberById(memberUpdateDto.getId()));
+//		MemberUpdateDto memberToUpdate = MemberUpdateDto.mapFromMember(memberService.getMemberById(memberUpdateDto.getId()));
 		memberService.updateMember(memberUpdateDto);
 
 		return "redirect:/librarianHome/members";
 	}
 
-	@PostMapping("members/delete")
+	@PostMapping("/members/delete")
 	public String deleteMember(@RequestParam int id) {
 		memberService.deleteMember(id);
 

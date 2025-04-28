@@ -15,7 +15,7 @@
         <h4 style="margin: 30px 0; text-align: center;">Update a member</h4>
         <p th:text="'Updating member with id: ' + ${memberId}"/>
 
-        <form action="/members/update" method="post" th:object="${memberUpdateDto}">
+        <form action="/librarianHome/members/update" method="post" th:object="${memberUpdateDto}">
 
             <label for="firstName">Member first name</label><br>
             <input type="text" id="firstName" name="firstName" th:field="*{firstName}" class="form-control bg-dark text-white text-start"><br>
@@ -28,7 +28,7 @@
             <input type="hidden" id="id" name="id" th:value="*{id}"><br>
 
             <div class="d-flex flex-row justify-content-between" style="margin-top: 20px">
-                <button type="button" class="btn btn-secondary" onclick="window.location.href='/librarians/members'"><i
+                <button type="button" class="btn btn-secondary" onclick="window.location.href='/librarianHome/members'"><i
                         class="bi bi-arrow-left" style="margin-right:5px"></i>Back
                 </button>
                 <input type="submit" value="Update" class="btn btn-success">

@@ -37,17 +37,20 @@ public class MemberService {
 		return MemberUpdateDto.mapFromMember(updatedMember);
 	}
 
-	public Member getMemberById(Integer id) {
+	public MemberReturnDto getMemberById(Integer id) {
 		Member member = memberRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("User with id " + id + " does not exists"));
-		return member;
+
+		MemberReturnDto memberReturnDto = new MemberReturnDto();
+		return memberReturnDto.mapFromMember(member);
 	}
 
-	public Member getMemberByUserId(Integer userId) {
+	public MemberReturnDto getMemberByUserId(Integer userId) {
 		Member member = memberRepository.findByUserId(userId)
 				.orElseThrow(() -> new RuntimeException("Member with user id: " + userId + " not found"));
 
-		return member;
+		MemberReturnDto memberReturnDto = new MemberReturnDto();
+		return memberReturnDto.mapFromMember(member);
 	}
 
 	public void deleteMember(Integer id) {

@@ -19,14 +19,14 @@ public class MemberUpdateDto {
 	private int id;
 	private String firstName;
 	private String lastName;
-	private User user;
+	private int userId;
 	private List<Book> borrowedBooks = new ArrayList<>();
 
-	public MemberUpdateDto(int id, String firstName, String lastName, User user) {
+	public MemberUpdateDto(int id, String firstName, String lastName, int userId) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.user = user;
+		this.userId = userId;
 	}
 
 	public Member mapToMember(Member member) {
@@ -36,7 +36,7 @@ public class MemberUpdateDto {
 	}
 
 	public static MemberUpdateDto mapFromMember(Member member) {
-		MemberUpdateDto memberUpdateDto = new MemberUpdateDto(member.getId(), member.getFirstName(), member.getLastName(), member.getUser());
+		MemberUpdateDto memberUpdateDto = new MemberUpdateDto(member.getId(), member.getFirstName(), member.getLastName(), member.getUser().getId());
 		return memberUpdateDto;
 	}
 }
