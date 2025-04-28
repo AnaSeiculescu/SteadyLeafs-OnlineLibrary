@@ -11,54 +11,58 @@
 
 <h2 class="text-center mb-4">Librarian home</h2>-->
 
-<!--<div class="container table.responsive w-50 d-flex flex-column align-items-center">-->
-<!--    <h2 class="text-center mb-4">All Books</h2>-->
-<!--    <table border="1" class="table table-hover table-light shadow p-3 mb-5 rounded" style="text-align:center">-->
+<div class="container table.responsive w-50 d-flex flex-column align-items-center">
+    <h3 class="text-center mb-4">All Books</h3>
+    <table border="1" class="table table-hover table-light shadow p-3 mb-5 rounded" style="text-align:center">
 
-<!--        <tr>-->
-<!--            <th>ID</th>-->
-<!--            <th>Title</th>-->
-<!--            <th>Author</th>-->
-<!--            <th>Status</th>-->
-<!--            <th>Borrowed By</th>-->
-<!--            <th>Update</th>-->
-<!--            <th>Delete</th>-->
-<!--        </tr>-->
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Status</th>
+            <th>Borrowed By</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
 
-<!--        <tbody>-->
-<!--        <tr th:each="book : ${bookList}">-->
-<!--            <td th:text="${book.id}"></td>-->
-<!--            <td th:text="${book.title}"></td>-->
-<!--            <td th:text="${book.author}"></td>-->
-<!--            <td th:text="${book.status}"></td>-->
-<!--            <td th:text="${book.borrowedBy}"></td>-->
-<!--            <td>-->
+        <tbody>
+        <tr th:each="book : ${bookList}">
+            <td th:text="${book.id}"></td>
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.status}"></td>
+            <td th:text="${book.borrowedBy != null ? book.borrowedBy.id : 'Not borrowed'}"></td>
+            <td>
 
-<!--                <form th:action="@{/books/updateForm}" class="d-inline">-->
-<!--                    <input type="hidden" name="id" th:value="${book.id}">-->
-<!--                    <button type="submit" class="btn btn-danger btn-sm">Update</button>-->
-<!--                </form>-->
+                <form th:action="@{/books/updateForm}" class="d-inline">
+                    <input type="hidden" name="id" th:value="${book.id}">
+                    <button type="submit" class="btn btn-danger btn-sm">Update</button>
+                </form>
 
-<!--            </td>-->
-<!--            <td>-->
+            </td>
+            <td>
 
-<!--                <form th:action="@{/books/delete}" method="post" class="d-inline">-->
-<!--                    <input type="hidden" name="id" th:value="${book.id}">-->
-<!--                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this book?');">Delete</button>-->
-<!--                </form>-->
+                <form th:action="@{/books/delete}" method="post" class="d-inline">
+                    <input type="hidden" name="id" th:value="${book.id}">
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this book?');">Delete</button>
+                </form>
 
-<!--            </td>-->
-<!--        </tr>-->
-<!--        </tbody>-->
-<!--    </table>-->
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
-<!--    <br/>-->
+    <br/>
 
-<!--    <form action="/books/create">-->
-<!--        <button type="submit" class="btn btn-dark shadow p-3 mb-3 rounded"><i class="bi bi-person-plus-fill" style="margin-right:8px"></i>Create a book</button>-->
-<!--    </form>-->
+    <form action="/books/create">
+        <button type="submit" class="btn btn-dark shadow p-3 mb-3 rounded"><i class="bi bi-journal-plus" style="margin-right:8px"></i>Create a book</button>
+    </form>
 
-<!--</div>-->
+    <form action="/members">
+        <button type="submit" class="btn btn-dark shadow p-3 mb-3 rounded"><i class="bi bi-person-fill" style="margin-right:8px"></i>Members</button>
+    </form>
+
+</div>
 
 </body>
 </html>

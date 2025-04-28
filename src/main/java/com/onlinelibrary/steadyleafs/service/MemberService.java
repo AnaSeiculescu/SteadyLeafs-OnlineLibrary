@@ -15,8 +15,6 @@ import java.util.List;
 public class MemberService {
 
 	private final MemberRepository memberRepository;
-	private final UserRepository userRepository;
-
 
 	public List<MemberReturnDto> getAllMembers() {
 		List<Member> membersFromDatabase = memberRepository.findAll();
@@ -53,10 +51,6 @@ public class MemberService {
 	}
 
 	public void deleteMember(Integer id) {
-//		Member member = getMemberById(id);
-//		Integer userId = member.getUser().getId();
-//		userRepository.deleteById(userId);
-
 		getMemberById(id);
 		memberRepository.deleteById(id);
 

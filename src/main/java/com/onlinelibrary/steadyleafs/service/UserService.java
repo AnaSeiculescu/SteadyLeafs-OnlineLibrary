@@ -9,6 +9,7 @@ import com.onlinelibrary.steadyleafs.model.dto.UserUpdateDto;
 import com.onlinelibrary.steadyleafs.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -68,6 +69,12 @@ public class UserService {
 	public void deleteUser(Integer id) {
 		getUserById(id);
 		userRepository.deleteById(id);
+	}
+
+	public User getLoggedInUser(Authentication authentication) {
+		MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
+		User currentUser = userDetails.getUser();
+		return currentUser;
 	}
 
 }

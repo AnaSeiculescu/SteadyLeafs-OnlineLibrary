@@ -3,24 +3,16 @@ package com.onlinelibrary.steadyleafs.service;
 import com.onlinelibrary.steadyleafs.model.Book;
 import com.onlinelibrary.steadyleafs.model.Member;
 import com.onlinelibrary.steadyleafs.repository.BookRepository;
-import com.onlinelibrary.steadyleafs.repository.MemberHomeRepository;
 import com.onlinelibrary.steadyleafs.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class MemberHomeService {
 
-//	private final MemberHomeRepository memberHomeRepository;
 	private final MemberRepository memberRepository;
 	private final BookRepository bookRepository;
-
-//	public List<Book> getAllMyBooks() {
-//		return memberHomeRepository.findAll();
-//	}
 
 	public void borrowBook(Book book, Member member) {
 		Book bookToUpdate = bookRepository.findById(book.getId())

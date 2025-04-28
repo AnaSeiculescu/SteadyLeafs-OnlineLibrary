@@ -6,6 +6,7 @@ import com.onlinelibrary.steadyleafs.model.User;
 import com.onlinelibrary.steadyleafs.service.BookService;
 import com.onlinelibrary.steadyleafs.service.MemberHomeService;
 import com.onlinelibrary.steadyleafs.service.MyUserDetails;
+import com.onlinelibrary.steadyleafs.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -20,15 +21,16 @@ import java.util.List;
 public class MemberHomeController {
 	private final BookService bookService;
 	private final MemberHomeService memberHomeService;
+	private final UserService userService;
 
-	private User getLoggedInUser(Authentication authentication) {
-		MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
-		User currentUser = userDetails.getUser();
-		return currentUser;
-	}
+//	private User getLoggedInUser(Authentication authentication) {
+//		MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
+//		User currentUser = userDetails.getUser();
+//		return currentUser;
+//	}
 
 	private Member getLoggedInMember(Authentication authentication) {
-		User currentUser = getLoggedInUser(authentication);
+		User currentUser = userService.getLoggedInUser(authentication);
 		Member member = currentUser.getMember();
 		Member currentMember = memberHomeService.getMemberWithBorrowedBooks(member.getId());
 		return currentMember;
@@ -36,7 +38,7 @@ public class MemberHomeController {
 
 	@GetMapping()
 	public String getMemberHomePage(Model model, Authentication authentication) {
-		User currentUser = getLoggedInUser(authentication);
+		User currentUser = userService.getLoggedInUser(authentication);
 		Member currentMember = getLoggedInMember(authentication);
 
 		model.addAttribute("currentUser", currentUser);
