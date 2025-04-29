@@ -29,11 +29,11 @@ public class MemberUpdateDto {
 		this.userId = userId;
 	}
 
-	public Member mapToMember(Member member) {
-		member.setFirstName(this.firstName);
-		member.setLastName(this.lastName);
-		return member;
-	}
+//	public Member mapToMember(Member member) {
+//		member.setFirstName(this.firstName);
+//		member.setLastName(this.lastName);
+//		return member;
+//	}
 
 	public static MemberUpdateDto mapFromMember(Member member) {
 		MemberUpdateDto memberUpdateDto = new MemberUpdateDto(member.getId(), member.getFirstName(), member.getLastName(), member.getUser().getId());

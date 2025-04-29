@@ -31,10 +31,12 @@ public class MemberService {
 		Member memberToUpdate = memberRepository.findById(memberUpdateDto.getId())
 				.orElseThrow(() -> new RuntimeException("Member with id " + memberUpdateDto.getId() + " does not exists"));
 
-		Member updatedMember = memberUpdateDto.mapToMember(memberToUpdate);
-		memberRepository.save(updatedMember);
+//		Member updatedMember = memberUpdateDto.mapToMember(memberToUpdate);
+		memberRepository.save(memberToUpdate);
 
-		return MemberUpdateDto.mapFromMember(updatedMember);
+		MemberUpdateDto updatedMember = MemberUpdateDto.mapFromMember(memberToUpdate);
+
+		return updatedMember;
 	}
 
 	public MemberReturnDto getMemberById(Integer id) {

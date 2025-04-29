@@ -2,6 +2,7 @@ package com.onlinelibrary.steadyleafs.service;
 
 import com.onlinelibrary.steadyleafs.model.Book;
 import com.onlinelibrary.steadyleafs.model.Member;
+import com.onlinelibrary.steadyleafs.model.dto.SignedInMemberDto;
 import com.onlinelibrary.steadyleafs.repository.BookRepository;
 import com.onlinelibrary.steadyleafs.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,13 +15,15 @@ public class MemberHomeService {
 	private final MemberRepository memberRepository;
 	private final BookRepository bookRepository;
 
-	public void borrowBook(Book book, Member member) {
+	public void borrowBook(Book book, SignedInMemberDto signedInMemberDto) {
 		Book bookToUpdate = bookRepository.findById(book.getId())
 						.orElseThrow(() -> new RuntimeException("Book not found"));
-		bookToUpdate.setBorrowedBy(member);
+
+		bookToUpdate.setBorrowedBy(SignedInMemberDto.mapToMember(signedInMemberDto));
 		bookToUpdate.setStatus("BORROWED");
 
-		member.getBorrowedBooks().add(bookToUpdate);
+		signedInMemberDto.getBorrowedBooks().add(bookToUpdate);
+		Member member = SignedInMemberDto.mapToMember(signedInMemberDto);
 
 		bookRepository.save(bookToUpdate);
 		memberRepository.save(member);
@@ -45,14 +48,13 @@ public class MemberHomeService {
 		bookRepository.save(bookToReturn);
 	}
 
-	public Member getMemberWithBorrowedBooks(int memberId) {
-		return memberRepository.findByIdWithBorrowedBooks(memberId)
+	public SignedInMemberDto getMemberWithBorrowedBooks(int memberId) {
+		Member member = memberRepository.findByIdWithBorrowedBooks(memberId)
 				.orElseThrow(() -> new RuntimeException("Member not found"));
-	}
 
-//	public Member getCurrentMember(int memberId) {
-//		return memberRepository.findById(memberId)
-//				.orElseThrow(() -> new RuntimeException("Member not found"));
-//	}
+		SignedInMemberDto signedInMemberDto = new SignedInMemberDto();
+
+		return signedInMemberDto.mapFromMember(member);
+	}
 
 }
