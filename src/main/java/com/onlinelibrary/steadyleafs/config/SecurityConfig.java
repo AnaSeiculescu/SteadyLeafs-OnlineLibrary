@@ -33,6 +33,13 @@ public class SecurityConfig {
 						.failureHandler(new CustomAuthenticationFailureHandler())
 						.successHandler(customSuccessHandler)
 						.permitAll())
+				.logout(logout -> logout
+						.logoutUrl("/logout")
+						.logoutSuccessUrl("/")
+						.invalidateHttpSession(true)
+						.clearAuthentication(true)
+						.deleteCookies("JSESSIONID")
+				)
 				.authorizeHttpRequests(authorize -> authorize
 								.requestMatchers("/").permitAll()
 								.requestMatchers("/login-member", "/login-librarian").permitAll()

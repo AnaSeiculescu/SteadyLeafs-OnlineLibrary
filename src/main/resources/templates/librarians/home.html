@@ -20,7 +20,7 @@
             <th>Title</th>
             <th>Author</th>
             <th>Status</th>
-            <th>Borrowed By</th>
+            <th>Borrowed By Id</th>
             <th>Update</th>
             <th>Delete</th>
         </tr>
@@ -31,7 +31,7 @@
             <td th:text="${book.title}"></td>
             <td th:text="${book.author}"></td>
             <td th:text="${book.status}"></td>
-            <td th:text="${book.borrowedBy != null ? book.borrowedBy.id : 'Not borrowed'}"></td>
+            <td th:text="${book.borrowedById != null ? book.borrowedById : 'Not borrowed'}"></td>
             <td>
 
                 <form th:action="@{/librarianHome/books/updateForm}" class="d-inline">
@@ -60,6 +60,10 @@
 
     <form action="/librarianHome/members">
         <button type="submit" class="btn btn-dark shadow p-3 mb-3 rounded"><i class="bi bi-person-fill" style="margin-right:8px"></i>Members</button>
+    </form>
+
+    <form th:action="@{/logout}" method="post">
+        <button type="submit" class="btn btn-danger shadow p-3 mb-3 rounded"><i class="bi bi-box-arrow-left" style="margin-right:8px"></i>Logout</button>
     </form>
 
 </div>

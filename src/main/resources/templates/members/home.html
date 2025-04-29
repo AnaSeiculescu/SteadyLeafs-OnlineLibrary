@@ -9,9 +9,52 @@
 </head>
 <body>
 
+<div style="width: 100%; display: flex; justify-content: space-between; align-items: center" class="container table.responsive w-100 d-flex">
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <h4 class="text-center mb-4" style="margin-top:50px">Welcome, <span th:text="${currentMember.firstName + ' ' + currentMember.lastName}"></span></h4>
+            <!--    <h2 class="text-center mb-4" style="margin-top:50px">Welcome, <span sec:authentication="email"></span></h2>-->
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Active</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+        </li>
+    </ul>
+
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Home</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Profile</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Contact</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="disabled-tab" data-bs-toggle="tab" data-bs-target="#disabled-tab-pane" type="button" role="tab" aria-controls="disabled-tab-pane" aria-selected="false" disabled>Disabled</button>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">...</div>
+        <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">...</div>
+        <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">...</div>
+        <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab" tabindex="0">...</div>
+    </div>
+</div>
+
 <div class="container table.responsive w-50 d-flex flex-column align-items-center" sec:authorize="isAuthenticated()">
-    <h2 class="text-center mb-4" style="margin-top:50px">Welcome, <span th:text="${currentMember.firstName + ' ' + currentMember.lastName}"></span></h2>
-<!--    <h2 class="text-center mb-4" style="margin-top:50px">Welcome, <span sec:authentication="email"></span></h2>-->
+<!--    <h2 class="text-center mb-4" style="margin-top:50px">Welcome, <span th:text="${currentMember.firstName + ' ' + currentMember.lastName}"></span></h2>-->
+<!--&lt;!&ndash;    <h2 class="text-center mb-4" style="margin-top:50px">Welcome, <span sec:authentication="email"></span></h2>&ndash;&gt;-->
 
     <h3 class="text-center mb-4" style="margin-top:50px">Your borrowed books</h3>
     <table border="1" class="table table-hover table-light shadow p-3 mb-5 rounded" style="text-align:center">
@@ -53,6 +96,10 @@
     <form action="/memberHome/seeAllBooks">
         <button type="submit" class="btn btn-dark shadow p-3 mb-3 rounded"><i class="bi bi-person-plus-fill" style="margin-right:8px"></i>View all books
         </button>
+    </form>
+
+    <form th:action="@{/logout}" method="post">
+        <button type="submit" class="btn btn-danger shadow p-3 mb-3 rounded"><i class="bi bi-box-arrow-left" style="margin-right:8px"></i>Logout</button>
     </form>
 
 </div>
