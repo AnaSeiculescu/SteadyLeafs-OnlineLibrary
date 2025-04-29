@@ -2,6 +2,8 @@ package com.onlinelibrary.steadyleafs.service;
 
 import com.onlinelibrary.steadyleafs.model.Book;
 import com.onlinelibrary.steadyleafs.model.User;
+import com.onlinelibrary.steadyleafs.model.dto.BookReturnDto;
+import com.onlinelibrary.steadyleafs.model.dto.BookUpdateDto;
 import com.onlinelibrary.steadyleafs.repository.BookRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,8 +15,11 @@ import java.util.List;
 public class BookService {
 	private final BookRepository bookRepository;
 
-	public List<Book> getAllBooks() {
-		return bookRepository.findAll();
+	public List<BookReturnDto> getAllBooks() {
+		List<Book> booksFromDatabase =  bookRepository.findAll();
+		return booksFromDatabase.stream()
+				.map(book -> new BookReturnDto().mapFromBook(book))
+				.toList();
 	}
 
 	public List<Book> getAvailableBooks() {
@@ -29,17 +34,19 @@ public class BookService {
 		bookRepository.save(book);
 	}
 
-	public Book updateBook(Book book) {
-		Book bookToUpdate = bookRepository.findById(book.getId())
-				.orElseThrow(() -> new RuntimeException("Book with id " + book.getId() + " does not exists"));
+	public BookUpdateDto updateBook(BookUpdateDto bookUpdateDto) {
+		Book bookFromDatabase = bookRepository.findById(bookUpdateDto.getId())
+				.orElseThrow(() -> new RuntimeException("Book with id " + bookUpdateDto.getId() + " does not exists"));
 
-		return bookRepository.save(bookToUpdate.mapToUpdate(book));
+		bookRepository.save(bookUpdateDto.mapToBook(bookFromDatabase));
+
+		return BookUpdateDto.mapFromBook(bookFromDatabase);
 	}
 
-	public Book getBookById(Integer id) {
+	public BookReturnDto getBookById(Integer id) {
 		Book book = bookRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Book with id " + id + " does not exists"));
-		return book;
+		return new BookReturnDto().mapFromBook(book);
 	}
 
 	public void deleteBook(Integer id) {

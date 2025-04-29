@@ -3,6 +3,7 @@ package com.onlinelibrary.steadyleafs.controller;
 import com.onlinelibrary.steadyleafs.model.Book;
 import com.onlinelibrary.steadyleafs.model.Member;
 import com.onlinelibrary.steadyleafs.model.User;
+import com.onlinelibrary.steadyleafs.model.dto.BookReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.SignedInMemberDto;
 import com.onlinelibrary.steadyleafs.service.BookService;
 import com.onlinelibrary.steadyleafs.service.MemberHomeService;
@@ -42,7 +43,7 @@ public class MemberHomeController {
 
 	@GetMapping("/seeAllBooks")
 	public String getAllBooks(Model model) {
-		List<Book> bookList = bookService.getAllBooks();
+		List<BookReturnDto> bookList = bookService.getAllBooks();
 		model.addAttribute("bookList", bookList);
 
 		return "members/books/allBooksForMembers";

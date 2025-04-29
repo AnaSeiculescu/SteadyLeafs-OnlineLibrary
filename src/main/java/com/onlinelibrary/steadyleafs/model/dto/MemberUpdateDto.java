@@ -22,21 +22,25 @@ public class MemberUpdateDto {
 	private int userId;
 	private List<Book> borrowedBooks = new ArrayList<>();
 
-	public MemberUpdateDto(int id, String firstName, String lastName, int userId) {
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.userId = userId;
+//	public MemberUpdateDto(String firstName, String lastName) {
+//		this.firstName = firstName;
+//		this.lastName = lastName;
+//	}
+
+	public Member mapToMember(Member oldMember) {
+		oldMember.setFirstName(this.firstName);
+		oldMember.setLastName(this.lastName);
+
+		return oldMember;
 	}
 
-//	public Member mapToMember(Member member) {
-//		member.setFirstName(this.firstName);
-//		member.setLastName(this.lastName);
-//		return member;
+//	public static MemberUpdateDto mapFromMember(Member member) {
+//		MemberUpdateDto memberUpdateDto = new MemberUpdateDto(member.getId(), member.getFirstName(), member.getLastName(), member.getUser().getId());
+//		return memberUpdateDto;
 //	}
 
 	public static MemberUpdateDto mapFromMember(Member member) {
-		MemberUpdateDto memberUpdateDto = new MemberUpdateDto(member.getId(), member.getFirstName(), member.getLastName(), member.getUser().getId());
+		MemberUpdateDto memberUpdateDto = new MemberUpdateDto(member.getId(), member.getFirstName(), member.getLastName(), member.getUser().getId(), member.getBorrowedBooks());
 		return memberUpdateDto;
 	}
 }

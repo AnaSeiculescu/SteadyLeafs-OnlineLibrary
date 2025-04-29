@@ -3,8 +3,7 @@ package com.onlinelibrary.steadyleafs.controller;
 import com.onlinelibrary.steadyleafs.model.Book;
 import com.onlinelibrary.steadyleafs.model.Librarian;
 import com.onlinelibrary.steadyleafs.model.User;
-import com.onlinelibrary.steadyleafs.model.dto.MemberReturnDto;
-import com.onlinelibrary.steadyleafs.model.dto.MemberUpdateDto;
+import com.onlinelibrary.steadyleafs.model.dto.*;
 import com.onlinelibrary.steadyleafs.service.BookService;
 import com.onlinelibrary.steadyleafs.service.MemberService;
 import com.onlinelibrary.steadyleafs.service.UserService;
@@ -36,7 +35,7 @@ public class LibrarianHomeController {
 		User currentUser = userService.getLoggedInUser(authentication);
 		Librarian currentLibrarian = getLoggedInLibrarian(authentication);
 
-		List<Book> bookList = bookService.getAllBooks();
+		List<BookReturnDto> bookList = bookService.getAllBooks();
 		model.addAttribute("bookList", bookList);
 
 		model.addAttribute("currentUser", currentUser);
@@ -68,30 +67,28 @@ public class LibrarianHomeController {
 
 	@GetMapping("/books/create")
 	public String getCreateBookForm(Model model) {
-		model.addAttribute("book", new Book());
+		model.addAttribute("book", new BookCreateDto());
 		return "librarians/books/createBookForm";
 	}
 
 	@PostMapping()
-	public String createBook(Model model, @ModelAttribute Book book) {
-		bookService.createBook(book);
+	public String createBook(Model model, @ModelAttribute BookCreateDto bookCreateDto) {
+		bookService.createBook(bookCreateDto.mapToBook(bookCreateDto));
 		model.addAttribute("bookList", bookService.getAllBooks());
 		return "redirect:/librarianHome";
 	}
 
 	@GetMapping("/books/updateForm")
 	public String getUpdateBookForm(Model model, @RequestParam int id) {
-		Book book = bookService.getBookById(id);
+		BookReturnDto book = bookService.getBookById(id);
 		model.addAttribute("book", book);
 		model.addAttribute("userId", id);
 		return "librarians/books/updateBookForm";
 	}
 
 	@PostMapping("/books/update")
-	public String updateBook(@RequestParam int id, @ModelAttribute Book book) {
-		Book bookToUpdate = bookService.getBookById(id);
-		bookToUpdate = bookService.updateBook(book);
-
+	public String updateBook(@RequestParam int id, @ModelAttribute BookUpdateDto bookUpdateDto) {
+		bookService.updateBook(bookUpdateDto);
 		return "redirect:/librarianHome";
 	}
 
@@ -114,8 +111,6 @@ public class LibrarianHomeController {
 	public String getUpdateMemberForm(Model model, @RequestParam int id) {
 		MemberReturnDto memberReturnDto = memberService.getMemberById(id);
 
-//		MemberUpdateDto memberUpdateDto = MemberUpdateDto.mapFromMember(memberReturnDto);
-
 		model.addAttribute("memberUpdateDto", memberReturnDto);
 		model.addAttribute("memberId", id);
 
@@ -124,9 +119,7 @@ public class LibrarianHomeController {
 
 	@PostMapping("/members/update")
 	public String updateMember(@ModelAttribute MemberUpdateDto memberUpdateDto, BindingResult bindingResult) {
-//		MemberUpdateDto memberToUpdate = MemberUpdateDto.mapFromMember(memberService.getMemberById(memberUpdateDto.getId()));
 		memberService.updateMember(memberUpdateDto);
-
 		return "redirect:/librarianHome/members";
 	}
 

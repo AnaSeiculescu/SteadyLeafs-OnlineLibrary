@@ -28,13 +28,13 @@ public class MemberService {
 	}
 
 	public MemberUpdateDto updateMember(MemberUpdateDto memberUpdateDto) {
-		Member memberToUpdate = memberRepository.findById(memberUpdateDto.getId())
+		Member memberFromDatabase = memberRepository.findById(memberUpdateDto.getId())
 				.orElseThrow(() -> new RuntimeException("Member with id " + memberUpdateDto.getId() + " does not exists"));
 
-//		Member updatedMember = memberUpdateDto.mapToMember(memberToUpdate);
-		memberRepository.save(memberToUpdate);
 
-		MemberUpdateDto updatedMember = MemberUpdateDto.mapFromMember(memberToUpdate);
+		memberRepository.save(memberUpdateDto.mapToMember(memberFromDatabase));
+
+		MemberUpdateDto updatedMember = MemberUpdateDto.mapFromMember(memberFromDatabase);
 
 		return updatedMember;
 	}

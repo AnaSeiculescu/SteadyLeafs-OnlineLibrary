@@ -19,7 +19,7 @@ public class MemberReturnDto {
 	private int id;
 	private String firstName;
 	private String lastName;
-	private int userId;
+	private Integer userId;
 	private List<Book> borrowedBooks;
 
 	public MemberReturnDto mapFromMember(Member member) {
