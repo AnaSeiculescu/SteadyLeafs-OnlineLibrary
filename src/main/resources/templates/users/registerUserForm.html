@@ -16,25 +16,25 @@
 
     <h4 style="margin: 30px 0; text-align: center;">Register as a new member</h4>
 
-    <form action="/users" method="post" th:object="${registrationDto}">
+    <form th:action="@{/users}" method="post" th:object="${registrationDto}">
 <!--      <label for="id">User id</label><br>-->
 <!--      <input type="text" id="id" th:field="*{id}" class="form-control bg-dark text-white text-start"><br>-->
 
       <label for="email">Email</label><br>
       <input type="text" id="email" th:field="*{email}" class="form-control bg-dark text-white text-start"><br>
-<!--      <p th:if="${#fields.hasErrors('email')}" style="color:red"> Invalid email</p>-->
+      <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"> Invalid email</p>
 
       <label for="password">Password</label><br>
       <input type="password" id="password" th:field="*{password}" class="form-control bg-dark text-white text-start"><br>
-<!--      <p th:if="${#fields.hasErrors('firstName')}" style="color:red"> Invalid first name</p>-->
+      <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color:red"> Invalid password</p>
 
         <label for="firstname">First name</label><br>
         <input type="text" id="firstname" th:field="*{firstName}" class="form-control bg-dark text-white text-start"><br>
-        <!--      <p th:if="${#fields.hasErrors('lastName')}" style="color:red"> Invalid last name</p>-->
+              <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" style="color:red"> Invalid first name</p>
 
       <label for="lastname">Last name</label><br>
       <input type="text" id="lastname" th:field="*{lastName}" class="form-control bg-dark text-white text-start"><br>
-      <!--      <p th:if="${#fields.hasErrors('lastName')}" style="color:red"> Invalid last name</p>-->
+            <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" style="color:red"> Invalid last name</p>
 
       <div class="d-flex flex-row justify-content-between" style="margin-top:20px">
         <button type="button" class="btn btn-secondary" onclick="window.location.href='/'"><i class="bi bi-arrow-left" style="margin-right:5px"></i>Back</button>
