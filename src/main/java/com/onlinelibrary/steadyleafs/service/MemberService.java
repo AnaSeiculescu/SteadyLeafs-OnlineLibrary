@@ -16,6 +16,9 @@ public class MemberService {
 
 	private final MemberRepository memberRepository;
 
+//	@PersistenceContext
+//	private EntityManager entityManager;
+
 	public List<MemberReturnDto> getAllMembers() {
 		List<Member> membersFromDatabase = memberRepository.findAll();
 		return membersFromDatabase.stream()
@@ -24,6 +27,7 @@ public class MemberService {
 	}
 
 	public void createMember(Member member) {
+//		entityManager.clear();
 		memberRepository.save(member);
 	}
 

@@ -37,14 +37,19 @@ public class MemberHomeController {
 		SignedInMemberDto currentMember = getLoggedInMember(authentication);
 
 		model.addAttribute("currentMember", currentMember);
+		model.addAttribute("activePage", "home");
 
 		return "members/home";
 	}
 
 	@GetMapping("/seeAllBooks")
-	public String getAllBooks(Model model) {
+	public String getAllBooks(Model model, Authentication authentication) {
+		SignedInMemberDto currentMember = getLoggedInMember(authentication);
 		List<BookReturnDto> bookList = bookService.getAllBooks();
+
+		model.addAttribute("currentMember", currentMember);
 		model.addAttribute("bookList", bookList);
+		model.addAttribute("activePage", "allBooks");
 
 		return "members/books/allBooksForMembers";
 	}

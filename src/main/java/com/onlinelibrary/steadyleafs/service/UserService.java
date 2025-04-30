@@ -22,7 +22,6 @@ public class UserService {
 	private final UserRepository userRepository;
 	private final MemberService memberService;
 	private final LibrarianService librarianService;
-	private final LibrarianRepository librarianRepository;
 
 	@Autowired
 	SecurityConfig securityConfig;
@@ -36,8 +35,12 @@ public class UserService {
 	}
 
 	public void createUser(RegistrationDto registrationDto) {
-		userRepository.save(registrationDto.mapToUser(securityConfig.delegatingPasswordEncoder()));
-		memberService.createMember(registrationDto.mapToMember());
+		User user = userRepository.save(registrationDto.mapToUser(securityConfig.delegatingPasswordEncoder()));
+		userRepository.save(user);
+
+		Member member = registrationDto.mapToMember();
+		member.setUser(user);
+		memberService.createMember(member);
 	}
 
 	public User getUserById(Integer id) {

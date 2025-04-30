@@ -31,10 +31,8 @@ public class RegistrationDto {
 	@NotBlank(message = "Last name is required")
 	private String lastName;
 
-	private User user = new User();
-	private Member member = new Member();
-
 	public User mapToUser(PasswordEncoder passwordEncoder) {
+		User user = new User();
 		user.setEmail(this.email);
 		user.setPassword(passwordEncoder.encode(this.password));
 		user.setRole("ROLE_MEMBER");
@@ -42,9 +40,10 @@ public class RegistrationDto {
 	}
 
 	public Member mapToMember() {
+		Member member = new Member();
 		member.setFirstName(this.firstName);
 		member.setLastName(this.lastName);
-		member.setUser(this.user);
+//		member.setUser(this.user);
 		member.setBorrowedBooks(new ArrayList<>());
 		return member;
 	}

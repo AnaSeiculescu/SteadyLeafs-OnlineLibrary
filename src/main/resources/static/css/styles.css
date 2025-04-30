@@ -1,0 +1,28 @@
+/*.background-image {
+  background-image: url('../images/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.5;
+}*/
+
+.background-image {
+  position: relative;
+  z-index: 1; /* ensure it's above background */
+}
+
+.background-image::before {
+  content: "";
+  position: absolute;
+   height: 100vh;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: url('../images/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.4; /* adjust this value as needed */
+  z-index: -1; /* place it behind content */
+}
