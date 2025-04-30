@@ -25,9 +25,9 @@ public class Librarian {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	public Librarian mapFromMember(Member member) {
+	public static Librarian mapFromMember(Member member) {
 		Librarian librarian = new Librarian();
-		librarian.setId(this.id);
+//		librarian.setId(this.id);
 		librarian.setFirstName(member.getFirstName());
 		librarian.setLastName(member.getLastName());
 		librarian.setUser(member.getUser());

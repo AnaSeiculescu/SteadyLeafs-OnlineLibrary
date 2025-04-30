@@ -21,6 +21,7 @@ public class UserUpdateDto {
 		return user;
 	}
 
+
 	public static UserUpdateDto mapFromUser(User user) {
 		UserUpdateDto userUpdateDto = new UserUpdateDto(user.getId(), user.getEmail(), user.getRole());
 		return userUpdateDto;

@@ -1,11 +1,13 @@
 package com.onlinelibrary.steadyleafs.service;
 
 import com.onlinelibrary.steadyleafs.config.SecurityConfig;
+import com.onlinelibrary.steadyleafs.model.Librarian;
 import com.onlinelibrary.steadyleafs.model.Member;
 import com.onlinelibrary.steadyleafs.model.User;
 import com.onlinelibrary.steadyleafs.model.dto.RegistrationDto;
 import com.onlinelibrary.steadyleafs.model.dto.UserReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.UserUpdateDto;
+import com.onlinelibrary.steadyleafs.repository.LibrarianRepository;
 import com.onlinelibrary.steadyleafs.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ public class UserService {
 	private final UserRepository userRepository;
 	private final MemberService memberService;
 	private final LibrarianService librarianService;
+	private final LibrarianRepository librarianRepository;
 
 	@Autowired
 	SecurityConfig securityConfig;
@@ -44,14 +47,15 @@ public class UserService {
 	}
 
 	public UserUpdateDto updateUser(UserUpdateDto userUpdateDto) {
-		User userToUpdate = userRepository.findById(userUpdateDto.getId())
+		User userFromDatabase = userRepository.findById(userUpdateDto.getId())
 				.orElseThrow(() -> new RuntimeException("User with id " + userUpdateDto.getId() + " does not exists"));
 
-		if (userUpdateDto.getRole().equals("LIBRARIAN")) {
-			convertMemberToLibrarian(userToUpdate);
+		User updatedUser = userUpdateDto.mapToUser(userFromDatabase);
+
+		if (userUpdateDto.getRole().equals("ROLE_LIBRARIAN")) {
+			convertMemberToLibrarian(userFromDatabase);
 		}
 
-		User updatedUser = userUpdateDto.mapToUser(userToUpdate);
 		userRepository.save(updatedUser);
 
 		return UserUpdateDto.mapFromUser(updatedUser);
@@ -59,10 +63,20 @@ public class UserService {
 
 	public void convertMemberToLibrarian(User user) {
 		Member member = user.getMember();
+
+		if (member == null) {
+			throw new IllegalStateException("Member not found. User is not a member.");
+		}
+
 		user.setMember(null);
+		member.setUser(null);
 		userRepository.save(user);
 
-		librarianService.createLibrarian(member);
+		Librarian librarian = librarianService.createLibrarian(member);
+		librarian.setUser(user);
+		user.setLibrarian(librarian);
+		userRepository.save(user);
+
 		memberService.deleteMember(member.getId());
 	}
 

@@ -2,7 +2,6 @@ package com.onlinelibrary.steadyleafs.model.dto;
 
 import com.onlinelibrary.steadyleafs.model.Book;
 import com.onlinelibrary.steadyleafs.model.Member;
-import com.onlinelibrary.steadyleafs.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

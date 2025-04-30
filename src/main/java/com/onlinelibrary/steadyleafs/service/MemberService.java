@@ -56,9 +56,9 @@ public class MemberService {
 	}
 
 	public void deleteMember(Integer id) {
-		getMemberById(id);
-		memberRepository.deleteById(id);
-
+		Member member = memberRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException("User with id " + id + " does not exists"));
+		memberRepository.deleteById(member.getId());
 	}
 
 }

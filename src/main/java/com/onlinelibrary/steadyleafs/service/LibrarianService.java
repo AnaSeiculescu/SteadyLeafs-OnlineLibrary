@@ -26,11 +26,13 @@ public class LibrarianService {
 //				.toList();
 	}
 
-	public void createLibrarian(Member member) {
+	public Librarian createLibrarian(Member member) {
 
-		Librarian librarian = new Librarian().mapFromMember(member);
+		Librarian librarian = Librarian.mapFromMember(member);
 
 		librarianRepository.save(librarian);
+
+		return librarian;
 //		memberRepository.save(registrationDto.mapToMember());
 
 	}
