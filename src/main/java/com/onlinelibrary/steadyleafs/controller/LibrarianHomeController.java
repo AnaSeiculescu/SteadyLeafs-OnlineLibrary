@@ -32,14 +32,15 @@ public class LibrarianHomeController {
 
 	@GetMapping()
 	public String getLibrarianHomePage(Model model, Authentication authentication) {
-		User currentUser = userService.getLoggedInUser(authentication);
+//		User currentUser = userService.getLoggedInUser(authentication);
 		Librarian currentLibrarian = getLoggedInLibrarian(authentication);
 
 		List<BookReturnDto> bookList = bookService.getAllBooks();
 		model.addAttribute("bookList", bookList);
 
-		model.addAttribute("currentUser", currentUser);
+//		model.addAttribute("currentUser", currentUser);
 		model.addAttribute("currentLibrarian", currentLibrarian);
+		model.addAttribute("activePage", "home");
 
 		return "librarians/home";
 	}
@@ -66,8 +67,12 @@ public class LibrarianHomeController {
 	}
 
 	@GetMapping("/books/create")
-	public String getCreateBookForm(Model model) {
+	public String getCreateBookForm(Model model, Authentication authentication) {
+		Librarian currentLibrarian = getLoggedInLibrarian(authentication);
+
+		model.addAttribute("currentLibrarian", currentLibrarian);
 		model.addAttribute("book", new BookCreateDto());
+		model.addAttribute("activePage", "createBook");
 		return "librarians/books/createBookForm";
 	}
 
@@ -79,8 +84,12 @@ public class LibrarianHomeController {
 	}
 
 	@GetMapping("/books/updateForm")
-	public String getUpdateBookForm(Model model, @RequestParam int id) {
+	public String getUpdateBookForm(Model model, @RequestParam int id, Authentication authentication) {
+		Librarian currentLibrarian = getLoggedInLibrarian(authentication);
+
 		BookReturnDto book = bookService.getBookById(id);
+
+		model.addAttribute("currentLibrarian", currentLibrarian);
 		model.addAttribute("book", book);
 		model.addAttribute("userId", id);
 		return "librarians/books/updateBookForm";
@@ -100,17 +109,25 @@ public class LibrarianHomeController {
 	}
 
 	@GetMapping("/members")
-	public String getAllMembers(Model model) {
+	public String getAllMembers(Model model, Authentication authentication) {
+		Librarian currentLibrarian = getLoggedInLibrarian(authentication);
+
 		List<MemberReturnDto> memberList = memberService.getAllMembers();
+
+		model.addAttribute("currentLibrarian", currentLibrarian);
 		model.addAttribute("memberList", memberList);
+		model.addAttribute("activePage", "allMembers");
 
 		return "librarians/members/memberList";
 	}
 
 	@GetMapping("/members/updateForm")
-	public String getUpdateMemberForm(Model model, @RequestParam int id) {
+	public String getUpdateMemberForm(Model model, @RequestParam int id, Authentication authentication) {
+		Librarian currentLibrarian = getLoggedInLibrarian(authentication);
+
 		MemberReturnDto memberReturnDto = memberService.getMemberById(id);
 
+		model.addAttribute("currentLibrarian", currentLibrarian);
 		model.addAttribute("memberUpdateDto", memberReturnDto);
 		model.addAttribute("memberId", id);
 
@@ -131,10 +148,13 @@ public class LibrarianHomeController {
 	}
 
 	@GetMapping("/members/borrowedBooks")
-	public String getBorrowedBooksByMember(Model model, @RequestParam Integer id) {
+	public String getBorrowedBooksByMember(Model model, @RequestParam Integer id, Authentication authentication) {
+		Librarian currentLibrarian = getLoggedInLibrarian(authentication);
+
 		MemberReturnDto member = memberService.getMemberById(id);
 		List<Book> borrowedBooks = bookService.getBooksByBorrowedBy(id);
 
+		model.addAttribute("currentLibrarian", currentLibrarian);
 		model.addAttribute("member", member);
 		model.addAttribute("borrowedBooks", borrowedBooks);
 

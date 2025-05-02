@@ -10,28 +10,31 @@
 </head>
 <body>
 
-<!--<div style="background-color: white; border-bottom: 2px solid black; width: 100%; display: flex; justify-content: space-between; align-items: center" class="container-fluid d-flex justify-content-between align-items-center fixed-top" >-->
+<div style="background-color: white; border-bottom: 2px solid black; width: 100%; display: flex; justify-content: space-between; align-items: center" class="container-fluid d-flex justify-content-between align-items-center fixed-top" >
 
-<!--    <div class="d-flex justify-content-between align-items-center mb-0 py-1" style="margin-left: 20px">-->
-<!--        <h5 class="text-center mb-0 mb-0 py-1">Welcome, <span th:text="${currentMember.firstName + ' ' + currentMember.lastName}"></span></h5>-->
-<!--    </div>-->
+    <div class="d-flex justify-content-between align-items-center mb-0 py-1" style="margin-left: 20px">
+        <h5 class="text-center mb-0 py-1">Welcome, <span th:text="${currentLibrarian.firstName + ' ' + currentLibrarian.lastName}"></span></h5>
+    </div>
 
-<!--    <ul class="nav nav-tabs mb-0 py-1" style="margin-right: 20px">-->
-<!--        <li class="nav-item">-->
-<!--            <a class="nav-link" th:classappend="${activePage == 'home'} ? ' active'"-->
-<!--               th:href="@{/memberHome}"><i class="bi bi-house-fill" style="margin-right:8px"></i>Home</a>-->
-<!--        </li>-->
-<!--        <li class="nav-item">-->
-<!--            <a class="nav-link" th:classappend="${activePage == 'allBooks'} ? ' active'"-->
-<!--               th:href="@{/memberHome/seeAllBooks}"><i class="bi bi-book" style="margin-right:8px"></i>Books</a>-->
-<!--        </li>-->
+    <ul class="nav nav-tabs mb-0 py-1" style="margin-right: 20px">
+        <li class="nav-item">
+            <a class="nav-link" th:classappend="${activePage == 'home'} ? ' active'"
+               th:href="@{/librarianHome}"><i class="bi bi-house-fill" style="margin-right:8px"></i>Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:classappend="${activePage == 'createBook'} ? ' active'"
+               th:href="@{/librarianHome/books/create}"><i class="bi bi-bookmark-plus" style="margin-right:8px"></i>Create book</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:classappend="${activePage == 'allMembers'} ? ' active'"
+               th:href="@{/librarianHome/members}"><i class="bi bi-person-fill" style="margin-right:8px"></i>Members</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/logout}"><i class="bi bi-box-arrow-left" style="margin-right:8px; margin-left: 15px"></i>Logout</a>
+        </li>
+    </ul>
 
-<!--        <li class="nav-item">-->
-<!--            <a class="nav-link" th:href="@{/logout}"><i class="bi bi-box-arrow-left" style="margin-right:8px; margin-left: 15px"></i>Logout</a>-->
-<!--        </li>-->
-<!--    </ul>-->
-
-<!--</div>-->
+</div>
 
 <div class="container-fluid d-flex align-items-center pt-5 background-image">
 
