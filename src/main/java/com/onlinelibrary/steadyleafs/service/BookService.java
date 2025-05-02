@@ -53,4 +53,9 @@ public class BookService {
 		getBookById(id);
 		bookRepository.deleteById(id);
 	}
+
+	public List<Book> getBooksByBorrowedBy(Integer memberId) {
+		List<Book> borrowedBooks = bookRepository.findByBorrowedBy_Id(memberId);
+		return borrowedBooks;
+	}
 }

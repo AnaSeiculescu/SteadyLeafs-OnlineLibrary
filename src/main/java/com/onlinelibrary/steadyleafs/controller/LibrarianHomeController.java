@@ -129,4 +129,15 @@ public class LibrarianHomeController {
 
 		return "redirect:/librarianHome/members";
 	}
+
+	@GetMapping("/members/borrowedBooks")
+	public String getBorrowedBooksByMember(Model model, @RequestParam Integer id) {
+		MemberReturnDto member = memberService.getMemberById(id);
+		List<Book> borrowedBooks = bookService.getBooksByBorrowedBy(id);
+
+		model.addAttribute("member", member);
+		model.addAttribute("borrowedBooks", borrowedBooks);
+
+		return "librarians/members/borrowedBooks";
+	}
 }

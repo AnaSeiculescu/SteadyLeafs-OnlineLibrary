@@ -4,7 +4,6 @@ import com.onlinelibrary.steadyleafs.model.Member;
 import com.onlinelibrary.steadyleafs.model.dto.MemberReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.MemberUpdateDto;
 import com.onlinelibrary.steadyleafs.repository.MemberRepository;
-import com.onlinelibrary.steadyleafs.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +14,6 @@ import java.util.List;
 public class MemberService {
 
 	private final MemberRepository memberRepository;
-
-//	@PersistenceContext
-//	private EntityManager entityManager;
 
 	public List<MemberReturnDto> getAllMembers() {
 		List<Member> membersFromDatabase = memberRepository.findAll();

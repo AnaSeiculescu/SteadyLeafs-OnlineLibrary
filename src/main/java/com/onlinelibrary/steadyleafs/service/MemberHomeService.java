@@ -22,15 +22,10 @@ public class MemberHomeService {
 		Member member = memberRepository.findById(signedInMemberDto.getId())
 				.orElseThrow(() -> new RuntimeException("Signed in member not found."));
 
-//		bookToUpdate.setBorrowedBy(SignedInMemberDto.mapToMember(signedInMemberDto));
-//		bookToUpdate.setBorrowedBy(signedInMemberDto.mapFromMember(bookToUpdate.getBorrowedBy()));
-
 		bookToUpdate.setBorrowedBy(member);
 		bookToUpdate.setStatus("BORROWED");
 
 		signedInMemberDto.getBorrowedBooks().add(bookToUpdate);
-//		Member member = SignedInMemberDto.mapToMember(signedInMemberDto);
-
 
 		bookRepository.save(bookToUpdate);
 		memberRepository.save(member);
