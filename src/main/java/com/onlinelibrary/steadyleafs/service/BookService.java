@@ -22,12 +22,16 @@ public class BookService {
 				.toList();
 	}
 
-	public List<Book> getAvailableBooks() {
-		return bookRepository.findByBorrowedByIsNull();
+	public List<BookReturnDto> getAvailableBooks() {
+		return bookRepository.findByBorrowedByIsNull().stream()
+				.map(book -> new BookReturnDto().mapFromBook(book))
+				.toList();
 	}
 
-	public List<Book> getLoanedBooks() {
-		return bookRepository.findByBorrowedByIsNotNull();
+	public List<BookReturnDto> getLoanedBooks() {
+		return bookRepository.findByBorrowedByIsNotNull().stream()
+				.map(book -> new BookReturnDto().mapFromBook(book))
+				.toList();
 	}
 
 	public void createBook(Book book) {

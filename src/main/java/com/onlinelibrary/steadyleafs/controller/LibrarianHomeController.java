@@ -31,13 +31,30 @@ public class LibrarianHomeController {
 	}
 
 	@GetMapping()
-	public String getLibrarianHomePage(Model model, Authentication authentication) {
+	public String getLibrarianHomePage(
+			Model model,
+			Authentication authentication,
+			@RequestParam(required = false, defaultValue = "all") String filter
+	) {
 //		User currentUser = userService.getLoggedInUser(authentication);
 		Librarian currentLibrarian = getLoggedInLibrarian(authentication);
 
 		List<BookReturnDto> bookList = bookService.getAllBooks();
-		model.addAttribute("bookList", bookList);
 
+		List<BookReturnDto> bookReturnDtoList;
+		switch (filter) {
+			case "loaned":
+				bookList = bookService.getLoanedBooks();
+				break;
+			case "available" :
+				bookList = bookService.getAvailableBooks();
+				break;
+			default:
+				bookList = bookService.getAllBooks();
+		}
+
+		model.addAttribute("bookList", bookList);
+		model.addAttribute("filter", filter);
 //		model.addAttribute("currentUser", currentUser);
 		model.addAttribute("currentLibrarian", currentLibrarian);
 		model.addAttribute("activePage", "home");
@@ -52,19 +69,19 @@ public class LibrarianHomeController {
 //		return "librarians/books/allBooks";
 //	}
 
-	@GetMapping("/books/available")
-	public String getAvailableBooks(Model model) {
-		List<Book> bookList = bookService.getAvailableBooks();
-		model.addAttribute("availableBookList", bookList);
-		return "librarians/books/availableBooks";
-	}
+//	@GetMapping("/books/available")
+//	public String getAvailableBooks(Model model) {
+//		List<Book> bookList = bookService.getAvailableBooks();
+//		model.addAttribute("availableBookList", bookList);
+//		return "librarians/books/availableBooks";
+//	}
 
-	@GetMapping("/books/loaned")
-	public String getLoanedBooks(Model model) {
-		List<Book> bookList = bookService.getLoanedBooks();
-		model.addAttribute("loanedBookList", bookList);
-		return "librarians/books/loanedBooks";
-	}
+//	@GetMapping("/books/loaned")
+//	public String getLoanedBooks(Model model) {
+//		List<Book> bookList = bookService.getLoanedBooks();
+//		model.addAttribute("loanedBookList", bookList);
+//		return "librarians/books/loanedBooks";
+//	}
 
 	@GetMapping("/books/create")
 	public String getCreateBookForm(Model model, Authentication authentication) {

@@ -38,8 +38,28 @@
 
 <div class="container-fluid d-flex align-items-center pt-5 background-image">
 
-    <div class="container table.responsive w-50 d-flex flex-column align-items-center">
-        <h3 class="text-center p-5">All Books</h3>
+    <div class="container table.responsive w-50 d-flex flex-column align-items-center mt-5">
+<!--        <h3 class="text-center p-5">All Books</h3>-->
+
+        <div class="container-fluid d-flex justify-content-start align-items-center" >
+
+            <ul class="nav nav-tabs mb-0 py-1" style="margin-right: 20px">
+                <li class="nav-item small">
+                    <a class="nav-link text-secondary" th:classappend="${filter == 'all' ? ' active' : ''}"
+                       th:href="@{/librarianHome(filter='all')}">All books</a>
+                </li>
+                <li class="nav-item small">
+                    <a class="nav-link text-secondary" th:classappend="${filter == 'loaned' ? ' active' : ''}"
+                       th:href="@{/librarianHome(filter='loaned')}">Loaned books</a>
+                </li>
+                <li class="nav-item small">
+                    <a class="nav-link text-secondary" th:classappend="${filter == 'available' ? ' active' : ''}"
+                       th:href="@{/librarianHome(filter='available')}">Available books</a>
+                </li>
+            </ul>
+
+        </div>
+
         <table border="1" class="table table-hover table-light shadow p-3 mb-5 rounded" style="text-align:center">
 
             <tr>
