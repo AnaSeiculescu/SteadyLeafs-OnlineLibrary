@@ -27,7 +27,15 @@
 <!--                  <p th:if="${#fields.hasErrors('password')}" style="color:red"> Invalid password</p>-->
 
             <input type="hidden" name="intendedRole" value="MEMBER" />
-            <p th:if="${param.error}" style="color:red">Invalid email or password</p>
+<!--            <p th:if="${param.error}" style="color:red">Invalid email or password</p>-->
+            <div th:if="${param.error}">
+                <div class="alert alert-danger">
+                    <p th:if="${param.error[0] == 'true'}">Invalid email or password.</p>
+                    <p th:if="${param.error[0] == 'accessDenied'}">You are not authorized to sign in as a member.</p>
+<!--                    <p th:case="'true'">Invalid email or password.</p>-->
+<!--                    <p th:case="'accessDenied'">You are not authorized to sign in as a member.</p>-->
+                </div>
+            </div>
 
             <div class="d-flex flex-row justify-content-between" style="margin-top:20px">
                 <button type="button" class="btn btn-secondary" onclick="window.location.href='/'"><i class="bi bi-arrow-left" style="margin-right:5px"></i>Back</button>
