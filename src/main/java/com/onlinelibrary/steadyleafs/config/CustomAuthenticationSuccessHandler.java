@@ -19,21 +19,34 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 										HttpServletResponse response,
 										Authentication authentication) throws IOException, ServletException {
 
-		System.out.println("🎉 User successfully authenticated: " + authentication.getName());
-		String redirectURL = "/";
-
+		String intendedRole = request.getParameter("intendedRole");
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
-		System.out.println("Authorities: " + authorities);
+		boolean isLibrarian = false;
+		boolean isMember = false;
 
 		for (GrantedAuthority authority : authorities) {
-			if (authority.getAuthority().equals("ROLE_LIBRARIAN")) {
-				redirectURL = "/librarianHome";
-				break;
-			} else if (authority.getAuthority().equals("ROLE_MEMBER")) {
-				redirectURL = "/memberHome";
-				break;
+			String role = authority.getAuthority();
+			if (role.equals("ROLE_LIBRARIAN")) {
+				isLibrarian = true;
+			} else if (role.equals("ROLE_MEMBER")) {
+				isMember = true;
 			}
+		}
+
+		if ("LIBRARIAN".equals(intendedRole) && !isLibrarian) {
+			response.sendRedirect("/login-librarian?error=accessDenied");
+			return;
+		} else if ("MEMBER".equals(intendedRole) && !isMember) {
+			response.sendRedirect("/login-member?error=accessDenied");
+			return;
+		}
+
+		String redirectURL = "/";
+		if (isLibrarian) {
+			redirectURL = "/librarianHome";
+		} else if (isMember) {
+			redirectURL = "/memberHome";
 		}
 
 		response.sendRedirect(redirectURL);
