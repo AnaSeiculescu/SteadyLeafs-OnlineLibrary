@@ -32,8 +32,6 @@
                 <div class="alert alert-danger">
                     <p th:if="${param.error[0] == 'true'}">Invalid email or password.</p>
                     <p th:if="${param.error[0] == 'accessDenied'}">You are not authorized to sign in as a member.</p>
-<!--                    <p th:case="'true'">Invalid email or password.</p>-->
-<!--                    <p th:case="'accessDenied'">You are not authorized to sign in as a member.</p>-->
                 </div>
             </div>
 

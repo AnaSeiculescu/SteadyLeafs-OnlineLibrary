@@ -22,19 +22,22 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		String intendedRole = request.getParameter("intendedRole");
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
+		boolean isAdmin = false;
 		boolean isLibrarian = false;
 		boolean isMember = false;
 
 		for (GrantedAuthority authority : authorities) {
 			String role = authority.getAuthority();
-			if (role.equals("ROLE_LIBRARIAN")) {
+			if (role.equals("ROLE_ADMIN")) {
+				isAdmin = true;
+			} else if (role.equals("ROLE_LIBRARIAN")) {
 				isLibrarian = true;
 			} else if (role.equals("ROLE_MEMBER")) {
 				isMember = true;
 			}
 		}
 
-		if ("LIBRARIAN".equals(intendedRole) && !isLibrarian) {
+		if ("LIBRARIAN".equals(intendedRole) && !(isLibrarian || isAdmin)) {
 			response.sendRedirect("/login-librarian?error=accessDenied");
 			return;
 		} else if ("MEMBER".equals(intendedRole) && !isMember) {
@@ -43,7 +46,9 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		}
 
 		String redirectURL = "/";
-		if (isLibrarian) {
+		if(isAdmin) {
+			redirectURL = "/adminHome";
+		} else if (isLibrarian) {
 			redirectURL = "/librarianHome";
 		} else if (isMember) {
 			redirectURL = "/memberHome";

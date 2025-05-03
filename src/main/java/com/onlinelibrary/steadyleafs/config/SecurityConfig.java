@@ -43,15 +43,14 @@ public class SecurityConfig {
 				.authorizeHttpRequests(authorize -> authorize
 								.requestMatchers("/").permitAll()
 								.requestMatchers("/login-member", "/login-librarian").permitAll()
-								.requestMatchers("/memberHome").permitAll()
-								.requestMatchers("/users/**").permitAll()
-								.requestMatchers("/librarians/**").permitAll()
-								.requestMatchers("/members/**").permitAll()
-//						.requestMatchers("/users/create").permitAll()
-								.requestMatchers("/books/**").permitAll()
+								.requestMatchers("/adminHome/**").hasRole("ADMIN")
+								.requestMatchers("/librarianHome/**").hasAnyRole("LIBRARIAN", "ADMIN")
+								.requestMatchers("/memberHome/**").hasRole("MEMBER")
+								.requestMatchers("/users/**").hasRole("ADMIN")
+								.requestMatchers("/librarians/**").hasRole("ADMIN")
 //						.requestMatchers("/users/delete").hasRole("ADMIN")
 //						.requestMatchers("/users/update").hasRole("ADMIN")
-								.requestMatchers("/*").permitAll()
+//								.requestMatchers("/*").permitAll()
 								.anyRequest().authenticated()
 
 				);
