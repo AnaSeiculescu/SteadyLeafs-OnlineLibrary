@@ -125,6 +125,23 @@ public class LibrarianHomeController {
 		return "redirect:/librarianHome";
 	}
 
+	@GetMapping("/books/statistics")
+	public String getBooksStatistics(Model model, Authentication authentication) {
+		Librarian currentLibrarian = getLoggedInLibrarian(authentication);
+
+		int all = bookService.getNumberOfBooks();
+		int loaned = bookService.getNumberOfLoanedBooks();
+		int available = bookService.getNumberOfAvailableBooks();
+
+		model.addAttribute("currentLibrarian", currentLibrarian);
+		model.addAttribute("quantityAll", all);
+		model.addAttribute("quantityLoaned", loaned);
+		model.addAttribute("quantityAvailable", available);
+		model.addAttribute("activePage", "statistics");
+
+		return "librarians/books/statistics";
+	}
+
 	@GetMapping("/members")
 	public String getAllMembers(Model model, Authentication authentication) {
 		Librarian currentLibrarian = getLoggedInLibrarian(authentication);

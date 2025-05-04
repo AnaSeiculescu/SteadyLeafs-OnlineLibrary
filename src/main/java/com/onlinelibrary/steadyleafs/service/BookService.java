@@ -62,4 +62,16 @@ public class BookService {
 		List<Book> borrowedBooks = bookRepository.findByBorrowedBy_Id(memberId);
 		return borrowedBooks;
 	}
+
+	public int getNumberOfBooks() {
+		return getAllBooks().size();
+	}
+
+	public int getNumberOfLoanedBooks() {
+		return getLoanedBooks().size();
+	}
+
+	public int getNumberOfAvailableBooks() {
+		return getAvailableBooks().size();
+	}
 }
