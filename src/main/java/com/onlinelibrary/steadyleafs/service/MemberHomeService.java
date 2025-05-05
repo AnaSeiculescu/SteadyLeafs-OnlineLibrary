@@ -2,6 +2,7 @@ package com.onlinelibrary.steadyleafs.service;
 
 import com.onlinelibrary.steadyleafs.model.Book;
 import com.onlinelibrary.steadyleafs.model.Member;
+import com.onlinelibrary.steadyleafs.model.dto.BookReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.SignedInMemberDto;
 import com.onlinelibrary.steadyleafs.repository.BookRepository;
 import com.onlinelibrary.steadyleafs.repository.MemberRepository;
@@ -14,15 +15,15 @@ public class MemberHomeService {
 
 	private final MemberRepository memberRepository;
 	private final BookRepository bookRepository;
+	private final BookService bookService;
 
-	public void borrowBook(Book book, SignedInMemberDto signedInMemberDto) {
-		Book bookToUpdate = bookRepository.findById(book.getId())
-				.orElseThrow(() -> new RuntimeException("Book not found"));
+	public void borrowBook(BookReturnDto book, SignedInMemberDto signedInMemberDto) {
+		BookReturnDto bookToUpdate = bookService.getBookById(book.getId());
 
 		Member member = memberRepository.findById(signedInMemberDto.getId())
 				.orElseThrow(() -> new RuntimeException("Signed in member not found."));
 
-		bookToUpdate.setBorrowedBy(member);
+		bookToUpdate.setBorrowedById(member.getId());
 		bookToUpdate.setStatus("BORROWED");
 
 		signedInMemberDto.getBorrowedBooks().add(bookToUpdate);

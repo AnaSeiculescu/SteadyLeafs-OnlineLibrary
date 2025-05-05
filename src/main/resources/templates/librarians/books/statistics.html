@@ -26,6 +26,10 @@
                th:href="@{/librarianHome/books/create}"><i class="bi bi-bookmark-plus" style="margin-right:8px"></i>Create book</a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" th:classappend="${activePage == 'statistics'} ? ' active'"
+               th:href="@{/librarianHome/books/statistics}"><i class="bi bi-clipboard-pulse" style="margin-right:8px"></i>Statistics</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" th:classappend="${activePage == 'allMembers'} ? ' active'"
                th:href="@{/librarianHome/members}"><i class="bi bi-person-fill" style="margin-right:8px"></i>Members</a>
         </li>
@@ -49,22 +53,22 @@
             </tr>
 
             <tbody>
+            <tr th:each="entry : ${bookStats}">
+                <td th:text="${entry.key}"></td>
+                <td th:text="${entry.value}"></td>
+            </tr>
 <!--            <tr>-->
-<!--                <td th:text="${category}"></td>-->
-<!--                <td th:text="${quantity}"></td>-->
+<!--                <td>All books</td>-->
+<!--                <td th:text="${quantityAll}"></td>-->
 <!--            </tr>-->
-            <tr>
-                <td>All books</td>
-                <td th:text="${quantityAll}"></td>
-            </tr>
-            <tr>
-                <td>Loaned books</td>
-                <td th:text="${quantityLoaned}"></td>
-            </tr>
-            <tr>
-                <td>Available books</td>
-                <td th:text="${quantityAvailable}"></td>
-            </tr>
+<!--            <tr>-->
+<!--                <td>Loaned books</td>-->
+<!--                <td th:text="${quantityLoaned}"></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>Available books</td>-->
+<!--                <td th:text="${quantityAvailable}"></td>-->
+<!--            </tr>-->
             </tbody>
         </table>
 

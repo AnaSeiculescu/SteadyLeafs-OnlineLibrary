@@ -14,7 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/librarianHome")
@@ -129,14 +131,13 @@ public class LibrarianHomeController {
 	public String getBooksStatistics(Model model, Authentication authentication) {
 		Librarian currentLibrarian = getLoggedInLibrarian(authentication);
 
-		int all = bookService.getNumberOfBooks();
-		int loaned = bookService.getNumberOfLoanedBooks();
-		int available = bookService.getNumberOfAvailableBooks();
+		Map<String, Integer> statsMap = new LinkedHashMap<>();
+		statsMap.put("All books", bookService.getNumberOfBooks());
+		statsMap.put("Loaned books", bookService.getNumberOfLoanedBooks());
+		statsMap.put("Available books", bookService.getNumberOfAvailableBooks());
 
 		model.addAttribute("currentLibrarian", currentLibrarian);
-		model.addAttribute("quantityAll", all);
-		model.addAttribute("quantityLoaned", loaned);
-		model.addAttribute("quantityAvailable", available);
+		model.addAttribute("bookStats", statsMap);
 		model.addAttribute("activePage", "statistics");
 
 		return "librarians/books/statistics";

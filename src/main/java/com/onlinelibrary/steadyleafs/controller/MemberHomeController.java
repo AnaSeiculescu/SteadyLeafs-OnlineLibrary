@@ -55,7 +55,7 @@ public class MemberHomeController {
 	}
 
 	@PostMapping("/add")
-	public String BorrowBook(Model model, @ModelAttribute Book book, Authentication authentication) {
+	public String BorrowBook(Model model, @ModelAttribute BookReturnDto book, Authentication authentication) {
 		SignedInMemberDto currentMember = getLoggedInMember(authentication);
 		memberHomeService.borrowBook(book, currentMember);
 		model.addAttribute("bookList", currentMember.getBorrowedBooks());

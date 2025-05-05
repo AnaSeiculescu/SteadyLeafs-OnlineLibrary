@@ -27,6 +27,10 @@
          th:href="@{/librarianHome/books/create}"><i class="bi bi-bookmark-plus" style="margin-right:8px"></i>Create book</a>
     </li>
     <li class="nav-item">
+      <a class="nav-link" th:classappend="${activePage == 'statistics'} ? ' active'"
+         th:href="@{/librarianHome/books/statistics}"><i class="bi bi-clipboard-pulse" style="margin-right:8px"></i>Statistics</a>
+    </li>
+    <li class="nav-item">
       <a class="nav-link" th:classappend="${activePage == 'allMembers'} ? ' active'"
          th:href="@{/librarianHome/members}"><i class="bi bi-person-fill" style="margin-right:8px"></i>Members</a>
     </li>
@@ -62,7 +66,7 @@
         <!--      <p th:if="${#fields.hasErrors('firstName')}" style="color:red"> Invalid first name</p>-->
 
         <div class="d-flex flex-row justify-content-between" style="margin-top:20px">
-          <button type="button" class="btn btn-secondary" onclick="window.location.href='/librarianHome'"><i class="bi bi-arrow-left" style="margin-right:5px"></i>Back</button>
+          <button type="button" class="btn btn-secondary" onclick="window.location.href='/librarianHome'"><i class="bi bi-arrow-left" style="margin-right:5px"></i>Home</button>
           <input type="submit" value="Create" class="btn btn-success">
         </div>
       </form>

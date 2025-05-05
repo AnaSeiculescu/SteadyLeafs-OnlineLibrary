@@ -26,6 +26,10 @@
          th:href="@{/librarianHome/books/create}"><i class="bi bi-bookmark-plus" style="margin-right:8px"></i>Create book</a>
     </li>
     <li class="nav-item">
+      <a class="nav-link" th:classappend="${activePage == 'statistics'} ? ' active'"
+         th:href="@{/librarianHome/books/statistics}"><i class="bi bi-clipboard-pulse" style="margin-right:8px"></i>Statistics</a>
+    </li>
+    <li class="nav-item">
       <a class="nav-link" th:classappend="${activePage == 'allMembers'} ? ' active'"
          th:href="@{/librarianHome/members}"><i class="bi bi-person-fill" style="margin-right:8px"></i>Members</a>
     </li>
@@ -81,14 +85,9 @@
     </table>
 
     <button type="button" class="btn btn-secondary" onclick="window.location.href='/librarianHome'"><i
-            class="bi bi-arrow-left" style="margin-right:5px"></i>Back
+            class="bi bi-arrow-left" style="margin-right:5px"></i>Home
     </button>
 
-    <!--  <br/>-->
-
-    <!--  <form action="/users/register">-->
-    <!--    <button type="submit" class="btn btn-dark shadow p-3 mb-3 rounded"><i class="bi bi-person-plus-fill" style="margin-right:8px"></i>Create a user</button>-->
-    <!--  </form>-->
   </div>
 
 </div>

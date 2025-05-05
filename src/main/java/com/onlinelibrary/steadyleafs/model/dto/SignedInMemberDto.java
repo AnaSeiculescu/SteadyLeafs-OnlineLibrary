@@ -21,7 +21,7 @@ public class SignedInMemberDto {
 	private String firstName;
 	private String lastName;
 	private User user;
-	private List<Book> borrowedBooks = new ArrayList<>();
+	private List<BookReturnDto> borrowedBooks = new ArrayList<>();
 
 	public SignedInMemberDto mapFromMember(Member member) {
 		SignedInMemberDto signedInMemberDto = new SignedInMemberDto();
@@ -29,7 +29,9 @@ public class SignedInMemberDto {
 		signedInMemberDto.setFirstName(member.getFirstName());
 		signedInMemberDto.setLastName(member.getLastName());
 		signedInMemberDto.setUser(member.getUser());
-		signedInMemberDto.setBorrowedBooks(member.getBorrowedBooks());
+		signedInMemberDto.setBorrowedBooks(member.getBorrowedBooks().stream()
+				.map(book -> new BookReturnDto().mapFromBook(book))
+				.toList());
 
 		return signedInMemberDto;
 	}
