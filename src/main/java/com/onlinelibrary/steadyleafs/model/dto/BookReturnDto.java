@@ -14,6 +14,7 @@ public class BookReturnDto {
 	private int id;
 	private String title;
 	private String author;
+	private String coverUrl;
 	private String status;
 	private Integer borrowedById;
 
@@ -22,6 +23,7 @@ public class BookReturnDto {
 		bookReturnDto.setId(book.getId());
 		bookReturnDto.setTitle(book.getTitle());
 		bookReturnDto.setAuthor(book.getAuthor());
+		bookReturnDto.setCoverUrl(book.getCoverUrl());
 		bookReturnDto.setStatus(book.getStatus());
 
 		if (book.getBorrowedBy() != null) {

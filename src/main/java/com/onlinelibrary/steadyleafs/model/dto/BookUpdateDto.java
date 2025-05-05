@@ -14,6 +14,7 @@ public class BookUpdateDto {
 	private int id;
 	private String title;
 	private String author;
+	private String coverUrl;
 	private String status;
 	private Integer borrowedById;
 
@@ -29,6 +30,7 @@ public class BookUpdateDto {
 		bookUpdateDto.setId(book.getId());
 		bookUpdateDto.setTitle(book.getTitle());
 		bookUpdateDto.setAuthor(book.getAuthor());
+		bookUpdateDto.setCoverUrl(book.getCoverUrl());
 		bookUpdateDto.setStatus(book.getStatus());
 
 		if (book.getBorrowedBy() != null) {

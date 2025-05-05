@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 @Slf4j
-@AllArgsConstructor
+//@AllArgsConstructor
 public class BookCoverApiService {
 	private static final String OPEN_LIBRARY_API_URL = "https://openlibrary.org/search.json?title=";
 

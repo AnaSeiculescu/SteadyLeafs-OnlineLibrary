@@ -76,7 +76,7 @@ public class LibrarianHomeController {
 
 	@PostMapping()
 	public String createBook(Model model, @ModelAttribute BookCreateDto bookCreateDto) {
-		bookService.createBook(bookCreateDto.mapToBook(bookCreateDto));
+		bookService.createBook(bookCreateDto);
 		model.addAttribute("bookList", bookService.getAllBooks());
 		return "redirect:/librarianHome";
 	}

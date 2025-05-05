@@ -15,6 +15,7 @@ public class BookCreateDto {
 	private int id;
 	private String title;
 	private String author;
+	private String coverUrl;;
 	private String status = "available";
 
 	public Book mapToBook(BookCreateDto bookCreateDto) {
@@ -22,6 +23,7 @@ public class BookCreateDto {
 		book.setId(bookCreateDto.getId());
 		book.setTitle(bookCreateDto.getTitle());
 		book.setAuthor(bookCreateDto.getAuthor());
+		book.setCoverUrl(bookCreateDto.getCoverUrl());
 		book.setStatus(this.status);
 
 		return book;

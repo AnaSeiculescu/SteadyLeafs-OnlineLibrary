@@ -2,6 +2,7 @@ package com.onlinelibrary.steadyleafs.service;
 
 import com.onlinelibrary.steadyleafs.model.Book;
 import com.onlinelibrary.steadyleafs.model.User;
+import com.onlinelibrary.steadyleafs.model.dto.BookCreateDto;
 import com.onlinelibrary.steadyleafs.model.dto.BookReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.BookUpdateDto;
 import com.onlinelibrary.steadyleafs.repository.BookRepository;
@@ -14,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class BookService {
 	private final BookRepository bookRepository;
+	private final BookCoverApiService bookCoverApiService;
 
 	public List<BookReturnDto> getAllBooks() {
 		List<Book> booksFromDatabase =  bookRepository.findAll();
@@ -34,7 +36,10 @@ public class BookService {
 				.toList();
 	}
 
-	public void createBook(Book book) {
+	public void createBook(BookCreateDto bookCreateDto) {
+		Book book = bookCreateDto.mapToBook(bookCreateDto);
+		String bookCoverUrl = bookCoverApiService.getCoverUrl(bookCreateDto.getTitle());
+		book.setCoverUrl(bookCoverUrl);
 		bookRepository.save(book);
 	}
 
