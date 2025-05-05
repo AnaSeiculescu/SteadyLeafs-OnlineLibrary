@@ -35,24 +35,4 @@ public class SignedInMemberDto {
 
 		return signedInMemberDto;
 	}
-
-//	public static Member mapToMember(SignedInMemberDto signedInMemberDto) {
-//		Member member = new Member();
-//		member.setId(signedInMemberDto.getId());
-//		member.setFirstName(signedInMemberDto.getFirstName());
-//		member.setLastName(signedInMemberDto.getLastName());
-//		member.setUser(signedInMemberDto.getUser());
-//		member.setBorrowedBooks(signedInMemberDto.getBorrowedBooks());
-//
-//		return member;
-//	}
-
-//	public Member mapToMember(Member member) {
-//		member.setId(this.id);
-//		member.setFirstName(this.firstName);
-//		member.setLastName(this.lastName);
-//		member.setBorrowedBooks(this.borrowedBooks);
-//
-//		return member;
-//	}
 }

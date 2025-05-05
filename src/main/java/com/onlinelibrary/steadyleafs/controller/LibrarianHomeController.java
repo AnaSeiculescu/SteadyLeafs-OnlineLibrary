@@ -64,27 +64,6 @@ public class LibrarianHomeController {
 		return "librarians/home";
 	}
 
-//	@GetMapping("/books")
-//	public String getAllBooks(Model model) {
-//		List<Book> bookList = bookService.getAllBooks();
-//		model.addAttribute("bookList", bookList);
-//		return "librarians/books/allBooks";
-//	}
-
-//	@GetMapping("/books/available")
-//	public String getAvailableBooks(Model model) {
-//		List<Book> bookList = bookService.getAvailableBooks();
-//		model.addAttribute("availableBookList", bookList);
-//		return "librarians/books/availableBooks";
-//	}
-
-//	@GetMapping("/books/loaned")
-//	public String getLoanedBooks(Model model) {
-//		List<Book> bookList = bookService.getLoanedBooks();
-//		model.addAttribute("loanedBookList", bookList);
-//		return "librarians/books/loanedBooks";
-//	}
-
 	@GetMapping("/books/create")
 	public String getCreateBookForm(Model model, Authentication authentication) {
 		Librarian currentLibrarian = getLoggedInLibrarian(authentication);

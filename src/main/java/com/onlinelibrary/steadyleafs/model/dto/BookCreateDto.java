@@ -27,13 +27,4 @@ public class BookCreateDto {
 		return book;
 	}
 
-//	public Book mapToBook(BookCreateDto bookCreateDto) {
-//		Book book = new Book();
-//		book.setId(bookCreateDto.getId());
-//		book.setTitle(bookCreateDto.getTitle());
-//		book.setAuthor(bookCreateDto.getAuthor());
-//		book.setStatus(bookCreateDto.getStatus());
-//
-//		return book;
-//	}
 }
