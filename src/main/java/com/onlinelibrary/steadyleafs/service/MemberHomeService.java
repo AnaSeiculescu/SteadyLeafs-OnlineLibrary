@@ -3,7 +3,6 @@ package com.onlinelibrary.steadyleafs.service;
 import com.onlinelibrary.steadyleafs.model.Book;
 import com.onlinelibrary.steadyleafs.model.Member;
 import com.onlinelibrary.steadyleafs.model.dto.BookReturnDto;
-import com.onlinelibrary.steadyleafs.model.dto.BookUpdateDto;
 import com.onlinelibrary.steadyleafs.model.dto.SignedInMemberDto;
 import com.onlinelibrary.steadyleafs.repository.BookRepository;
 import com.onlinelibrary.steadyleafs.repository.MemberRepository;
@@ -24,10 +23,7 @@ public class MemberHomeService {
 				.orElseThrow(() -> new RuntimeException("Signed in member not found."));
 
 		bookFromDatabase.setBorrowedBy(member);
-		bookFromDatabase.setStatus("BORROWED");
-
-//		BookReturnDto bookUpdated = book.mapFromBook(bookFromDatabase);
-//		signedInMemberDto.getBorrowedBooks().add(bookUpdated);
+//		bookFromDatabase.setStatus("BORROWED");
 
 		bookRepository.save(bookFromDatabase);
 		memberRepository.save(member);
@@ -46,7 +42,7 @@ public class MemberHomeService {
 		bookToReturn.getBorrowedBy().getBorrowedBooks().remove(bookToReturn);
 
 		bookToReturn.setBorrowedBy(null);
-		bookToReturn.setStatus("available");
+//		bookToReturn.setStatus("AVAILABLE");
 
 		memberRepository.save(member);
 		bookRepository.save(bookToReturn);

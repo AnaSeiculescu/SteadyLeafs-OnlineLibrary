@@ -27,13 +27,9 @@ public class Book {
 	@JoinColumn(name = "member_id")
 	private Member borrowedBy;
 
-	public Book mapToUpdate(Book bookUpdated) {
-		Book book = new Book();
-		book.setId(bookUpdated.getId());
-		book.setTitle(bookUpdated.getTitle());
-		book.setAuthor(bookUpdated.getAuthor());
-		book.setStatus(bookUpdated.getStatus());
-		book.setBorrowedBy(bookUpdated.getBorrowedBy());
-		return book;
+	public void setBorrowedBy(Member member) {
+		this.borrowedBy = member;
+		this.status = (member == null) ? "available" : "BORROWED";
 	}
+
 }
