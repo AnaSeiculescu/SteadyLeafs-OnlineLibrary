@@ -1,7 +1,9 @@
 package com.onlinelibrary.steadyleafs.service;
 
+//import com.onlinelibrary.steadyleafs.model.OpenLibraryCovers;
+//import lombok.AllArgsConstructor;
+import com.onlinelibrary.steadyleafs.model.Doc;
 import com.onlinelibrary.steadyleafs.model.OpenLibraryCovers;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,13 +20,17 @@ public class BookCoverApiService {
 //	private final String bookTitle;
 
 	public String getCoverUrl(String bookTitle) {
-		ResponseEntity<OpenLibraryCovers[]> response = restTemplate.getForEntity(OPEN_LIBRARY_API_URL + bookTitle, OpenLibraryCovers[].class);
+		ResponseEntity<OpenLibraryCovers> response = restTemplate.getForEntity(OPEN_LIBRARY_API_URL + bookTitle, OpenLibraryCovers.class);
 
 		if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
-			OpenLibraryCovers[] covers = response.getBody();
+			OpenLibraryCovers data = response.getBody();
 
-			if (covers.length > 0 && covers[0] != null && covers[0].getDocs() != null) {
-				int coverId = covers[0].getDocs().getCover_i();
+			if (data.getDocs() != null && !data.getDocs().isEmpty()) {
+				Doc firstDoc = data.getDocs().get(0);
+
+				System.out.println("FIRST DOC = " + firstDoc);
+
+				int coverId = firstDoc.getCover_i();
 				return "https://covers.openlibrary.org/b/id/" + coverId + "-M.jpg";
 			}
 		}
