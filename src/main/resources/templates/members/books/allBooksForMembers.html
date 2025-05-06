@@ -38,32 +38,62 @@
 
 <div class="container-fluid d-flex align-items-center pt-5 background-image">
 
-  <div class="container table.responsive w-50 d-flex flex-column align-items-center">
+  <div class="container table.responsive w-75 d-flex flex-column align-items-center mt-5 mb-5">
     <h4 class="text-center p-5">All Books</h4>
-    <table border="1" class="table table-hover table-light shadow p-3 mb-5 rounded" style="text-align:center">
 
-      <tr>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Status</th>
-        <th>Action</th>
-      </tr>
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+        <div class="col" th:each="book : ${bookList}">
+          <div class="card h-100 shadow rounded">
+            <div class="row g-0 h-100">
 
-      <tbody>
-      <tr th:each="book : ${bookList}">
-        <td th:text="${book.title}"></td>
-        <td th:text="${book.author}"></td>
-        <td th:text="${book.status}"></td>
-        <td>
-          <form th:action="@{/memberHome/add}" method="post" class="d-inline">
-            <input type="hidden" name="id" th:value="${book.id}">
-            <button type="submit" class="btn btn-danger btn-sm">Borrow</button>
-          </form>
-        </td>
-      </tr>
-      </tbody>
+              <div class="col-md-4 bg-white p-2 d-flex align-items-center">
+                <img th:src="${book.coverUrl}" class="img-fluid rounded" alt="Book Cover" style="max-height: 150px; object-fit: cover;">
+              </div>
 
-    </table>
+              <div class="col-md-8 d-flex flex-column">
+                <div class="card-body">
+                  <h5 class="card-title" th:text="${book.title}">Book Title</h5>
+                  <p class="card-text mb-1" style="font-size: 14px">
+                    <strong>Author:</strong> <span th:text="${book.author}"></span><br>
+                    <strong>Status:</strong> <span th:text="${book.status}"></span><br>
+                  </p>
+                </div>
+
+                <div class="mt-auto px-3 pb-3">
+                  <form th:action="@{/memberHome/add}" method="post" class="d-inline">
+                    <input type="hidden" name="id" th:value="${book.id}">
+                    <button type="submit" class="btn btn-success btn-sm" onclick="return confirm('Are you sure you want to return this book?');">Borrow</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!--    <table border="1" class="table table-hover table-light shadow p-3 mb-5 rounded" style="text-align:center">-->
+<!--      <tr>-->
+<!--        <th>Title</th>-->
+<!--        <th>Author</th>-->
+<!--        <th>Status</th>-->
+<!--        <th>Action</th>-->
+<!--      </tr>-->
+<!--      <tbody>-->
+<!--      <tr th:each="book : ${bookList}">-->
+<!--        <td th:text="${book.title}"></td>-->
+<!--        <td th:text="${book.author}"></td>-->
+<!--        <td th:text="${book.status}"></td>-->
+<!--        <td>-->
+<!--          <form th:action="@{/memberHome/add}" method="post" class="d-inline">-->
+<!--            <input type="hidden" name="id" th:value="${book.id}">-->
+<!--            <button type="submit" class="btn btn-danger btn-sm">Borrow</button>-->
+<!--          </form>-->
+<!--        </td>-->
+<!--      </tr>-->
+<!--      </tbody>-->
+<!--    </table>-->
 
     <br/>
 
