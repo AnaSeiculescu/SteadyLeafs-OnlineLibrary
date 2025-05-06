@@ -1,20 +1,68 @@
-/*.background-image {
+body {
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
   background-image: url('../images/background.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 0.4);
+  filter: opacity(0.5);
+  z-index: -1;
+  /*opacity: 0.5;*/
+}
+
+/* Custom tab styles */
+.nav-tabs .nav-link {
+    color: #F8EEDF; /* Light text color */
+    background-color: #222831; /* Dark background color for non-active tabs */
+    border: none; /* Remove borders */
+}
+
+/* Active tab styles */
+.nav-tabs .nav-link.active {
+    color: #222831; /* Dark text color for active tab */
+    background-color: #F8EEDF; /* Light background for active tab */
+}
+
+/* Optional: Hover state */
+.nav-tabs .nav-link:hover {
+    background-color: #333;
+}
+
+
+/*body {
+  background-image: url('../images/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   opacity: 0.5;
 }*/
 
+/*
 .background-image {
   position: relative;
-  z-index: 1; /* ensure it's above background */
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
 }
 
 .background-image::before {
   content: "";
   position: absolute;
-   height: 100vh;
+  height: 100vh;
   top: 0;
   right: 0;
   bottom: 0;
@@ -23,6 +71,8 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  opacity: 0.4; /* adjust this value as needed */
-  z-index: -1; /* place it behind content */
+  background-attachment: fixed;
+  opacity: 0.4;
+  z-index: -1;
 }
+*/

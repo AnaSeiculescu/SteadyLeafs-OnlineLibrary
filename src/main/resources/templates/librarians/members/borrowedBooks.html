@@ -50,23 +50,12 @@
             <tr>
                 <th>Title</th>
                 <th>Author</th>
-<!--                <th>Status</th>-->
-<!--                <th>Action</th>-->
             </tr>
 
             <tbody>
             <tr th:each="book : ${borrowedBooks}">
                 <td th:text="${book.title}"></td>
                 <td th:text="${book.author}"></td>
-<!--                <td th:text="${book.status}"></td>-->
-<!--                <td>-->
-
-<!--                    <form th:action="@{/memberHome/delete}" method="post" class="d-inline">-->
-<!--                        <input type="hidden" name="id" th:value="${book.id}">-->
-<!--                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to return this book?');">Return book</button>-->
-<!--                    </form>-->
-
-<!--                </td>-->
             </tr>
             </tbody>
         </table>
@@ -76,15 +65,6 @@
         <button type="button" class="btn btn-secondary" onclick="window.location.href='/librarianHome/members'"><i
                 class="bi bi-arrow-left" style="margin-right:5px"></i>Back
         </button>
-
-        <!--    <form action="/memberHome/seeAllBooks">-->
-        <!--        <button type="submit" class="btn btn-dark shadow p-3 mb-3 rounded"><i class="bi bi-person-plus-fill" style="margin-right:8px"></i>View all books-->
-        <!--        </button>-->
-        <!--    </form>-->
-
-        <!--    <form th:action="@{/logout}" method="post">-->
-        <!--        <button type="submit" class="btn btn-danger shadow p-3 mb-3 rounded"><i class="bi bi-box-arrow-left" style="margin-right:8px"></i>Logout</button>-->
-        <!--    </form>-->
 
     </div>
 
