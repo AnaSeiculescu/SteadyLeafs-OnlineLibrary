@@ -35,7 +35,12 @@
          th:href="@{/librarianHome/members}"><i class="bi bi-person-fill" style="margin-right:8px"></i>Members</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" th:href="@{/logout}"><i class="bi bi-box-arrow-left" style="margin-right:8px; margin-left: 15px"></i>Logout</a>
+      <a class="nav-link"
+         th:href="@{/logout}"
+         onclick="return confirm('Are you sure you want to leave?');">
+        <i class="bi bi-box-arrow-left" style="margin-right:8px; margin-left: 15px"></i>
+        Logout
+      </a>
     </li>
   </ul>
 
