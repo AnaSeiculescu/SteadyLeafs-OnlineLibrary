@@ -21,22 +21,23 @@ body::before {
   /*opacity: 0.5;*/
 }
 
-/* Custom tab styles */
-.nav-tabs .nav-link {
-    color: #F8EEDF; /* Light text color */
-    background-color: #222831; /* Dark background color for non-active tabs */
-    border: none; /* Remove borders */
+.book-tab {
+    color: #F8EEDF;
+    /*color: #DFD0B8;*/
+    background-color: #222831;
+    border: none;
 }
 
-/* Active tab styles */
-.nav-tabs .nav-link.active {
-    color: #222831; /* Dark text color for active tab */
-    background-color: #F8EEDF; /* Light background for active tab */
+.book-tab.active {
+    color: #222831;
+    background-color: #D7D3BF !important;
+    /*background-color: #DFD0B8;*/
+    font-weight: bold;
 }
 
-/* Optional: Hover state */
-.nav-tabs .nav-link:hover {
-    background-color: #333;
+.book-tab:hover {
+    color: #F8EEDF;
+    background-color: #393E46;
 }
 
 
