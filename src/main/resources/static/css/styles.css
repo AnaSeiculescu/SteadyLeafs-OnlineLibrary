@@ -2,6 +2,7 @@ body {
   position: relative;
   margin: 0;
   padding: 0;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 body::before {
@@ -15,7 +16,6 @@ body::before {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: rgba(0, 0, 0, 0.4);
   filter: opacity(0.5);
   z-index: -1;
   /*opacity: 0.5;*/
@@ -30,14 +30,18 @@ body::before {
 
 .book-tab.active {
     color: #222831;
-    background-color: #D7D3BF !important;
-    /*background-color: #DFD0B8;*/
+    /*background-color: #D7D3BF !important;*/
+    /*background-color: #fff !important;*/
     font-weight: bold;
 }
 
 .book-tab:hover {
     color: #F8EEDF;
     background-color: #393E46;
+}
+
+.my-background {
+    background-color: #e8e6dc;
 }
 
 

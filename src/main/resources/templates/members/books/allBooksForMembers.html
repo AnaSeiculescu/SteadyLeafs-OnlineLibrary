@@ -38,16 +38,16 @@
 
 <div class="container-fluid d-flex align-items-center pt-5 background-image">
 
-  <div class="container table.responsive w-75 d-flex flex-column align-items-center mt-5 mb-5">
+  <div class="container table.responsive w-75 d-flex flex-column align-items-center mb-5">
     <h4 class="text-center p-5">All Books</h4>
 
     <div class="container">
       <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
         <div class="col" th:each="book : ${bookList}">
-          <div class="card h-100 shadow rounded">
+          <div class="card h-100 shadow rounded my-background">
             <div class="row g-0 h-100">
 
-              <div class="col-md-4 bg-white p-2 d-flex align-items-center">
+              <div class="col-md-4 p-2 d-flex align-items-center my-background">
                 <img th:src="${book.coverUrl}" class="img-fluid rounded" alt="Book Cover" style="max-height: 150px; object-fit: cover;">
               </div>
 
