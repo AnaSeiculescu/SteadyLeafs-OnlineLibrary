@@ -1,5 +1,6 @@
 package com.onlinelibrary.steadyleafs.service;
 
+import com.onlinelibrary.steadyleafs.model.Book;
 import com.onlinelibrary.steadyleafs.model.Member;
 import com.onlinelibrary.steadyleafs.model.dto.MemberReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.MemberUpdateDto;
@@ -7,6 +8,7 @@ import com.onlinelibrary.steadyleafs.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -17,13 +19,17 @@ public class MemberService {
 
 	public List<MemberReturnDto> getAllMembers() {
 		List<Member> membersFromDatabase = memberRepository.findAll();
+
+		membersFromDatabase.forEach(member -> {
+			member.getBorrowedBooks().sort(Comparator.comparing(Book::getTitle));
+		});
+
 		return membersFromDatabase.stream()
 				.map(member -> new MemberReturnDto().mapFromMember(member))
 				.toList();
 	}
 
 	public void createMember(Member member) {
-//		entityManager.clear();
 		memberRepository.save(member);
 	}
 
@@ -42,6 +48,8 @@ public class MemberService {
 	public MemberReturnDto getMemberById(Integer id) {
 		Member member = memberRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("User with id " + id + " does not exists"));
+
+		member.getBorrowedBooks().sort(Comparator.comparing(Book::getTitle));
 
 		MemberReturnDto memberReturnDto = new MemberReturnDto();
 		return memberReturnDto.mapFromMember(member);

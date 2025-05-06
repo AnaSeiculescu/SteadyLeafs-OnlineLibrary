@@ -166,11 +166,11 @@ public class LibrarianHomeController {
 		Librarian currentLibrarian = getLoggedInLibrarian(authentication);
 
 		MemberReturnDto member = memberService.getMemberById(id);
-		List<Book> borrowedBooks = bookService.getBooksByBorrowedBy(id);
+//		List<Book> borrowedBooks = bookService.getBooksByBorrowedBy(id);
 
 		model.addAttribute("currentLibrarian", currentLibrarian);
 		model.addAttribute("member", member);
-		model.addAttribute("borrowedBooks", borrowedBooks);
+//		model.addAttribute("borrowedBooks", borrowedBooks);
 
 		return "librarians/members/borrowedBooks";
 	}

@@ -19,7 +19,7 @@ public class MemberReturnDto {
 	private String firstName;
 	private String lastName;
 	private Integer userId;
-	private List<Book> borrowedBooks;
+	private List<BookReturnDto> borrowedBooks;
 
 	public MemberReturnDto mapFromMember(Member member) {
 		MemberReturnDto memberReturnDto = new MemberReturnDto();
@@ -27,7 +27,9 @@ public class MemberReturnDto {
 		memberReturnDto.setFirstName(member.getFirstName());
 		memberReturnDto.setLastName(member.getLastName());
 		memberReturnDto.setUserId(member.getUser().getId());
-		memberReturnDto.setBorrowedBooks(new ArrayList<>(member.getBorrowedBooks()));
+		memberReturnDto.setBorrowedBooks(member.getBorrowedBooks().stream()
+				.map(book -> new BookReturnDto().mapFromBook(book))
+				.toList());
 
 		return memberReturnDto;
 	}

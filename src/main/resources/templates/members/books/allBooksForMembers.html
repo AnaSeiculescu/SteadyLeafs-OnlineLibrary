@@ -63,7 +63,13 @@
                 <div class="mt-auto px-3 pb-3">
                   <form th:action="@{/memberHome/add}" method="post" class="d-inline">
                     <input type="hidden" name="id" th:value="${book.id}">
-                    <button type="submit" class="btn btn-success btn-sm" onclick="return confirm('Are you sure you want to return this book?');">Borrow</button>
+                    <div th:attr="title=${book.status == 'BORROWED'} ? 'Already borrowed' : 'Borrow this book'">
+                      <button type="submit"
+                              class="btn btn-success btn-sm"
+                              th:attr="disabled=${book.status == 'BORROWED'}">
+                        Borrow
+                      </button>
+                    </div>
                   </form>
                 </div>
               </div>

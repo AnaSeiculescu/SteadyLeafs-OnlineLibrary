@@ -9,6 +9,9 @@ import com.onlinelibrary.steadyleafs.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MemberHomeService {
@@ -51,6 +54,9 @@ public class MemberHomeService {
 	public SignedInMemberDto getMemberWithBorrowedBooks(int memberId) {
 		Member member = memberRepository.findByIdWithBorrowedBooks(memberId)
 				.orElseThrow(() -> new RuntimeException("Member not found"));
+
+		List<Book> borrowedBooks = member.getBorrowedBooks();
+		borrowedBooks.sort(Comparator.comparing(Book::getTitle));
 
 		SignedInMemberDto signedInMemberDto = new SignedInMemberDto();
 

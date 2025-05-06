@@ -7,6 +7,7 @@ import com.onlinelibrary.steadyleafs.model.dto.BookReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.BookUpdateDto;
 import com.onlinelibrary.steadyleafs.repository.BookRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,20 +19,22 @@ public class BookService {
 	private final BookCoverApiService bookCoverApiService;
 
 	public List<BookReturnDto> getAllBooks() {
-		List<Book> booksFromDatabase =  bookRepository.findAll();
+		List<Book> booksFromDatabase =  bookRepository.findAll(Sort.by("title").ascending());
 		return booksFromDatabase.stream()
 				.map(book -> new BookReturnDto().mapFromBook(book))
 				.toList();
 	}
 
 	public List<BookReturnDto> getAvailableBooks() {
-		return bookRepository.findByBorrowedByIsNull().stream()
+		List<Book> availableBooks = bookRepository.findByBorrowedByIsNull(Sort.by("title").ascending());
+		return availableBooks.stream()
 				.map(book -> new BookReturnDto().mapFromBook(book))
 				.toList();
 	}
 
 	public List<BookReturnDto> getLoanedBooks() {
-		return bookRepository.findByBorrowedByIsNotNull().stream()
+		List<Book> loanedBooks = bookRepository.findByBorrowedByIsNotNull(Sort.by("title").ascending());
+		return loanedBooks.stream()
 				.map(book -> new BookReturnDto().mapFromBook(book))
 				.toList();
 	}
