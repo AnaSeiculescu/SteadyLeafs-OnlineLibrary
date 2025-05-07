@@ -41,14 +41,15 @@ public class SecurityConfig {
 						.deleteCookies("JSESSIONID")
 				)
 				.authorizeHttpRequests(authorize -> authorize
-								.requestMatchers("/adminHome/**").hasRole("ADMIN")
-								.requestMatchers("/librarianHome/**").hasAnyRole("LIBRARIAN", "ADMIN")
-								.requestMatchers("/memberHome/**").hasRole("MEMBER")
-								.requestMatchers("/users/**").hasRole("ADMIN")
-								.requestMatchers("/librarians/**").hasRole("ADMIN")
-								.requestMatchers("/").permitAll()
-								.requestMatchers("/login-member", "/login-librarian").permitAll()
-								.anyRequest().authenticated()
+						.requestMatchers("/").permitAll()
+						.requestMatchers("/**").permitAll()
+						.requestMatchers("/login-member", "/login-librarian").permitAll()
+						.requestMatchers("/adminHome/**").hasRole("ADMIN")
+						.requestMatchers("/librarianHome/**").hasAnyRole("LIBRARIAN", "ADMIN")
+						.requestMatchers("/memberHome/**").hasRole("MEMBER")
+						.requestMatchers("/users/**").hasRole("ADMIN")
+						.requestMatchers("/librarians/**").hasRole("ADMIN")
+						.anyRequest().authenticated()
 				);
 		return http.build();
 	}

@@ -1,0 +1,22 @@
+body {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-image: url('../images/background4.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: opacity(0.5);
+  z-index: -1;
+  /*opacity: 0.5;*/
+}
