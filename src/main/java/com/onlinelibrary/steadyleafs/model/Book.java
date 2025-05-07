@@ -1,10 +1,7 @@
 package com.onlinelibrary.steadyleafs.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 //import java.time.LocalDate;
 
@@ -14,6 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Book {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

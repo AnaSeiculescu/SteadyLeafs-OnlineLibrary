@@ -35,6 +35,10 @@ public class UserService {
 	}
 
 	public void createUser(RegistrationDto registrationDto) {
+		if (registrationDto == null) {
+			throw new RuntimeException("Missing new registration data.");
+		}
+
 		User user = userRepository.save(registrationDto.mapToUser(securityConfig.delegatingPasswordEncoder()));
 		userRepository.save(user);
 

@@ -29,8 +29,8 @@ public class MemberService {
 				.toList();
 	}
 
-	public void createMember(Member member) {
-		memberRepository.save(member);
+	public Member createMember(Member member) {
+		return memberRepository.save(member);
 	}
 
 	public MemberUpdateDto updateMember(MemberUpdateDto memberUpdateDto) {

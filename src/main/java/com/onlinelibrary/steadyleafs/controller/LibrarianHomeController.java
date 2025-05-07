@@ -7,6 +7,7 @@ import com.onlinelibrary.steadyleafs.model.dto.*;
 import com.onlinelibrary.steadyleafs.service.BookService;
 import com.onlinelibrary.steadyleafs.service.MemberService;
 import com.onlinelibrary.steadyleafs.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -75,7 +76,7 @@ public class LibrarianHomeController {
 	}
 
 	@PostMapping()
-	public String createBook(Model model, @ModelAttribute BookCreateDto bookCreateDto) {
+	public String createBook(Model model, @ModelAttribute @Valid BookCreateDto bookCreateDto) {
 		bookService.createBook(bookCreateDto);
 		model.addAttribute("bookList", bookService.getAllBooks());
 		return "redirect:/librarianHome";
@@ -94,7 +95,7 @@ public class LibrarianHomeController {
 	}
 
 	@PostMapping("/books/update")
-	public String updateBook(@RequestParam int id, @ModelAttribute BookUpdateDto bookUpdateDto) {
+	public String updateBook(@RequestParam int id, @ModelAttribute @Valid BookUpdateDto bookUpdateDto) {
 		bookService.updateBook(bookUpdateDto);
 		return "redirect:/librarianHome";
 	}

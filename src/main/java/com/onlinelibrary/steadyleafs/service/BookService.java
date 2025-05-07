@@ -6,14 +6,17 @@ import com.onlinelibrary.steadyleafs.model.dto.BookCreateDto;
 import com.onlinelibrary.steadyleafs.model.dto.BookReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.BookUpdateDto;
 import com.onlinelibrary.steadyleafs.repository.BookRepository;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Validated
 public class BookService {
 	private final BookRepository bookRepository;
 	private final BookCoverApiService bookCoverApiService;
@@ -39,11 +42,15 @@ public class BookService {
 				.toList();
 	}
 
-	public void createBook(BookCreateDto bookCreateDto) {
+	public Book createBook(@Valid BookCreateDto bookCreateDto) {
+		if (bookCreateDto == null) {
+			throw new RuntimeException("Missing book data.");
+		}
+
 		Book book = bookCreateDto.mapToBook(bookCreateDto);
 		String bookCoverUrl = bookCoverApiService.getCoverUrl(bookCreateDto.getTitle());
 		book.setCoverUrl(bookCoverUrl);
-		bookRepository.save(book);
+		return bookRepository.save(book);
 	}
 
 	public BookUpdateDto updateBook(BookUpdateDto bookUpdateDto) {

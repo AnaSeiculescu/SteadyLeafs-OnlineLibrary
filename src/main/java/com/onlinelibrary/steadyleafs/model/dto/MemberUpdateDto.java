@@ -3,6 +3,8 @@ package com.onlinelibrary.steadyleafs.model.dto;
 import com.onlinelibrary.steadyleafs.model.Book;
 import com.onlinelibrary.steadyleafs.model.Member;
 import com.onlinelibrary.steadyleafs.model.User;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,9 +18,17 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberUpdateDto {
+
 	private int id;
+
+	@NotBlank(message = "First name is required")
+	@Pattern(regexp = "^[A-Za-z .,'-]{1,100}$", message = "First name must use valid characters")
 	private String firstName;
+
+	@NotBlank(message = "Last name is required")
+	@Pattern(regexp = "^[A-Za-z .,'-]{1,100}$", message = "Last name must use valid characters")
 	private String lastName;
+
 	private int userId;
 	private List<Book> borrowedBooks = new ArrayList<>();
 

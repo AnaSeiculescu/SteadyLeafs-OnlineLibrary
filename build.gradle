@@ -39,8 +39,15 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 //	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testImplementation 'org.mockito:mockito-inline:5.2.0'
+	testImplementation group: 'org.mockito', name: 'mockito-core', version: '5.17.0'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+//test {
+//	useJUnitPlatform()
+//	jvmArgs '-javaagent:${buildDir}/libs/mockito-agent-5.2.0.jar'
+//}
