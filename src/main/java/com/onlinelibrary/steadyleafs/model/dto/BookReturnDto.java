@@ -33,7 +33,7 @@ public class BookReturnDto {
 			bookReturnDto.setBorrowedById(null);
 		}
 
-		bookReturnDto.setMemberReturnDto(new MemberReturnDto().mapFromMember(book.getBorrowedBy()));
+		bookReturnDto.setMemberReturnDto(new MemberReturnDto().mapFromMemberBasic(book.getBorrowedBy()));
 
 		return bookReturnDto;
 	}

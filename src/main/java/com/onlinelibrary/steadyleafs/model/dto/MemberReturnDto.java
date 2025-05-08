@@ -32,6 +32,15 @@ public class MemberReturnDto {
 		return memberReturnDto;
 	}
 
+	public MemberReturnDto mapFromMemberBasic(Member member) {
+		MemberReturnDto memberReturnDto = new MemberReturnDto();
+		memberReturnDto.setId(member.getId());
+		memberReturnDto.setFirstName(member.getFirstName());
+		memberReturnDto.setLastName(member.getLastName());
+		memberReturnDto.setUserId(member.getUser().getId());
+
+		return memberReturnDto;
+	}
 
 //	public Member mapToMember() {
 //		Member member = new Member();
