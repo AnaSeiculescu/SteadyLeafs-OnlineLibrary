@@ -2,6 +2,7 @@ package com.onlinelibrary.steadyleafs.controller;
 
 import com.onlinelibrary.steadyleafs.model.Book;
 import com.onlinelibrary.steadyleafs.model.Librarian;
+import com.onlinelibrary.steadyleafs.model.Member;
 import com.onlinelibrary.steadyleafs.model.User;
 import com.onlinelibrary.steadyleafs.model.dto.*;
 import com.onlinelibrary.steadyleafs.service.BookService;
@@ -57,14 +58,12 @@ public class LibrarianHomeController {
 				bookList = bookService.getAllBooks();
 		}
 
-//		MemberReturnDto member = null;
-//		if (bookId != null) {
-//			BookReturnDto bookFound = bookService.getBookById(bookId);
-//			Integer memberId = bookFound.getBorrowedById();
-//			if (memberId != null) {
-//				member = memberService.getMemberById(memberId);
-//			}
-//		}
+		for (BookReturnDto book : bookList) {
+			if (book.getBorrowedById() != null) {
+				MemberReturnDto member = memberService.getMemberById(book.getBorrowedById());
+				book.setMemberReturnDto(member);
+			}
+		}
 
 		model.addAttribute("bookList", bookList);
 		model.addAttribute("filter", filter);

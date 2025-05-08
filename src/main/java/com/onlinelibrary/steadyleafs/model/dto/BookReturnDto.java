@@ -29,11 +29,11 @@ public class BookReturnDto {
 
 		if (book.getBorrowedBy() != null) {
 			bookReturnDto.setBorrowedById(book.getBorrowedBy().getId());
+			bookReturnDto.setMemberReturnDto(new MemberReturnDto().mapFromMemberBasic(book.getBorrowedBy()));
 		} else {
 			bookReturnDto.setBorrowedById(null);
+			bookReturnDto.setMemberReturnDto(null);
 		}
-
-		bookReturnDto.setMemberReturnDto(new MemberReturnDto().mapFromMemberBasic(book.getBorrowedBy()));
 
 		return bookReturnDto;
 	}
