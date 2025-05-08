@@ -1,13 +1,11 @@
 package com.onlinelibrary.steadyleafs.model.dto;
 
-import com.onlinelibrary.steadyleafs.model.Book;
 import com.onlinelibrary.steadyleafs.model.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -33,5 +31,14 @@ public class MemberReturnDto {
 
 		return memberReturnDto;
 	}
+
+
+//	public Member mapToMember() {
+//		Member member = new Member();
+//		member.setFirstName(this.firstName);
+//		member.setLastName(this.lastName);
+//
+//		return member;
+//	}
 
 }

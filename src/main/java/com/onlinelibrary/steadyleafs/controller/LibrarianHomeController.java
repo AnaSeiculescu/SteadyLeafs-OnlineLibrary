@@ -37,8 +37,8 @@ public class LibrarianHomeController {
 	public String getLibrarianHomePage(
 			Model model,
 			Authentication authentication,
-			@RequestParam(required = false, defaultValue = "all") String filter,
-			@RequestParam(required = false) Integer bookId
+			@RequestParam(required = false, defaultValue = "all") String filter
+//			@RequestParam(required = false) Integer bookId
 	) {
 //		User currentUser = userService.getLoggedInUser(authentication);
 		Librarian currentLibrarian = getLoggedInLibrarian(authentication);
@@ -57,18 +57,18 @@ public class LibrarianHomeController {
 				bookList = bookService.getAllBooks();
 		}
 
-		MemberReturnDto member = null;
-		if (bookId != null) {
-			BookReturnDto bookFound = bookService.getBookById(bookId);
-			Integer memberId = bookFound.getBorrowedById();
-			if (memberId != null) {
-				member = memberService.getMemberById(memberId);
-			}
-		}
+//		MemberReturnDto member = null;
+//		if (bookId != null) {
+//			BookReturnDto bookFound = bookService.getBookById(bookId);
+//			Integer memberId = bookFound.getBorrowedById();
+//			if (memberId != null) {
+//				member = memberService.getMemberById(memberId);
+//			}
+//		}
 
 		model.addAttribute("bookList", bookList);
 		model.addAttribute("filter", filter);
-		model.addAttribute("member", member);
+//		model.addAttribute("member", member);
 		model.addAttribute("currentLibrarian", currentLibrarian);
 		model.addAttribute("activePage", "home");
 

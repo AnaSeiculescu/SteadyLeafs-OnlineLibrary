@@ -17,6 +17,7 @@ public class BookReturnDto {
 	private String coverUrl;
 	private String status;
 	private Integer borrowedById;
+	private MemberReturnDto memberReturnDto;
 
 	public BookReturnDto mapFromBook(Book book) {
 		BookReturnDto bookReturnDto = new BookReturnDto();
@@ -31,6 +32,8 @@ public class BookReturnDto {
 		} else {
 			bookReturnDto.setBorrowedById(null);
 		}
+
+		bookReturnDto.setMemberReturnDto(new MemberReturnDto().mapFromMember(book.getBorrowedBy()));
 
 		return bookReturnDto;
 	}

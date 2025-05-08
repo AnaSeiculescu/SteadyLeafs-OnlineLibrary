@@ -85,13 +85,14 @@
                                         <strong>Author:</strong> <span th:text="${book.author}"></span><br>
                                         <strong>Status:</strong> <span th:text="${book.status}"></span><br>
                                         <strong>Borrowed:</strong>
-                                        <span th:if="${book.borrowedById != null}">
+                                        <span th:if="${book.borrowedById != null and book.memberReturnDto != null}">
                                             <a th:href="@{/librarianHome/members/borrowedBooks(id=${book.borrowedById})}"
-                                               th:text="${member.firstName + ' ' + member.lastName}">Member Name</a>
+                                               th:text="${book.memberReturnDto.firstName + ' ' + book.memberReturnDto.lastName}">Member Name</a>
                                         </span>
                                         <span th:if="${book.borrowedById == null}" class="text-muted">
                                             Not borrowed
                                         </span>
+
                                     </p>
                                 </div>
 
