@@ -57,9 +57,14 @@ public class BookService {
 		Book bookFromDatabase = bookRepository.findById(bookUpdateDto.getId())
 				.orElseThrow(() -> new RuntimeException("Book with id " + bookUpdateDto.getId() + " does not exists"));
 
+		if (!bookFromDatabase.getTitle().equals(bookUpdateDto.getTitle())) {
+			String bookCoverUrl = bookCoverApiService.getCoverUrl(bookUpdateDto.getTitle());
+			bookFromDatabase.setCoverUrl(bookCoverUrl);
+		}
 		bookRepository.save(bookUpdateDto.mapToBook(bookFromDatabase));
 
-		return BookUpdateDto.mapFromBook(bookFromDatabase);
+//		return BookUpdateDto.mapFromBook(bookFromDatabase);
+		return bookUpdateDto;
 	}
 
 	public BookReturnDto getBookById(Integer id) {

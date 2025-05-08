@@ -39,14 +39,12 @@ public class LibrarianHomeController {
 			Model model,
 			Authentication authentication,
 			@RequestParam(required = false, defaultValue = "all") String filter
-//			@RequestParam(required = false) Integer bookId
 	) {
-//		User currentUser = userService.getLoggedInUser(authentication);
+
 		Librarian currentLibrarian = getLoggedInLibrarian(authentication);
 
-		List<BookReturnDto> bookList = bookService.getAllBooks();
+		List<BookReturnDto> bookList;
 
-//		List<BookReturnDto> bookReturnDtoList;
 		switch (filter) {
 			case "loaned":
 				bookList = bookService.getLoanedBooks();
@@ -67,7 +65,6 @@ public class LibrarianHomeController {
 
 		model.addAttribute("bookList", bookList);
 		model.addAttribute("filter", filter);
-//		model.addAttribute("member", member);
 		model.addAttribute("currentLibrarian", currentLibrarian);
 		model.addAttribute("activePage", "home");
 

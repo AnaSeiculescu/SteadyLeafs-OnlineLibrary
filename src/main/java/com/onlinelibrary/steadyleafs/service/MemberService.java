@@ -37,12 +37,10 @@ public class MemberService {
 		Member memberFromDatabase = memberRepository.findById(memberUpdateDto.getId())
 				.orElseThrow(() -> new RuntimeException("Member with id " + memberUpdateDto.getId() + " does not exists"));
 
-
 		memberRepository.save(memberUpdateDto.mapToMember(memberFromDatabase));
+//		MemberUpdateDto updatedMember = MemberUpdateDto.mapFromMember(memberFromDatabase);
 
-		MemberUpdateDto updatedMember = MemberUpdateDto.mapFromMember(memberFromDatabase);
-
-		return updatedMember;
+		return memberUpdateDto;
 	}
 
 	public MemberReturnDto getMemberById(Integer id) {

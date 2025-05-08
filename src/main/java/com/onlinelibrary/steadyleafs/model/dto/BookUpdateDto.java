@@ -28,11 +28,11 @@ public class BookUpdateDto {
 	private String status;
 	private Integer borrowedById;
 
-	public Book mapToBook(Book oldBook) {
-		oldBook.setTitle(this.title);
-		oldBook.setAuthor(this.author);
+	public Book mapToBook(Book book) {
+		book.setTitle(this.title);
+		book.setAuthor(this.author);
 
-		return oldBook;
+		return book;
 	}
 
 	public static BookUpdateDto mapFromBook(Book book) {
