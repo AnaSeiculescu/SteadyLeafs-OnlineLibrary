@@ -47,7 +47,11 @@
         <!--    <h2 class="text-center mb-4" style="margin-top:50px">Welcome, <span th:text="${currentMember.firstName + ' ' + currentMember.lastName}"></span></h2>-->
         <!--&lt;!&ndash;    <h2 class="text-center mb-4" style="margin-top:50px">Welcome, <span sec:authentication="email"></span></h2>&ndash;&gt;-->
 
-        <h3 class="text-center p-5">Your borrowed books</h3>
+        <h3 class="text-center p-5">Your books</h3>
+
+        <div th:if="${#lists.isEmpty(currentMember.borrowedBooks)}" class="d-flex justify-content-center align-items-center" style="height: 30vh;">
+            <p class="text-muted">You haven't borrowed any books yet.</p>
+        </div>
 
         <div class="container">
             <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
