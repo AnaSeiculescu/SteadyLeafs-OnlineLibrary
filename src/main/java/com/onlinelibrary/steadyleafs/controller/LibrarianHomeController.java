@@ -37,14 +37,15 @@ public class LibrarianHomeController {
 	public String getLibrarianHomePage(
 			Model model,
 			Authentication authentication,
-			@RequestParam(required = false, defaultValue = "all") String filter
+			@RequestParam(required = false, defaultValue = "all") String filter,
+			@RequestParam(required = false) Integer bookId
 	) {
 //		User currentUser = userService.getLoggedInUser(authentication);
 		Librarian currentLibrarian = getLoggedInLibrarian(authentication);
 
 		List<BookReturnDto> bookList = bookService.getAllBooks();
 
-		List<BookReturnDto> bookReturnDtoList;
+//		List<BookReturnDto> bookReturnDtoList;
 		switch (filter) {
 			case "loaned":
 				bookList = bookService.getLoanedBooks();
@@ -56,9 +57,18 @@ public class LibrarianHomeController {
 				bookList = bookService.getAllBooks();
 		}
 
+		MemberReturnDto member = null;
+		if (bookId != null) {
+			BookReturnDto bookFound = bookService.getBookById(bookId);
+			Integer memberId = bookFound.getBorrowedById();
+			if (memberId != null) {
+				member = memberService.getMemberById(memberId);
+			}
+		}
+
 		model.addAttribute("bookList", bookList);
 		model.addAttribute("filter", filter);
-//		model.addAttribute("currentUser", currentUser);
+		model.addAttribute("member", member);
 		model.addAttribute("currentLibrarian", currentLibrarian);
 		model.addAttribute("activePage", "home");
 
@@ -167,11 +177,9 @@ public class LibrarianHomeController {
 		Librarian currentLibrarian = getLoggedInLibrarian(authentication);
 
 		MemberReturnDto member = memberService.getMemberById(id);
-//		List<Book> borrowedBooks = bookService.getBooksByBorrowedBy(id);
 
 		model.addAttribute("currentLibrarian", currentLibrarian);
 		model.addAttribute("member", member);
-//		model.addAttribute("borrowedBooks", borrowedBooks);
 
 		return "librarians/members/borrowedBooks";
 	}
