@@ -4,14 +4,8 @@ import com.onlinelibrary.steadyleafs.model.Book;
 import com.onlinelibrary.steadyleafs.model.dto.BookCreateDto;
 import com.onlinelibrary.steadyleafs.model.dto.BookReturnDto;
 import com.onlinelibrary.steadyleafs.repository.BookRepository;
-import jakarta.validation.Validation;
-import jakarta.validation.Validator;
-import jakarta.validation.ValidatorFactory;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Sort;
@@ -24,7 +18,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-//@ExtendWith(MockitoExtension.class)
 public class BookServiceTest {
 
 	@InjectMocks
@@ -52,15 +45,6 @@ public class BookServiceTest {
 		invalidBookDto.setCoverUrl("http://localhost");
 		invalidBookDto.setStatus("available");
 
-//		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-//		Validator validator = factory.getValidator();
-//
-//		var violations = validator.validate(invalidBookDto);
-//		assertFalse(violations.isEmpty());
-//
-//		var violation = violations.iterator().next();
-//		assertEquals("Title must use valid characters", violation.getMessage());
-
 		when(bookRepository.save(any())).thenReturn(new BookCreateDto().mapToBook(invalidBookDto));
 
 //		assertThrows(ConstraintViolationException.class, () -> {
@@ -78,7 +62,6 @@ public class BookServiceTest {
 		BookCreateDto bookCreateDto = new BookCreateDto();
 		bookCreateDto.setTitle("Cenusareasa");
 		bookCreateDto.setAuthor("Perrault");
-//		bookCreateDto.setCoverUrl("http://localhost");
 		bookCreateDto.setStatus("available");
 
 		String mockedCoverUrl = "http://mocked-cover-url.com";
@@ -121,4 +104,56 @@ public class BookServiceTest {
 		assertEquals("Rapunzel", result.get(1).getTitle());
 		assertEquals("Perrault", result.get(0).getAuthor());
 	}
+
+	@Test
+	void getAllBooksWhenNoInputExpectsEmptyList() {
+		when(bookRepository.findAll(Sort.by("title").ascending()))
+				.thenReturn(List.of());
+
+		List<BookReturnDto> result = bookService.getAllBooks();
+
+//		assertTrue(result.isEmpty());
+		assertEquals(0, result.size());
+	}
+
+	@Test
+	void getAllBooksBooksShouldBeSortedByTitle() {
+		Book book1 = new Book();
+		book1.setTitle("Rapunzel");
+
+		Book book2 = new Book();
+		book2.setTitle("Cenusareasa");
+
+		when(bookRepository.findAll(Sort.by("title").ascending()))
+				.thenReturn(List.of(book2, book1));
+
+		List<BookReturnDto> result = bookService.getAllBooks();
+
+		assertEquals("Cenusareasa", result.get(0).getTitle());
+		assertEquals("Rapunzel", result.get(1).getTitle());
+
+	}
+
+	@Test
+	void getAllBooksCheckIfDtoMapIsCorrect() {
+		Book book = new Book();
+		book.setId(1);
+		book.setTitle("Cenusareasa");
+		book.setAuthor("Perrault");
+		book.setCoverUrl("http://mocked-cover-url.com");
+		book.setStatus("available");
+
+		when(bookRepository.findAll(Sort.by("title").ascending()))
+				.thenReturn(List.of(book));
+		List<BookReturnDto> result = bookService.getAllBooks();
+
+		BookReturnDto bookReturnDto = result.get(0);
+
+		assertEquals(1, result.size());
+		assertEquals("Cenusareasa", result.getFirst().getTitle());
+		assertEquals("Perrault", result.getFirst().getAuthor());
+		assertEquals("http://mocked-cover-url.com", result.getFirst().getCoverUrl());
+		assertEquals("available", result.getFirst().getStatus());
+	}
+
 }
