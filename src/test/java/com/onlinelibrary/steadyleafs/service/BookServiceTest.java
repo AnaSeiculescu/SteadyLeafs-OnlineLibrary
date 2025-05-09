@@ -1,6 +1,8 @@
 package com.onlinelibrary.steadyleafs.service;
 
 import com.onlinelibrary.steadyleafs.model.Book;
+import com.onlinelibrary.steadyleafs.model.Member;
+import com.onlinelibrary.steadyleafs.model.User;
 import com.onlinelibrary.steadyleafs.model.dto.BookCreateDto;
 import com.onlinelibrary.steadyleafs.model.dto.BookReturnDto;
 import com.onlinelibrary.steadyleafs.repository.BookRepository;
@@ -150,10 +152,85 @@ public class BookServiceTest {
 		BookReturnDto bookReturnDto = result.get(0);
 
 		assertEquals(1, result.size());
-		assertEquals("Cenusareasa", result.getFirst().getTitle());
-		assertEquals("Perrault", result.getFirst().getAuthor());
-		assertEquals("http://mocked-cover-url.com", result.getFirst().getCoverUrl());
-		assertEquals("available", result.getFirst().getStatus());
+		assertEquals("Cenusareasa", bookReturnDto.getTitle());
+		assertEquals("Perrault", bookReturnDto.getAuthor());
+		assertEquals("http://mocked-cover-url.com", bookReturnDto.getCoverUrl());
+		assertEquals("available", bookReturnDto.getStatus());
+	}
+
+	@Test
+	void getAvailableBooksReturnsMappedDtoList() {
+		Book book1 = new Book();
+		book1.setTitle("Cenusareasa");
+		book1.setAuthor("Perrault");
+		book1.setCoverUrl("http://mocked-cover-url1.com");
+		book1.setStatus("available");
+
+		Book book2 = new Book();
+		book2.setTitle("Rapunzel");
+		book2.setAuthor("Grimm");
+		book2.setCoverUrl("http://mocked-cover-url2.com");
+		book2.setStatus("available");
+
+		List<Book> mockedBooks = List.of(book1, book2);
+
+		when(bookRepository.findByBorrowedByIsNull(Sort.by("title").ascending()))
+				.thenReturn(mockedBooks);
+
+		List<BookReturnDto> result = bookService.getAvailableBooks();
+
+		assertEquals(2, result.size());
+
+		BookReturnDto dto1 = result.get(0);
+		assertEquals("Cenusareasa", dto1.getTitle());
+		assertEquals("Perrault", dto1.getAuthor());
+		assertEquals("http://mocked-cover-url1.com", dto1.getCoverUrl());
+		assertEquals("available", dto1.getStatus());
+
+		BookReturnDto dto2 = result.get(1);
+		assertEquals("Rapunzel", dto2.getTitle());
+		assertEquals("Grimm", dto2.getAuthor());
+		assertEquals("http://mocked-cover-url2.com", dto2.getCoverUrl());
+		assertEquals("available", dto2.getStatus());
+	}
+
+	@Test
+	void getLoanedBooksReturnsMappedDtoList() {
+
+		Book book1 = new Book();
+		book1.setTitle("Cenusareasa");
+		book1.setAuthor("Perrault");
+		book1.setCoverUrl("http://mocked-cover-url1.com");
+		book1.setStatus("BORROWED");
+		book1.setBorrowedBy(new Member());
+
+		Book book2 = new Book();
+		book2.setTitle("Rapunzel");
+		book2.setAuthor("Grimm");
+		book2.setCoverUrl("http://mocked-cover-url2.com");
+		book2.setStatus("BORROWED");
+		book2.setBorrowedBy(new Member());
+
+		List<Book> mockedBooks = List.of(book1, book2);
+
+		when(bookRepository.findByBorrowedByIsNotNull(Sort.by("title").ascending()))
+				.thenReturn(mockedBooks);
+
+		List<BookReturnDto> result = bookService.getLoanedBooks();
+
+		assertEquals(2, result.size());
+
+//		BookReturnDto dto1 = result.get(0);
+//		assertEquals("Cenusareasa", dto1.getTitle());
+//		assertEquals("Perrault", dto1.getAuthor());
+//		assertEquals("http://mocked-cover-url1.com", dto1.getCoverUrl());
+//		assertEquals("available", dto1.getStatus());
+//
+//		BookReturnDto dto2 = result.get(1);
+//		assertEquals("Rapunzel", dto2.getTitle());
+//		assertEquals("Grimm", dto2.getAuthor());
+//		assertEquals("http://mocked-cover-url2.com", dto2.getCoverUrl());
+//		assertEquals("available", dto2.getStatus());
 	}
 
 }
