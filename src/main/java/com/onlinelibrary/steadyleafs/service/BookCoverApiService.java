@@ -26,9 +26,12 @@ public class BookCoverApiService {
 				if (data.getDocs() != null && !data.getDocs().isEmpty()) {
 					Doc firstDoc = data.getDocs().get(0);
 
-					System.out.println("FIRST DOC = " + firstDoc);
+					System.out.println("FIRST DOC = " + firstDoc.toString());
 
 					int coverId = firstDoc.getCover_i();
+					if (coverId == 0) {
+						return DEFAULT_COVER_URL;
+					}
 					return "https://covers.openlibrary.org/b/id/" + coverId + "-M.jpg";
 				}
 			}
