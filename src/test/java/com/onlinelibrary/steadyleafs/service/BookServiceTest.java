@@ -196,20 +196,33 @@ public class BookServiceTest {
 
 	@Test
 	void getLoanedBooksReturnsMappedDtoList() {
+		User user1 = new User();
+		user1.setId(1);
+		user1.setEmail("user1@email.com");
+
+		User user2 = new User();
+		user2.setId(2);
+		user2.setEmail("user2@email.com");
+
+		Member member1 = new Member();
+		member1.setUser(user1);
+
+		Member member2 = new Member();
+		member2.setUser(user2);
 
 		Book book1 = new Book();
 		book1.setTitle("Cenusareasa");
 		book1.setAuthor("Perrault");
 		book1.setCoverUrl("http://mocked-cover-url1.com");
 		book1.setStatus("BORROWED");
-		book1.setBorrowedBy(new Member());
+		book1.setBorrowedBy(member1);
 
 		Book book2 = new Book();
 		book2.setTitle("Rapunzel");
 		book2.setAuthor("Grimm");
 		book2.setCoverUrl("http://mocked-cover-url2.com");
 		book2.setStatus("BORROWED");
-		book2.setBorrowedBy(new Member());
+		book2.setBorrowedBy(member2);
 
 		List<Book> mockedBooks = List.of(book1, book2);
 
@@ -219,18 +232,10 @@ public class BookServiceTest {
 		List<BookReturnDto> result = bookService.getLoanedBooks();
 
 		assertEquals(2, result.size());
-
-//		BookReturnDto dto1 = result.get(0);
-//		assertEquals("Cenusareasa", dto1.getTitle());
-//		assertEquals("Perrault", dto1.getAuthor());
-//		assertEquals("http://mocked-cover-url1.com", dto1.getCoverUrl());
-//		assertEquals("available", dto1.getStatus());
-//
-//		BookReturnDto dto2 = result.get(1);
-//		assertEquals("Rapunzel", dto2.getTitle());
-//		assertEquals("Grimm", dto2.getAuthor());
-//		assertEquals("http://mocked-cover-url2.com", dto2.getCoverUrl());
-//		assertEquals("available", dto2.getStatus());
+		assertEquals("Cenusareasa", result.get(0).getTitle());
+		assertEquals("Rapunzel", result.get(1).getTitle());
 	}
+
+
 
 }
