@@ -14,7 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
-import javax.management.RuntimeErrorException;
 import java.util.List;
 import java.util.Optional;
 
@@ -267,6 +266,24 @@ public class BookServiceTest {
 	}
 
 	@Test
+	void getBookByIdWhenNullInputShouldThrowException() {
+		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> bookService.getBookById(null));
+		assertEquals("ID cannot be null", exception.getMessage());
+
+		verify(bookRepository, never()).findById(any());
+	}
+
+	@Test
+	void getBookByIdWhenNegativeInputShouldThrowException() {
+		when(bookRepository.findById(-1)).thenReturn(Optional.empty());
+
+		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> bookService.getBookById(-1));
+		assertEquals("ID cannot be negative", exception.getMessage());
+
+		verify(bookRepository, never()).findById(-1);
+	}
+
+	@Test
 	void updateBookAuthorChangesShouldSaveNewAuthor_TitleAndCoverStaysTheSame() {
 		BookUpdateDto bookUpdateDto = new BookUpdateDto();
 		bookUpdateDto.setId(1);
@@ -327,6 +344,49 @@ public class BookServiceTest {
 
 		RuntimeException exception = assertThrows(RuntimeException.class, () -> bookService.updateBook(bookUpdateDto));
 		assertEquals("Book with id 95 does not exists", exception.getMessage());
+	}
+
+	@Test
+	void deleteBookWhenBookExists() {
+		Book book = new Book();
+		book.setId(1);
+		book.setTitle("Rapunzel");
+
+		when(bookRepository.findById(1)).thenReturn(Optional.of(book));
+
+		doNothing().when(bookRepository).deleteById(1);
+
+		bookService.deleteBook(1);
+
+		verify(bookRepository).deleteById(1);
+	}
+
+	@Test
+	void deleteBookWhenBookDoesNotExistsThrowsException() {
+		when(bookRepository.findById(95)).thenReturn(Optional.empty());
+
+		RuntimeException exception = assertThrows(RuntimeException.class, () -> bookService.deleteBook(95));
+		assertEquals("Book with id 95 does not exists", exception.getMessage());
+
+		verify(bookRepository, never()).deleteById(95);
+	}
+
+	@Test
+	void deleteBookWhenNullInputShouldThrowException() {
+		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> bookService.deleteBook(null));
+		assertEquals("ID cannot be null", exception.getMessage());
+
+		verify(bookRepository, never()).deleteById(any());
+	}
+
+	@Test
+	void deleteBookWhenNegativeInputShouldThrowException() {
+		when(bookRepository.findById(-1)).thenReturn(Optional.empty());
+
+		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> bookService.deleteBook(-1));
+		assertEquals("ID cannot be negative", exception.getMessage());
+
+		verify(bookRepository, never()).deleteById(-1);
 	}
 
 }

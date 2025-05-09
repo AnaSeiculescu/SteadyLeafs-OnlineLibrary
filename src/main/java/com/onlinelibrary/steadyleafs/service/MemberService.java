@@ -44,6 +44,13 @@ public class MemberService {
 	}
 
 	public MemberReturnDto getMemberById(Integer id) {
+		if (id == null) {
+			throw new IllegalArgumentException("ID cannot be null");
+		}
+		if (id < 0) {
+			throw new IllegalArgumentException("ID cannot be negative");
+		}
+
 		Member member = memberRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("User with id " + id + " does not exists"));
 
@@ -62,6 +69,13 @@ public class MemberService {
 	}
 
 	public void deleteMember(Integer id) {
+		if (id == null) {
+			throw new IllegalArgumentException("ID cannot be null");
+		}
+		if (id < 0) {
+			throw new IllegalArgumentException("ID cannot be negative");
+		}
+
 		Member member = memberRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("User with id " + id + " does not exists"));
 		memberRepository.deleteById(member.getId());

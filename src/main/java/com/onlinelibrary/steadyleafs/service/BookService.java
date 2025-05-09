@@ -68,12 +68,26 @@ public class BookService {
 	}
 
 	public BookReturnDto getBookById(Integer id) {
+		if (id == null) {
+			throw new IllegalArgumentException("ID cannot be null");
+		}
+		if (id < 0) {
+			throw new IllegalArgumentException("ID cannot be negative");
+		}
+
 		Book book = bookRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Book with id " + id + " does not exists"));
 		return new BookReturnDto().mapFromBook(book);
 	}
 
 	public void deleteBook(Integer id) {
+		if (id == null) {
+			throw new IllegalArgumentException("ID cannot be null");
+		}
+		if (id < 0) {
+			throw new IllegalArgumentException("ID cannot be negative");
+		}
+
 		getBookById(id);
 		bookRepository.deleteById(id);
 	}
