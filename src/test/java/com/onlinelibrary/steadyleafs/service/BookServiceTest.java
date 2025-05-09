@@ -5,6 +5,7 @@ import com.onlinelibrary.steadyleafs.model.Member;
 import com.onlinelibrary.steadyleafs.model.User;
 import com.onlinelibrary.steadyleafs.model.dto.BookCreateDto;
 import com.onlinelibrary.steadyleafs.model.dto.BookReturnDto;
+import com.onlinelibrary.steadyleafs.model.dto.BookUpdateDto;
 import com.onlinelibrary.steadyleafs.repository.BookRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -13,11 +14,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
+import javax.management.RuntimeErrorException;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 public class BookServiceTest {
@@ -236,6 +239,94 @@ public class BookServiceTest {
 		assertEquals("Rapunzel", result.get(1).getTitle());
 	}
 
+	@Test
+	void getBookByIdWhenBookExistsReturnsMappedDto() {
+		Book book1 = new Book();
+		book1.setId(1);
+		book1.setTitle("Rapunzel");
+		book1.setAuthor("Grimm");
+		book1.setCoverUrl("http://mocked-cover-url.com");
+		book1.setStatus("available");
 
+		when(bookRepository.findById(1)).thenReturn(Optional.of(book1));
+
+		BookReturnDto bookReturnDto = bookService.getBookById(1);
+
+		assertEquals("Rapunzel", bookReturnDto.getTitle());
+		assertEquals("Grimm", bookReturnDto.getAuthor());
+		assertEquals("http://mocked-cover-url.com", bookReturnDto.getCoverUrl());
+		assertEquals("available", bookReturnDto.getStatus());
+	}
+
+	@Test
+	void getBookByIdWhenBookDoesNotExistsThrowsException() {
+		when(bookRepository.findById(95)).thenReturn(Optional.empty());
+
+		RuntimeException exception = assertThrows(RuntimeException.class, () -> bookService.getBookById(95));
+		assertEquals("Book with id 95 does not exists", exception.getMessage());
+	}
+
+	@Test
+	void updateBookAuthorChangesShouldSaveNewAuthor_TitleAndCoverStaysTheSame() {
+		BookUpdateDto bookUpdateDto = new BookUpdateDto();
+		bookUpdateDto.setId(1);
+		bookUpdateDto.setTitle("Rapunzel");
+		bookUpdateDto.setAuthor("Grimm");
+
+		Book bookFromDatabase = new Book();
+		bookFromDatabase.setId(1);
+		bookFromDatabase.setTitle("Rapunzel");
+		bookFromDatabase.setAuthor("Old Title");
+
+		when(bookRepository.findById(1)).thenReturn(Optional.of(bookFromDatabase));
+		when(bookRepository.save(any(Book.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+		BookUpdateDto result = bookService.updateBook(bookUpdateDto);
+
+		verify(bookCoverApiService, never()).getCoverUrl(anyString());
+		verify(bookRepository).save(argThat(savedBook ->
+				savedBook.getAuthor().equals("Grimm") &&
+				savedBook.getTitle().equals("Rapunzel")
+		));
+	}
+
+	@Test
+	void updateBookWhenTitleChangesCoverShouldChangeToo() {
+		BookUpdateDto bookUpdateDto = new BookUpdateDto();
+		bookUpdateDto.setId(1);
+		bookUpdateDto.setTitle("New Title");
+
+		Book bookFromDatabase = new Book();
+		bookFromDatabase.setId(1);
+		bookFromDatabase.setTitle("Rapunzel");
+
+		when(bookRepository.findById(1)).thenReturn(Optional.of(bookFromDatabase));
+		when(bookCoverApiService.getCoverUrl("New Title")).thenReturn("http://new-cover-url.com");
+
+		BookUpdateDto result = bookService.updateBook(bookUpdateDto);
+
+		Book savedBook = new Book();
+		savedBook.setId(1);
+		savedBook.setTitle("New Title");
+		savedBook.setCoverUrl("http://new-cover-url.com");
+
+		when(bookRepository.save(any(Book.class))).thenReturn(savedBook);
+
+		assertEquals("New Title", result.getTitle());
+		verify(bookCoverApiService).getCoverUrl("New Title");
+		verify(bookRepository).save(any(Book.class));
+	}
+
+	@Test
+	void updateBookWhenBookNotFoundShouldThrowException() {
+		BookUpdateDto bookUpdateDto = new BookUpdateDto();
+		bookUpdateDto.setId(95);
+		bookUpdateDto.setTitle("Rapunzel");
+
+		when(bookRepository.findById(95)).thenReturn(Optional.empty());
+
+		RuntimeException exception = assertThrows(RuntimeException.class, () -> bookService.updateBook(bookUpdateDto));
+		assertEquals("Book with id 95 does not exists", exception.getMessage());
+	}
 
 }
