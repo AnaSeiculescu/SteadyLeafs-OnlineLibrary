@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.List;
 
@@ -22,18 +23,18 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-//@SpringBootTest
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
+//@ExtendWith(MockitoExtension.class)
 public class BookServiceTest {
 
 	@InjectMocks
 	@Autowired
 	BookService bookService;
 
-	@Mock
+	@MockitoBean
 	BookRepository bookRepository;
 
-	@Mock
+	@MockitoBean
 	BookCoverApiService bookCoverApiService;
 
 	@Test
@@ -51,23 +52,23 @@ public class BookServiceTest {
 		invalidBookDto.setCoverUrl("http://localhost");
 		invalidBookDto.setStatus("available");
 
-		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-		Validator validator = factory.getValidator();
-
-		var violations = validator.validate(invalidBookDto);
-		assertFalse(violations.isEmpty());
-
-		var violation = violations.iterator().next();
-		assertEquals("Title must use valid characters", violation.getMessage());
-
-//		when(bookRepository.save(any())).thenReturn(new BookCreateDto().mapToBook(invalidBookDto));
+//		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+//		Validator validator = factory.getValidator();
 //
-////		assertThrows(ConstraintViolationException.class, () -> {
-////			bookService.createBook(invalidBookDto);
-////		});
+//		var violations = validator.validate(invalidBookDto);
+//		assertFalse(violations.isEmpty());
 //
-//		RuntimeException exception = assertThrows(RuntimeException.class, () -> bookService.createBook(invalidBookDto));
-//		assertEquals("createBook.bookCreateDto.title: Title must use valid characters", exception.getMessage());
+//		var violation = violations.iterator().next();
+//		assertEquals("Title must use valid characters", violation.getMessage());
+
+		when(bookRepository.save(any())).thenReturn(new BookCreateDto().mapToBook(invalidBookDto));
+
+//		assertThrows(ConstraintViolationException.class, () -> {
+//			bookService.createBook(invalidBookDto);
+//		});
+
+		RuntimeException exception = assertThrows(RuntimeException.class, () -> bookService.createBook(invalidBookDto));
+		assertEquals("createBook.bookCreateDto.title: Title must use valid characters", exception.getMessage());
 
 	}
 
