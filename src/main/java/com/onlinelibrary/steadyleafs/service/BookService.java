@@ -44,7 +44,7 @@ public class BookService {
 
 	public Book createBook(@Valid BookCreateDto bookCreateDto) {
 		if (bookCreateDto == null) {
-			throw new RuntimeException("Missing book data.");
+			throw new RuntimeException("Missing book data");
 		}
 
 		Book book = bookCreateDto.mapToBook(bookCreateDto);

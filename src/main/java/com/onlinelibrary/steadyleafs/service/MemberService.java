@@ -30,6 +30,10 @@ public class MemberService {
 	}
 
 	public Member createMember(Member member) {
+		if (member == null) {
+			throw new RuntimeException("Missing member data");
+		}
+
 		return memberRepository.save(member);
 	}
 

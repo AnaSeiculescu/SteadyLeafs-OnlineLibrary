@@ -37,11 +37,11 @@ public class BookServiceTest {
 	@Test
 	public void createBookWhenNoDataExpectException() {
 		RuntimeException exception = assertThrows(RuntimeException.class, () -> bookService.createBook(null));
-		assertEquals("Missing book data.", exception.getMessage());
+		assertEquals("Missing book data", exception.getMessage());
 	}
 
 	@Test
-	void createBookGivenInvalidInputShouldThrowException() {
+	void createBookGivenInvalidInputExpectException() {
 
 		BookCreateDto invalidBookDto = new BookCreateDto();
 		invalidBookDto.setTitle("Cinderella$#");
@@ -110,7 +110,7 @@ public class BookServiceTest {
 	}
 
 	@Test
-	void getAllBooksWhenNoInputExpectsEmptyList() {
+	void getAllBooksWhenNoInputExpectEmptyList() {
 		when(bookRepository.findAll(Sort.by("title").ascending()))
 				.thenReturn(List.of());
 
@@ -258,7 +258,7 @@ public class BookServiceTest {
 	}
 
 	@Test
-	void getBookByIdWhenBookDoesNotExistsThrowsException() {
+	void getBookByIdWhenBookDoesNotExistsExpectException() {
 		when(bookRepository.findById(95)).thenReturn(Optional.empty());
 
 		RuntimeException exception = assertThrows(RuntimeException.class, () -> bookService.getBookById(95));
@@ -266,7 +266,7 @@ public class BookServiceTest {
 	}
 
 	@Test
-	void getBookByIdWhenNullInputShouldThrowException() {
+	void getBookByIdWhenNullInputExpectException() {
 		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> bookService.getBookById(null));
 		assertEquals("ID cannot be null", exception.getMessage());
 
@@ -274,7 +274,7 @@ public class BookServiceTest {
 	}
 
 	@Test
-	void getBookByIdWhenNegativeInputShouldThrowException() {
+	void getBookByIdWhenNegativeInputExpectException() {
 		when(bookRepository.findById(-1)).thenReturn(Optional.empty());
 
 		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> bookService.getBookById(-1));
@@ -335,7 +335,7 @@ public class BookServiceTest {
 	}
 
 	@Test
-	void updateBookWhenBookNotFoundShouldThrowException() {
+	void updateBookWhenBookNotFoundExpectException() {
 		BookUpdateDto bookUpdateDto = new BookUpdateDto();
 		bookUpdateDto.setId(95);
 		bookUpdateDto.setTitle("Rapunzel");
@@ -372,7 +372,7 @@ public class BookServiceTest {
 	}
 
 	@Test
-	void deleteBookWhenNullInputShouldThrowException() {
+	void deleteBookWhenNullInputExpectException() {
 		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> bookService.deleteBook(null));
 		assertEquals("ID cannot be null", exception.getMessage());
 
@@ -380,7 +380,7 @@ public class BookServiceTest {
 	}
 
 	@Test
-	void deleteBookWhenNegativeInputShouldThrowException() {
+	void deleteBookWhenNegativeInputExpectException() {
 		when(bookRepository.findById(-1)).thenReturn(Optional.empty());
 
 		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> bookService.deleteBook(-1));
