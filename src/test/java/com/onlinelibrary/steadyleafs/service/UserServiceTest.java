@@ -1,16 +1,17 @@
 package com.onlinelibrary.steadyleafs.service;
 
-import com.onlinelibrary.steadyleafs.model.Book;
+import com.onlinelibrary.steadyleafs.model.Librarian;
 import com.onlinelibrary.steadyleafs.model.Member;
 import com.onlinelibrary.steadyleafs.model.User;
-import com.onlinelibrary.steadyleafs.model.dto.BookReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.RegistrationDto;
 import com.onlinelibrary.steadyleafs.model.dto.UserReturnDto;
+import com.onlinelibrary.steadyleafs.model.dto.UserUpdateDto;
 import com.onlinelibrary.steadyleafs.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
@@ -26,16 +27,25 @@ class UserServiceTest {
 
 	@InjectMocks
 	@Autowired
-	UserService userService;
+	private UserService userService;
 
 	@MockitoBean
-	UserRepository userRepository;
+	private UserRepository userRepository;
 
 	@MockitoBean
 	private PasswordEncoder passwordEncoder;
 
 	@MockitoBean
-	MemberService memberService;
+	private MemberService memberService;
+
+	@MockitoBean
+	private LibrarianService librarianService;
+
+	@MockitoBean
+	private Authentication authentication;
+
+	@MockitoBean
+	private MyUserDetails myUserDetails;
 
 	@Test
 	void createUserWithNoDataExpectException() {
@@ -168,5 +178,140 @@ class UserServiceTest {
 		assertEquals("ID cannot be negative", exception.getMessage());
 
 		verify(userRepository, never()).findById(-1);
+	}
+
+	@Test
+	void updateUserEmailChanges() {
+		UserUpdateDto userUpdateDto = new UserUpdateDto();
+		userUpdateDto.setId(1);
+		userUpdateDto.setEmail("new@email.com");
+		userUpdateDto.setRole("ROLE_MEMBER");
+
+		User userFromDatabase = new User();
+		userFromDatabase.setId(1);
+		userFromDatabase.setEmail("old@email.com");
+		userFromDatabase.setRole("ROLE_MEMBER");
+
+		when(userRepository.findById(1))
+				.thenReturn(Optional.of(userFromDatabase));
+		when(userRepository.save(any(User.class)))
+				.thenAnswer(invocation -> invocation.getArgument(0));
+
+		UserUpdateDto result = userService.updateUser(userUpdateDto);
+
+		assertEquals("new@email.com", result.getEmail());
+		assertEquals("ROLE_MEMBER", result.getRole());
+	}
+
+	@Test
+	void updateUserWhenUserNotFoundExpectException() {
+		UserUpdateDto userUpdateDto = new UserUpdateDto();
+		userUpdateDto.setId(95);
+		userUpdateDto.setEmail("new@email.com");
+
+		when(userRepository.findById(95))
+				.thenReturn(Optional.empty());
+
+		RuntimeException exception = assertThrows(RuntimeException.class, () -> userService.updateUser(userUpdateDto));
+		assertEquals("User with id 95 does not exists", exception.getMessage());
+	}
+
+	@Test
+	void convertMemberToLibrarianIfTheUsersRoleChangesToLibrarianALibrarianIsCreated() {
+		Member member = new Member();
+		member.setId(5);
+
+		User user = new User();
+		user.setId(1);
+		user.setMember(member);
+		member.setUser(user);
+
+		Librarian librarian = new Librarian();
+		librarian.setId(3);
+		librarian.setUser(user);
+
+		when(librarianService.createLibrarian(member))
+				.thenReturn(librarian);
+
+		when(userRepository.save(any(User.class)))
+				.thenAnswer(invocation -> invocation.getArgument(0));
+
+		User result = userService.convertMemberToLibrarian(user);
+
+		assertNull(result.getMember());
+		assertEquals(librarian, result.getLibrarian());
+
+		verify(userRepository, times(2)).save(user);
+		verify(librarianService).createLibrarian(member);
+		verify(memberService).deleteMember(member.getId());
+	}
+
+	@Test
+	void convertMemberToLibrarianGivenUserWithoutMemberExpectException() {
+		User user = new User();
+
+		Exception exception = assertThrows(IllegalStateException.class, () -> userService.convertMemberToLibrarian(user));
+
+		assertEquals("Member not found. User is not a member.", exception.getMessage());
+	}
+
+	@Test
+	void deleteUserWhenUserExists() {
+		User user = new User();
+		user.setId(1);
+		user.setEmail("user@email.com");
+
+		when(userRepository.findById(1))
+				.thenReturn(Optional.of(user));
+
+		userService.deleteUser(1);
+
+		verify(userRepository).deleteById(1);
+	}
+
+	@Test
+	void deleteUserWhenUserDoesNotExistsThrowsException() {
+		when(userRepository.findById(95))
+				.thenReturn(Optional.empty());
+
+		RuntimeException exception = assertThrows(RuntimeException.class, () -> userService.deleteUser(95));
+		assertEquals("User with id 95 does not exists", exception.getMessage());
+
+		verify(userRepository, never()).deleteById(95);
+	}
+
+	@Test
+	void deleteUserWhenNullInputExpectException() {
+		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> userService.deleteUser(null));
+		assertEquals("ID cannot be null", exception.getMessage());
+
+		verify(userRepository, never()).deleteById(any());
+	}
+
+	@Test
+	void deleteUserWhenNegativeInputExpectException() {
+		when(userRepository.findById(-1))
+				.thenReturn(Optional.empty());
+
+		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> userService.deleteUser(-1));
+		assertEquals("ID cannot be negative", exception.getMessage());
+
+		verify(userRepository, never()).deleteById(-1);
+	}
+
+	@Test
+	void getLoggedInUserExpectCorrectUser() {
+		User expectedUser = new User();
+		expectedUser.setId(1);
+		expectedUser.setEmail("user@email.com");
+
+		when(myUserDetails.getUser())
+				.thenReturn(expectedUser);
+		when(authentication.getPrincipal())
+				.thenReturn(myUserDetails);
+
+		User actualUser = userService.getLoggedInUser(authentication);
+
+		assertEquals(expectedUser, actualUser);
 	}
 }

@@ -26,13 +26,13 @@ public class BookServiceTest {
 
 	@InjectMocks
 	@Autowired
-	BookService bookService;
+	private BookService bookService;
 
 	@MockitoBean
-	BookRepository bookRepository;
+	private BookRepository bookRepository;
 
 	@MockitoBean
-	BookCoverApiService bookCoverApiService;
+	private BookCoverApiService bookCoverApiService;
 
 	@Test
 	public void createBookWhenNoDataExpectException() {
@@ -302,7 +302,8 @@ public class BookServiceTest {
 
 		when(bookRepository.findById(1))
 				.thenReturn(Optional.of(bookFromDatabase));
-		when(bookRepository.save(any(Book.class))).thenAnswer(invocation -> invocation.getArgument(0));
+		when(bookRepository.save(any(Book.class)))
+				.thenAnswer(invocation -> invocation.getArgument(0));
 
 		BookUpdateDto result = bookService.updateBook(bookUpdateDto);
 
@@ -363,8 +364,6 @@ public class BookServiceTest {
 
 		when(bookRepository.findById(1))
 				.thenReturn(Optional.of(book));
-
-		doNothing().when(bookRepository).deleteById(1);
 
 		bookService.deleteBook(1);
 
