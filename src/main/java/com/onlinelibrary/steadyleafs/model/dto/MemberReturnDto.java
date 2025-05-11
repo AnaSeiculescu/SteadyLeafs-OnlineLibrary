@@ -24,7 +24,13 @@ public class MemberReturnDto {
 		memberReturnDto.setId(member.getId());
 		memberReturnDto.setFirstName(member.getFirstName());
 		memberReturnDto.setLastName(member.getLastName());
-		memberReturnDto.setUserId(member.getUser().getId());
+
+		if (member.getUser() != null) {
+			memberReturnDto.setUserId(member.getUser().getId());
+		} else {
+			System.out.println("Member with ID " + member.getId() + " has no associated User.");
+		}
+
 		memberReturnDto.setBorrowedBooks(member.getBorrowedBooks().stream()
 				.map(book -> new BookReturnDto().mapFromBook(book))
 				.toList());
