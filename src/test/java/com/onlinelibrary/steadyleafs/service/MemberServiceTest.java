@@ -24,4 +24,6 @@ class MemberServiceTest {
 		RuntimeException exception = assertThrows(RuntimeException.class, () -> memberService.createMember(null));
 		assertEquals("Missing member data", exception.getMessage());
 	}
+
+
 }

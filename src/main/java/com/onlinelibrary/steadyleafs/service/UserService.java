@@ -7,14 +7,16 @@ import com.onlinelibrary.steadyleafs.model.User;
 import com.onlinelibrary.steadyleafs.model.dto.RegistrationDto;
 import com.onlinelibrary.steadyleafs.model.dto.UserReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.UserUpdateDto;
-import com.onlinelibrary.steadyleafs.repository.LibrarianRepository;
 import com.onlinelibrary.steadyleafs.repository.UserRepository;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +28,8 @@ public class UserService {
 	@Autowired
 	SecurityConfig securityConfig;
 
+	private final Validator validator;
+
 	public List<UserReturnDto> getAllUsers() {
 		List<User> usersFromDatabase = userRepository.findAll();
 
@@ -34,9 +38,14 @@ public class UserService {
 				.toList();
 	}
 
-	public void createUser(RegistrationDto registrationDto) {
+	public User createUser(RegistrationDto registrationDto) {
 		if (registrationDto == null) {
-			throw new RuntimeException("Missing new registration data.");
+			throw new RuntimeException("Missing new registration data");
+		}
+
+		Set<ConstraintViolation<RegistrationDto>> violations = validator.validate(registrationDto);
+		if (!violations.isEmpty()) {
+			throw new RuntimeException(violations.iterator().next().getMessage());
 		}
 
 		User user = userRepository.save(registrationDto.mapToUser(securityConfig.delegatingPasswordEncoder()));
@@ -45,6 +54,7 @@ public class UserService {
 		Member member = registrationDto.mapToMember();
 		member.setUser(user);
 		memberService.createMember(member);
+		return user;
 	}
 
 	public User getUserById(Integer id) {
