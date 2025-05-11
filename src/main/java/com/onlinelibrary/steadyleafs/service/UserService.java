@@ -57,10 +57,19 @@ public class UserService {
 		return user;
 	}
 
-	public User getUserById(Integer id) {
+	public UserReturnDto getUserById(Integer id) {
+		if (id == null) {
+			throw new IllegalArgumentException("ID cannot be null");
+		}
+		if (id < 0) {
+			throw new IllegalArgumentException("ID cannot be negative");
+		}
+
 		User user = userRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("User with id " + id + " does not exists"));
-		return user;
+
+		UserReturnDto userReturnDto = new UserReturnDto();
+		return userReturnDto.mapFromUser(user);
 	}
 
 	public UserUpdateDto updateUser(UserUpdateDto userUpdateDto) {

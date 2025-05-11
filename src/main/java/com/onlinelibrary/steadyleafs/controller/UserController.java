@@ -49,9 +49,11 @@ public class UserController {
 
 	@GetMapping("/updateForm")
 	public String getUpdateUserForm(Model model, @RequestParam int id) {
-		User user = userService.getUserById(id);
-		UserUpdateDto userUpdateDto = UserUpdateDto.mapFromUser(user);
-		model.addAttribute("userUpdateDto", userUpdateDto);
+		UserReturnDto userReturnDto = userService.getUserById(id);
+//		UserUpdateDto userUpdateDto = UserUpdateDto.mapFromUser(user);
+//		model.addAttribute("userUpdateDto", userUpdateDto);
+
+		model.addAttribute("userUpdateDto", userReturnDto);
 		model.addAttribute("userId", id);
 
 		return "users/updateUserForm";

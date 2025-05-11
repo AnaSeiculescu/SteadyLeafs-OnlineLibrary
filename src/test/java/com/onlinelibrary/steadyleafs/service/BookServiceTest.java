@@ -49,7 +49,8 @@ public class BookServiceTest {
 		invalidBookDto.setCoverUrl("http://localhost");
 		invalidBookDto.setStatus("available");
 
-		when(bookRepository.save(any())).thenReturn(new BookCreateDto().mapToBook(invalidBookDto));
+		when(bookRepository.save(any()))
+				.thenReturn(new BookCreateDto().mapToBook(invalidBookDto));
 
 //		assertThrows(ConstraintViolationException.class, () -> {
 //			bookService.createBook(invalidBookDto);
@@ -70,8 +71,10 @@ public class BookServiceTest {
 
 		String mockedCoverUrl = "http://mocked-cover-url.com";
 
-		when(bookCoverApiService.getCoverUrl("Cenusareasa")).thenReturn(mockedCoverUrl);
-		when(bookRepository.save(any())).thenReturn(new BookCreateDto().mapToBook(bookCreateDto));
+		when(bookCoverApiService.getCoverUrl("Cenusareasa"))
+				.thenReturn(mockedCoverUrl);
+		when(bookRepository.save(any()))
+				.thenReturn(new BookCreateDto().mapToBook(bookCreateDto));
 
 		Book createdBook = bookService.createBook(bookCreateDto);
 
@@ -247,7 +250,8 @@ public class BookServiceTest {
 		book1.setCoverUrl("http://mocked-cover-url.com");
 		book1.setStatus("available");
 
-		when(bookRepository.findById(1)).thenReturn(Optional.of(book1));
+		when(bookRepository.findById(1))
+				.thenReturn(Optional.of(book1));
 
 		BookReturnDto bookReturnDto = bookService.getBookById(1);
 
@@ -259,7 +263,8 @@ public class BookServiceTest {
 
 	@Test
 	void getBookByIdWhenBookDoesNotExistsExpectException() {
-		when(bookRepository.findById(95)).thenReturn(Optional.empty());
+		when(bookRepository.findById(95))
+				.thenReturn(Optional.empty());
 
 		RuntimeException exception = assertThrows(RuntimeException.class, () -> bookService.getBookById(95));
 		assertEquals("Book with id 95 does not exists", exception.getMessage());
@@ -295,7 +300,8 @@ public class BookServiceTest {
 		bookFromDatabase.setTitle("Rapunzel");
 		bookFromDatabase.setAuthor("Old Title");
 
-		when(bookRepository.findById(1)).thenReturn(Optional.of(bookFromDatabase));
+		when(bookRepository.findById(1))
+				.thenReturn(Optional.of(bookFromDatabase));
 		when(bookRepository.save(any(Book.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
 		BookUpdateDto result = bookService.updateBook(bookUpdateDto);
@@ -317,7 +323,8 @@ public class BookServiceTest {
 		bookFromDatabase.setId(1);
 		bookFromDatabase.setTitle("Rapunzel");
 
-		when(bookRepository.findById(1)).thenReturn(Optional.of(bookFromDatabase));
+		when(bookRepository.findById(1))
+				.thenReturn(Optional.of(bookFromDatabase));
 		when(bookCoverApiService.getCoverUrl("New Title")).thenReturn("http://new-cover-url.com");
 
 		BookUpdateDto result = bookService.updateBook(bookUpdateDto);
@@ -327,7 +334,8 @@ public class BookServiceTest {
 		savedBook.setTitle("New Title");
 		savedBook.setCoverUrl("http://new-cover-url.com");
 
-		when(bookRepository.save(any(Book.class))).thenReturn(savedBook);
+		when(bookRepository.save(any(Book.class)))
+				.thenReturn(savedBook);
 
 		assertEquals("New Title", result.getTitle());
 		verify(bookCoverApiService).getCoverUrl("New Title");
@@ -340,7 +348,8 @@ public class BookServiceTest {
 		bookUpdateDto.setId(95);
 		bookUpdateDto.setTitle("Rapunzel");
 
-		when(bookRepository.findById(95)).thenReturn(Optional.empty());
+		when(bookRepository.findById(95))
+				.thenReturn(Optional.empty());
 
 		RuntimeException exception = assertThrows(RuntimeException.class, () -> bookService.updateBook(bookUpdateDto));
 		assertEquals("Book with id 95 does not exists", exception.getMessage());
@@ -352,7 +361,8 @@ public class BookServiceTest {
 		book.setId(1);
 		book.setTitle("Rapunzel");
 
-		when(bookRepository.findById(1)).thenReturn(Optional.of(book));
+		when(bookRepository.findById(1))
+				.thenReturn(Optional.of(book));
 
 		doNothing().when(bookRepository).deleteById(1);
 
@@ -363,7 +373,8 @@ public class BookServiceTest {
 
 	@Test
 	void deleteBookWhenBookDoesNotExistsThrowsException() {
-		when(bookRepository.findById(95)).thenReturn(Optional.empty());
+		when(bookRepository.findById(95))
+				.thenReturn(Optional.empty());
 
 		RuntimeException exception = assertThrows(RuntimeException.class, () -> bookService.deleteBook(95));
 		assertEquals("Book with id 95 does not exists", exception.getMessage());
@@ -381,7 +392,8 @@ public class BookServiceTest {
 
 	@Test
 	void deleteBookWhenNegativeInputExpectException() {
-		when(bookRepository.findById(-1)).thenReturn(Optional.empty());
+		when(bookRepository.findById(-1))
+				.thenReturn(Optional.empty());
 
 		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> bookService.deleteBook(-1));
 		assertEquals("ID cannot be negative", exception.getMessage());
