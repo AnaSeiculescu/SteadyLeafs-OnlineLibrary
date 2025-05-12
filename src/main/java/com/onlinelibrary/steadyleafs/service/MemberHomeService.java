@@ -18,34 +18,27 @@ public class MemberHomeService {
 
 	private final MemberRepository memberRepository;
 	private final BookRepository bookRepository;
+	private final BookService bookService;
 
 	public void borrowBook(BookReturnDto book, SignedInMemberDto signedInMemberDto) {
-		Book bookFromDatabase = getMyBookById(book.getId());
+		Book bookFromDatabase = bookService.getBookById(book.getId());
 
 		Member member = memberRepository.findById(signedInMemberDto.getId())
 				.orElseThrow(() -> new RuntimeException("Signed in member not found."));
 
 		bookFromDatabase.setBorrowedBy(member);
-//		bookFromDatabase.setStatus("BORROWED");
 
 		bookRepository.save(bookFromDatabase);
 		memberRepository.save(member);
 	}
 
-	public Book getMyBookById(Integer id) {
-		Book book = bookRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException("Book with id " + id + " does not exists in your List"));
-		return book;
-	}
-
 	public void returnMyBook(Integer id) {
-		Book bookToReturn = getMyBookById(id);
+		Book bookToReturn = bookService.getBookById(id);
 		Member member = bookToReturn.getBorrowedBy();
 
 		bookToReturn.getBorrowedBy().getBorrowedBooks().remove(bookToReturn);
 
 		bookToReturn.setBorrowedBy(null);
-//		bookToReturn.setStatus("AVAILABLE");
 
 		memberRepository.save(member);
 		bookRepository.save(bookToReturn);

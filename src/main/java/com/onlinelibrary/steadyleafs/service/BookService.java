@@ -67,7 +67,7 @@ public class BookService {
 		return bookUpdateDto;
 	}
 
-	public BookReturnDto getBookById(Integer id) {
+	public Book getBookById(Integer id) {
 		if (id == null) {
 			throw new IllegalArgumentException("ID cannot be null");
 		}
@@ -77,7 +77,8 @@ public class BookService {
 
 		Book book = bookRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Book with id " + id + " does not exists"));
-		return new BookReturnDto().mapFromBook(book);
+//		return new BookReturnDto().mapFromBook(book);
+		return book;
 	}
 
 	public void deleteBook(Integer id) {

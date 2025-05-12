@@ -52,10 +52,6 @@ public class BookServiceTest {
 		when(bookRepository.save(any()))
 				.thenReturn(new BookCreateDto().mapToBook(invalidBookDto));
 
-//		assertThrows(ConstraintViolationException.class, () -> {
-//			bookService.createBook(invalidBookDto);
-//		});
-
 		RuntimeException exception = assertThrows(RuntimeException.class, () -> bookService.createBook(invalidBookDto));
 		assertEquals("createBook.bookCreateDto.title: Title must use valid characters", exception.getMessage());
 	}
@@ -241,7 +237,7 @@ public class BookServiceTest {
 	}
 
 	@Test
-	void getBookByIdWhenBookExistsReturnsMappedDto() {
+	void getBookByIdWhenBookExistsReturnsTheBook() {
 		Book book1 = new Book();
 		book1.setId(1);
 		book1.setTitle("Rapunzel");
@@ -252,12 +248,12 @@ public class BookServiceTest {
 		when(bookRepository.findById(1))
 				.thenReturn(Optional.of(book1));
 
-		BookReturnDto bookReturnDto = bookService.getBookById(1);
+		Book result = bookService.getBookById(1);
 
-		assertEquals("Rapunzel", bookReturnDto.getTitle());
-		assertEquals("Grimm", bookReturnDto.getAuthor());
-		assertEquals("http://mocked-cover-url.com", bookReturnDto.getCoverUrl());
-		assertEquals("available", bookReturnDto.getStatus());
+		assertEquals("Rapunzel", result.getTitle());
+		assertEquals("Grimm", result.getAuthor());
+		assertEquals("http://mocked-cover-url.com", result.getCoverUrl());
+		assertEquals("available", result.getStatus());
 	}
 
 	@Test

@@ -92,7 +92,9 @@ public class LibrarianHomeController {
 	public String getUpdateBookForm(Model model, @RequestParam int id, Authentication authentication) {
 		Librarian currentLibrarian = getLoggedInLibrarian(authentication);
 
-		BookReturnDto book = bookService.getBookById(id);
+//		BookReturnDto book = bookService.getBookById(id);
+		Book bookFromDatabase = bookService.getBookById(id);
+		BookReturnDto book = new BookReturnDto().mapFromBook(bookFromDatabase);
 
 		model.addAttribute("currentLibrarian", currentLibrarian);
 		model.addAttribute("book", book);
