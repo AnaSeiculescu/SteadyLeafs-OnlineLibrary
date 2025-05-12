@@ -58,7 +58,6 @@ public class BookServiceTest {
 
 		RuntimeException exception = assertThrows(RuntimeException.class, () -> bookService.createBook(invalidBookDto));
 		assertEquals("createBook.bookCreateDto.title: Title must use valid characters", exception.getMessage());
-
 	}
 
 	@Test

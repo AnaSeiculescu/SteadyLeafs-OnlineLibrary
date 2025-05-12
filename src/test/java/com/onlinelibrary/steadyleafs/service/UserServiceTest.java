@@ -78,7 +78,7 @@ class UserServiceTest {
 	}
 
 	@Test
-	void createUserGivenOneBookExpectUserCreated() {
+	void createUserGivenOneUserExpectUserCreated() {
 
 		RegistrationDto userDto = new RegistrationDto();
 		userDto.setEmail("user@email.com");
