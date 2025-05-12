@@ -24,7 +24,7 @@ public class MemberHomeService {
 		Book bookFromDatabase = bookService.getBookById(book.getId());
 
 		Member member = memberRepository.findById(signedInMemberDto.getId())
-				.orElseThrow(() -> new RuntimeException("Signed in member not found."));
+				.orElseThrow(() -> new RuntimeException("Signed in member not found"));
 
 		bookFromDatabase.setBorrowedBy(member);
 
@@ -34,7 +34,14 @@ public class MemberHomeService {
 
 	public void returnMyBook(Integer id) {
 		Book bookToReturn = bookService.getBookById(id);
-		Member member = bookToReturn.getBorrowedBy();
+
+		Member member;
+		if (bookToReturn.getBorrowedBy() != null) {
+			member = bookToReturn.getBorrowedBy();
+		} else {
+			throw new RuntimeException("Borrower not found");
+		}
+
 
 		bookToReturn.getBorrowedBy().getBorrowedBooks().remove(bookToReturn);
 

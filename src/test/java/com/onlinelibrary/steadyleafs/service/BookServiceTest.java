@@ -239,16 +239,16 @@ public class BookServiceTest {
 	@Test
 	void getBookByIdWhenBookExistsReturnsTheBook() {
 		Book book1 = new Book();
-		book1.setId(1);
+		book1.setId(3);
 		book1.setTitle("Rapunzel");
 		book1.setAuthor("Grimm");
 		book1.setCoverUrl("http://mocked-cover-url.com");
 		book1.setStatus("available");
 
-		when(bookRepository.findById(1))
+		when(bookRepository.findById(3))
 				.thenReturn(Optional.of(book1));
 
-		Book result = bookService.getBookById(1);
+		Book result = bookService.getBookById(3);
 
 		assertEquals("Rapunzel", result.getTitle());
 		assertEquals("Grimm", result.getAuthor());
