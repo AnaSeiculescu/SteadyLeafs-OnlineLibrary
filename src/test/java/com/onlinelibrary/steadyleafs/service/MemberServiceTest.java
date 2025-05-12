@@ -2,9 +2,8 @@ package com.onlinelibrary.steadyleafs.service;
 
 import com.onlinelibrary.steadyleafs.model.Member;
 import com.onlinelibrary.steadyleafs.model.User;
-import com.onlinelibrary.steadyleafs.model.dto.BookCreateDto;
 import com.onlinelibrary.steadyleafs.model.dto.MemberReturnDto;
-import com.onlinelibrary.steadyleafs.model.dto.UserReturnDto;
+import com.onlinelibrary.steadyleafs.model.dto.MemberUpdateDto;
 import com.onlinelibrary.steadyleafs.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -13,10 +12,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class MemberServiceTest {
@@ -93,5 +93,160 @@ class MemberServiceTest {
 		List<MemberReturnDto> result = memberService.getAllMembers();
 
 		assertEquals(0, result.size());
+	}
+
+	@Test
+	void getMemberByIdWhenMemberExistsReturnsMappedDto() {
+		Member member = new Member();
+		member.setId(1);
+		member.setFirstName("Vasile");
+		member.setLastName("Popescu");
+
+		when(memberRepository.findById(1))
+				.thenReturn(Optional.of(member));
+
+		MemberReturnDto userReturnDto = memberService.getMemberById(1);
+
+		assertEquals("Vasile", userReturnDto.getFirstName());
+		assertEquals("Popescu", userReturnDto.getLastName());
+	}
+
+	@Test
+	void getMemberByIdWhenMemberDoesNotExistsExpectException() {
+		when(memberRepository.findById(95))
+				.thenReturn(Optional.empty());
+
+		RuntimeException exception = assertThrows(RuntimeException.class, () -> memberService.getMemberById(95));
+		assertEquals("Member with id 95 does not exists", exception.getMessage());
+	}
+
+	@Test
+	void getMemberByIdWhenNullInputExpectException() {
+		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> memberService.getMemberById(null));
+		assertEquals("ID cannot be null", exception.getMessage());
+
+		verify(memberRepository, never()).findById(any());
+	}
+
+	@Test
+	void getMemberByIdWhenNegativeInputExpectException() {
+		when(memberRepository.findById(-1)).thenReturn(Optional.empty());
+
+		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> memberService.getMemberById(-1));
+		assertEquals("ID cannot be negative", exception.getMessage());
+
+		verify(memberRepository, never()).findById(-1);
+	}
+
+	@Test
+	void updateMemberFirstNameChanges() {
+		MemberUpdateDto memberUpdateDto = new MemberUpdateDto();
+		memberUpdateDto.setId(1);
+		memberUpdateDto.setFirstName("Gigel");
+		memberUpdateDto.setLastName("Popescu");
+
+		Member memberFromDatabase = new Member();
+		memberFromDatabase.setId(1);
+		memberFromDatabase.setFirstName("Vasile");
+		memberFromDatabase.setLastName("Popescu");
+
+		when(memberRepository.findById(1))
+				.thenReturn(Optional.of(memberFromDatabase));
+		when(memberRepository.save(any(Member.class)))
+				.thenAnswer(invocation -> invocation.getArgument(0));
+
+		MemberUpdateDto result = memberService.updateMember(memberUpdateDto);
+
+		assertEquals("Gigel", result.getFirstName());
+		assertEquals("Popescu", result.getLastName());
+	}
+
+	@Test
+	void updateMemberWhenMemberNotFoundExpectException() {
+		MemberUpdateDto memberUpdateDto = new MemberUpdateDto();
+		memberUpdateDto.setId(95);
+		memberUpdateDto.setFirstName("Vasile");
+		memberUpdateDto.setLastName("Popescu");
+
+		when(memberRepository.findById(95))
+				.thenReturn(Optional.empty());
+
+		RuntimeException exception = assertThrows(RuntimeException.class, () -> memberService.updateMember(memberUpdateDto));
+		assertEquals("Member with id 95 does not exists", exception.getMessage());
+	}
+
+	@Test
+	void deleteMemberWhenMemberExists() {
+		Member member = new Member();
+		member.setId(1);
+		member.setFirstName("Vasile");
+
+		when(memberRepository.findById(1))
+				.thenReturn(Optional.of(member));
+
+		memberService.deleteMember(1);
+
+		verify(memberRepository).deleteById(1);
+	}
+
+	@Test
+	void deleteMemberWhenMemberDoesNotExistsThrowsException() {
+		when(memberRepository.findById(95))
+				.thenReturn(Optional.empty());
+
+		RuntimeException exception = assertThrows(RuntimeException.class, () -> memberService.deleteMember(95));
+		assertEquals("Member with id 95 does not exists", exception.getMessage());
+
+		verify(memberRepository, never()).deleteById(95);
+	}
+
+	@Test
+	void deleteMemberWhenNullInputExpectException() {
+		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> memberService.deleteMember(null));
+		assertEquals("ID cannot be null", exception.getMessage());
+
+		verify(memberRepository, never()).deleteById(any());
+	}
+
+	@Test
+	void deleteMemberWhenNegativeInputExpectException() {
+		when(memberRepository.findById(-1))
+				.thenReturn(Optional.empty());
+
+		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> memberService.deleteMember(-1));
+		assertEquals("ID cannot be negative", exception.getMessage());
+
+		verify(memberRepository, never()).deleteById(-1);
+	}
+
+	@Test
+	void getMemberByUserIdGivenOneUserExpectMember() {
+		User user = new User();
+		user.setId(7);
+
+		Member memberFromDatabase = new Member();
+		memberFromDatabase.setFirstName("Vasile");
+		memberFromDatabase.setLastName("Popescu");
+		memberFromDatabase.setUser(user);
+
+		when(memberRepository.findByUserId(7))
+				.thenReturn(Optional.of(memberFromDatabase));
+
+		MemberReturnDto result = memberService.getMemberByUserId(7);
+
+		assertEquals("Vasile", result.getFirstName());
+		assertEquals("Popescu", result.getLastName());
+	}
+
+	@Test
+	void getMemberByUserIdWhenMemberDoesNotExistExpectException() {
+		User user = new User();
+		user.setId(7);
+
+		when(memberRepository.findByUserId(7))
+				.thenReturn(Optional.empty());
+
+		RuntimeException exception = assertThrows(RuntimeException.class, () -> memberService.getMemberByUserId(7));
+		assertEquals("Member with user id: 7 not found", exception.getMessage());
 	}
 }

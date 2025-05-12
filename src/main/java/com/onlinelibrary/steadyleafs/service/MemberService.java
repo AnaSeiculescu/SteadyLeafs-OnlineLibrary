@@ -56,7 +56,7 @@ public class MemberService {
 		}
 
 		Member member = memberRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException("User with id " + id + " does not exists"));
+				.orElseThrow(() -> new RuntimeException("Member with id " + id + " does not exists"));
 
 		member.getBorrowedBooks().sort(Comparator.comparing(Book::getTitle));
 
@@ -81,7 +81,7 @@ public class MemberService {
 		}
 
 		Member member = memberRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException("User with id " + id + " does not exists"));
+				.orElseThrow(() -> new RuntimeException("Member with id " + id + " does not exists"));
 		memberRepository.deleteById(member.getId());
 	}
 
