@@ -47,13 +47,4 @@ public class MemberReturnDto {
 
 		return memberReturnDto;
 	}
-
-//	public Member mapToMember() {
-//		Member member = new Member();
-//		member.setFirstName(this.firstName);
-//		member.setLastName(this.lastName);
-//
-//		return member;
-//	}
-
 }

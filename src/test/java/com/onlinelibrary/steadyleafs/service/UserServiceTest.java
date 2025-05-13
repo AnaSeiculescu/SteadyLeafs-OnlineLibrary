@@ -6,6 +6,7 @@ import com.onlinelibrary.steadyleafs.model.User;
 import com.onlinelibrary.steadyleafs.model.dto.RegistrationDto;
 import com.onlinelibrary.steadyleafs.model.dto.UserReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.UserUpdateDto;
+import com.onlinelibrary.steadyleafs.repository.LibrarianRepository;
 import com.onlinelibrary.steadyleafs.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -40,6 +41,9 @@ class UserServiceTest {
 
 	@MockitoBean
 	private LibrarianService librarianService;
+
+	@MockitoBean
+	private LibrarianRepository librarianRepository;
 
 	@MockitoBean
 	private Authentication authentication;
@@ -241,7 +245,8 @@ class UserServiceTest {
 		assertNull(result.getMember());
 		assertEquals(librarian, result.getLibrarian());
 
-		verify(userRepository, times(2)).save(user);
+		verify(userRepository, times(1)).save(user);
+		verify(librarianRepository, times(1)).save(librarian);
 		verify(librarianService).createLibrarian(member);
 		verify(memberService).deleteMember(member.getId());
 	}

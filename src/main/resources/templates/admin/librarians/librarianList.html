@@ -19,11 +19,11 @@
     <ul class="nav nav-tabs mb-0 py-1" style="margin-right: 20px">
         <li class="nav-item">
             <a class="nav-link" th:classappend="${activePage == 'home'} ? ' active'"
-               th:href="@{/librarianHome}"><i class="bi bi-house-fill" style="margin-right:8px"></i>Home</a>
+               th:href="@{/adminHome}"><i class="bi bi-house-fill" style="margin-right:8px"></i>Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" th:classappend="${activePage == 'allMembers'} ? ' active'"
-               th:href="@{/librarianHome/members}"><i class="bi bi-person-fill" style="margin-right:8px"></i>Librarians</a>
+            <a class="nav-link" th:classappend="${activePage == 'allLibrarians'} ? ' active'"
+               th:href="@{/adminHome/librarians}"><i class="bi bi-person-fill" style="margin-right:8px"></i>Librarians</a>
         </li>
         <li class="nav-item">
             <a class="nav-link"
@@ -47,26 +47,26 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>UserId</th>
-                <th>Update</th>
-                <th>Delete</th>
+<!--                <th>Update</th>-->
+                <th>Action</th>
             </tr>
 
             <tbody>
-            <tr th:each="member : ${memberList}">
-                <td th:text="${member.id}"></td>
-                <td th:text="${member.firstName}"></td>
-                <td th:text="${member.lastName}"></td>
-                <td th:text="${member.userId}"></td>
+            <tr th:each="librarian : ${librarianList}">
+                <td th:text="${librarian.id}"></td>
+                <td th:text="${librarian.firstName}"></td>
+                <td th:text="${librarian.lastName}"></td>
+                <td th:text="${librarian.userId}"></td>
+<!--                <td>-->
+<!--                    <form th:action="@{/adminHome/members/updateForm}" class="d-inline">-->
+<!--                        <input type="hidden" name="id" th:value="${librarian.id}">-->
+<!--                        <button type="submit" class="btn btn-danger btn-sm">Update</button>-->
+<!--                    </form>-->
+<!--                </td>-->
                 <td>
-                    <form th:action="@{/librarianHome/members/updateForm}" class="d-inline">
-                        <input type="hidden" name="id" th:value="${member.id}">
-                        <button type="submit" class="btn btn-danger btn-sm">Update</button>
-                    </form>
-                </td>
-                <td>
-                    <form th:action="@{/librarianHome/members/delete}" method="post" class="d-inline">
-                        <input type="hidden" name="id" th:value="${member.id}">
-                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this user?');">Delete</button>
+                    <form th:action="@{/adminHome/librarians/delete}" method="post" class="d-inline">
+                        <input type="hidden" name="id" th:value="${librarian.id}">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this librarian?');">Delete</button>
                     </form>
                 </td>
 
@@ -74,7 +74,7 @@
             </tbody>
         </table>
 
-        <button type="button" class="btn btn-secondary" onclick="window.location.href='/librarianHome'"><i
+        <button type="button" class="btn btn-secondary" onclick="window.location.href='/adminHome'"><i
                 class="bi bi-arrow-left" style="margin-right:5px"></i>Home
         </button>
 

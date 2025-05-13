@@ -31,6 +31,4 @@ public class Member {
 	@OneToMany(mappedBy = "borrowedBy", cascade = CascadeType.ALL)
 	private List<Book> borrowedBooks = new ArrayList<>();
 
-
-
 }

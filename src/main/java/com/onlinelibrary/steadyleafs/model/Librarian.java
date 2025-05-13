@@ -21,16 +21,20 @@ public class Librarian {
 	private String firstName;
 	private String lastName;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	private User user;
 
 	public static Librarian mapFromMember(Member member) {
 		Librarian librarian = new Librarian();
-//		librarian.setId(this.id);
 		librarian.setFirstName(member.getFirstName());
 		librarian.setLastName(member.getLastName());
-		librarian.setUser(member.getUser());
+
+		if (member.getUser() != null) {
+			librarian.setUser(member.getUser());
+		} else {
+			System.out.println("Member with ID " + member.getId() + " has no associated User.");
+		}
 
 		return librarian;
 	}

@@ -26,7 +26,7 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
 				.csrf(c -> c.disable())
-				.httpBasic(Customizer.withDefaults())
+//				.httpBasic(Customizer.withDefaults())
 				.formLogin(form -> form
 						.loginPage("/login")
 						.loginProcessingUrl("/login")
@@ -42,13 +42,11 @@ public class SecurityConfig {
 				)
 				.authorizeHttpRequests(authorize -> authorize
 								.requestMatchers("/").permitAll()
-								.requestMatchers("/css/**", "/js/**", "/images/**", "/favicon.ico").permitAll()
-								.requestMatchers("/users/**").permitAll()
+								.requestMatchers("/css/**", "/js/**", "/images/**", "/favicon.ico", "/webjars/**").permitAll()
 								.requestMatchers("/login-member", "/login-librarian", "/register/**").permitAll()
 								.requestMatchers("/adminHome/**").hasRole("ADMIN")
 								.requestMatchers("/librarianHome/**").hasAnyRole("LIBRARIAN", "ADMIN")
 								.requestMatchers("/memberHome/**").hasRole("MEMBER")
-//						.requestMatchers("/users/**").hasRole("ADMIN")
 								.requestMatchers("/librarians/**").hasRole("ADMIN")
 								.anyRequest().authenticated()
 				);
