@@ -7,6 +7,7 @@ import com.onlinelibrary.steadyleafs.model.dto.RegistrationDto;
 import com.onlinelibrary.steadyleafs.model.dto.UserReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.UserUpdateDto;
 import com.onlinelibrary.steadyleafs.repository.LibrarianRepository;
+import com.onlinelibrary.steadyleafs.repository.MemberRepository;
 import com.onlinelibrary.steadyleafs.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -38,6 +39,9 @@ class UserServiceTest {
 
 	@MockitoBean
 	private MemberService memberService;
+
+	@MockitoBean
+	private MemberRepository memberRepository;
 
 	@MockitoBean
 	private LibrarianService librarianService;
@@ -221,7 +225,7 @@ class UserServiceTest {
 	}
 
 	@Test
-	void convertMemberToLibrarianIfTheUsersRoleChangesToLibrarianALibrarianIsCreated() {
+	void convertMemberToLibrarian_IfTheUsersRoleChangesToLibrarianALibrarianIsCreated() {
 		Member member = new Member();
 		member.setId(5);
 
@@ -252,12 +256,52 @@ class UserServiceTest {
 	}
 
 	@Test
-	void convertMemberToLibrarianGivenUserWithoutMemberExpectException() {
+	void convertMemberToLibrarian_GivenUserWithoutMemberExpectException() {
 		User user = new User();
 
 		Exception exception = assertThrows(IllegalStateException.class, () -> userService.convertMemberToLibrarian(user));
 
 		assertEquals("Member not found. User is not a member.", exception.getMessage());
+	}
+
+	@Test
+	void convertLibrarianToMember_IfTheUsersRoleChangesToMemberAMemberIsCreated() {
+		Librarian librarian = new Librarian();
+		librarian.setId(5);
+
+		User user = new User();
+		user.setId(1);
+		user.setLibrarian(librarian);
+		librarian.setUser(user);
+
+		Member member = new Member();
+		member.setId(3);
+		member.setUser(user);
+
+		when(memberService.createMemberFromLibrarian(librarian))
+				.thenReturn(member);
+
+		when(userRepository.save(any(User.class)))
+				.thenAnswer(invocation -> invocation.getArgument(0));
+
+		User result = userService.convertLibrarianToMember(user);
+
+		assertNull(result.getLibrarian());
+		assertEquals(member, result.getMember());
+
+		verify(userRepository, times(1)).save(user);
+		verify(memberRepository, times(1)).save(member);
+		verify(memberService).createMemberFromLibrarian(librarian);
+		verify(librarianService).deleteLibrarian(librarian.getId());
+	}
+
+	@Test
+	void convertLibrarianToMember_GivenUserWithoutLibrarianExpectException() {
+		User user = new User();
+
+		Exception exception = assertThrows(IllegalStateException.class, () -> userService.convertLibrarianToMember(user));
+
+		assertEquals("Librarian not found. User is not a librarian.", exception.getMessage());
 	}
 
 	@Test

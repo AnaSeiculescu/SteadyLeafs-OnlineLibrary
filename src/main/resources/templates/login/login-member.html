@@ -21,14 +21,12 @@
 
             <label>Email</label><br>
             <input type="text" name="username" placeholder="email" required class="form-control bg-dark text-white text-start"><br>
-<!--                  <p th:if="${#fields.hasErrors('email')}" style="color:red"> Invalid email</p>-->
 
             <label>Password</label><br>
             <input type="password" name="password" required class="form-control bg-dark text-white text-start"><br>
-<!--                  <p th:if="${#fields.hasErrors('password')}" style="color:red"> Invalid password</p>-->
 
             <input type="hidden" name="intendedRole" value="MEMBER" />
-<!--            <p th:if="${param.error}" style="color:red">Invalid email or password</p>-->
+
             <div th:if="${param.error}">
                 <div class="alert alert-danger">
                     <p th:if="${param.error[0] == 'true'}">Invalid email or password.</p>

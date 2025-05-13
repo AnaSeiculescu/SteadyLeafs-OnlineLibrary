@@ -25,10 +25,6 @@
             <a class="nav-link" th:classappend="${activePage == 'allBooks'} ? ' active'"
                th:href="@{/memberHome/seeAllBooks}"><i class="bi bi-book" style="margin-right:8px"></i>Books</a>
         </li>
-<!--        <li class="nav-item">-->
-<!--            <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/profile'} ? ' active'"-->
-<!--               th:href="@{/profile}">Profile</a>-->
-<!--        </li>-->
         <li class="nav-item">
             <a class="nav-link"
                th:href="@{/logout}"
@@ -44,8 +40,6 @@
 <div class="container-fluid d-flex align-items-center pt-5 background-image">
 
     <div class="container table.responsive w-75 d-flex flex-column align-items-center mb-5" >
-        <!--    <h2 class="text-center mb-4" style="margin-top:50px">Welcome, <span th:text="${currentMember.firstName + ' ' + currentMember.lastName}"></span></h2>-->
-        <!--&lt;!&ndash;    <h2 class="text-center mb-4" style="margin-top:50px">Welcome, <span sec:authentication="email"></span></h2>&ndash;&gt;-->
 
         <h3 class="text-center p-5">Your books</h3>
 
@@ -83,28 +77,6 @@
                 </div>
             </div>
         </div>
-
-<!--        <table border="1" class="table table-hover table-light shadow p-3 mb-5 rounded" style="text-align:center">-->
-<!--            <tr>-->
-<!--                <th>Title</th>-->
-<!--                <th>Author</th>-->
-<!--                <th>Status</th>-->
-<!--                <th>Action</th>-->
-<!--            </tr>-->
-<!--            <tbody>-->
-<!--            <tr th:each="book : ${currentMember.borrowedBooks}">-->
-<!--                <td th:text="${book.title}"></td>-->
-<!--                <td th:text="${book.author}"></td>-->
-<!--                <td th:text="${book.status}"></td>-->
-<!--                <td>-->
-<!--                    <form th:action="@{/memberHome/delete}" method="post" class="d-inline">-->
-<!--                        <input type="hidden" name="id" th:value="${book.id}">-->
-<!--                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to return this book?');">Return book</button>-->
-<!--                    </form>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--            </tbody>-->
-<!--        </table>-->
 
     </div>
 

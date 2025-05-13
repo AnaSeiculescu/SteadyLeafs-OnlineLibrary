@@ -25,10 +25,6 @@
       <a class="nav-link" th:classappend="${activePage == 'allBooks'} ? ' active'"
          th:href="@{/memberHome/seeAllBooks}"><i class="bi bi-book" style="margin-right:8px"></i>Books</a>
     </li>
-    <!--        <li class="nav-item">-->
-    <!--            <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/profile'} ? ' active'"-->
-    <!--               th:href="@{/profile}">Profile</a>-->
-    <!--        </li>-->
     <li class="nav-item">
       <a class="nav-link"
          th:href="@{/logout}"
@@ -83,28 +79,6 @@
         </div>
       </div>
     </div>
-
-<!--    <table border="1" class="table table-hover table-light shadow p-3 mb-5 rounded" style="text-align:center">-->
-<!--      <tr>-->
-<!--        <th>Title</th>-->
-<!--        <th>Author</th>-->
-<!--        <th>Status</th>-->
-<!--        <th>Action</th>-->
-<!--      </tr>-->
-<!--      <tbody>-->
-<!--      <tr th:each="book : ${bookList}">-->
-<!--        <td th:text="${book.title}"></td>-->
-<!--        <td th:text="${book.author}"></td>-->
-<!--        <td th:text="${book.status}"></td>-->
-<!--        <td>-->
-<!--          <form th:action="@{/memberHome/add}" method="post" class="d-inline">-->
-<!--            <input type="hidden" name="id" th:value="${book.id}">-->
-<!--            <button type="submit" class="btn btn-danger btn-sm">Borrow</button>-->
-<!--          </form>-->
-<!--        </td>-->
-<!--      </tr>-->
-<!--      </tbody>-->
-<!--    </table>-->
 
     <br/>
 

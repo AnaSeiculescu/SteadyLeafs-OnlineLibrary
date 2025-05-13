@@ -114,7 +114,6 @@ public class BookServiceTest {
 
 		List<BookReturnDto> result = bookService.getAllBooks();
 
-//		assertTrue(result.isEmpty());
 		assertEquals(0, result.size());
 	}
 
