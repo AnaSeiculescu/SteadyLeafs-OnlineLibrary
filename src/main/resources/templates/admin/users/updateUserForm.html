@@ -51,8 +51,15 @@
         <input type="text" id="email" name="email" th:field="*{email}" class="form-control bg-dark text-white text-start"><br>
         <!--      <label for="password">User password</label><br>-->
         <!--      <input type="text" id="password" name="password" th:field="*{password}" class="form-control bg-dark text-white text-start"><br>-->
+
+<!--        <label for="role">User role</label><br>-->
+<!--        <input type="text" id="role" name="role" th:field="*{role}" class="form-control bg-dark text-white text-start"><br>-->
+
         <label for="role">User role</label><br>
-        <input type="text" id="role" name="role" th:field="*{role}" class="form-control bg-dark text-white text-start"><br>
+        <select class="form-control bg-dark text-white text-start" id="role" th:field="*{role}">
+          <option value="0">Role</option>
+          <option th:each="role : ${roles}" th:value="${role.name()}" th:text="${role.name()}"></option>
+        </select>
 
         <input type="hidden" id="id" name="id" th:value="*{id}"><br>
 

@@ -1,6 +1,7 @@
 package com.onlinelibrary.steadyleafs.controller;
 
 import com.onlinelibrary.steadyleafs.model.Librarian;
+import com.onlinelibrary.steadyleafs.model.UserRole;
 import com.onlinelibrary.steadyleafs.model.dto.LibrarianReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.UserReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.UserUpdateDto;
@@ -38,6 +39,7 @@ public class AdminHomeController {
 
 		model.addAttribute("userUpdateDto", userReturnDto);
 		model.addAttribute("userId", id);
+		model.addAttribute("roles", UserRole.values());
 
 		return "admin/users/updateUserForm";
 	}
