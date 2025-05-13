@@ -9,6 +9,7 @@ import com.onlinelibrary.steadyleafs.model.dto.RegistrationDto;
 import com.onlinelibrary.steadyleafs.model.dto.UserReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.UserUpdateDto;
 import com.onlinelibrary.steadyleafs.repository.LibrarianRepository;
+import com.onlinelibrary.steadyleafs.repository.MemberRepository;
 import com.onlinelibrary.steadyleafs.repository.UserRepository;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
@@ -27,6 +28,7 @@ public class UserService {
 	private final MemberService memberService;
 	private final LibrarianService librarianService;
 	private final LibrarianRepository librarianRepository;
+	private final MemberRepository memberRepository;
 
 	@Autowired
 	SecurityConfig securityConfig;
@@ -79,10 +81,12 @@ public class UserService {
 		User userFromDatabase = userRepository.findById(userUpdateDto.getId())
 				.orElseThrow(() -> new RuntimeException("User with id " + userUpdateDto.getId() + " does not exists"));
 
-//		User updatedUser = userUpdateDto.mapToUser(userFromDatabase);
-
 		if (userFromDatabase.getRole().equals("ROLE_MEMBER") && userUpdateDto.getRole().equals("ROLE_LIBRARIAN")) {
 			convertMemberToLibrarian(userFromDatabase);
+		}
+
+		if (userFromDatabase.getRole().equals("ROLE_LIBRARIAN") && userUpdateDto.getRole().equals("ROLE_MEMBER")) {
+			convertLibrarianToMember(userFromDatabase);
 		}
 
 		User updatedUser = userUpdateDto.mapToUser(userFromDatabase);
@@ -109,6 +113,27 @@ public class UserService {
 		librarianRepository.save(librarian);
 
 		memberService.deleteMember(member.getId());
+
+		return user;
+	}
+
+	public User convertLibrarianToMember(User user) {
+		Librarian librarian = user.getLibrarian();
+
+		if (librarian == null) {
+			throw new IllegalStateException("Librarian not found. User is not a librarian.");
+		}
+
+		Member member = memberService.createMemberFromLibrarian(librarian);
+		user.setMember(member);
+
+		user.setLibrarian(null);
+		librarian.setUser(null);
+
+		userRepository.save(user);
+		memberRepository.save(member);
+
+		librarianService.deleteLibrarian(librarian.getId());
 
 		return user;
 	}

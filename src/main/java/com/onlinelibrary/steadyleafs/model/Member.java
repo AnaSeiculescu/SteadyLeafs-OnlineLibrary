@@ -31,4 +31,17 @@ public class Member {
 	@OneToMany(mappedBy = "borrowedBy", cascade = CascadeType.ALL)
 	private List<Book> borrowedBooks = new ArrayList<>();
 
+	public static Member mapFromLibrarian(Librarian librarian) {
+		Member member = new Member();
+		member.setFirstName(librarian.getFirstName());
+		member.setLastName(librarian.getLastName());
+
+		if (librarian.getUser() != null) {
+			member.setUser(librarian.getUser());
+		} else {
+			System.out.println("Librarian with ID " + librarian.getId() + " has no associated User.");
+		}
+
+		return member;
+	}
 }

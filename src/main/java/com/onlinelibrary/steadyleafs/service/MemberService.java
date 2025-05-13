@@ -1,6 +1,7 @@
 package com.onlinelibrary.steadyleafs.service;
 
 import com.onlinelibrary.steadyleafs.model.Book;
+import com.onlinelibrary.steadyleafs.model.Librarian;
 import com.onlinelibrary.steadyleafs.model.Member;
 import com.onlinelibrary.steadyleafs.model.dto.MemberReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.MemberUpdateDto;
@@ -35,6 +36,14 @@ public class MemberService {
 		}
 
 		return memberRepository.save(member);
+	}
+
+	public Member createMemberFromLibrarian(Librarian librarian) {
+		Member member = Member.mapFromLibrarian(librarian);
+		member.setUser(librarian.getUser());
+		memberRepository.save(member);
+
+		return member;
 	}
 
 	public MemberUpdateDto updateMember(MemberUpdateDto memberUpdateDto) {
