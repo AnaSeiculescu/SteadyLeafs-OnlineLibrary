@@ -1,13 +1,14 @@
 package com.onlinelibrary.steadyleafs.service;
 
 import com.onlinelibrary.steadyleafs.config.SecurityConfig;
+import com.onlinelibrary.steadyleafs.model.Book;
 import com.onlinelibrary.steadyleafs.model.Librarian;
 import com.onlinelibrary.steadyleafs.model.Member;
 import com.onlinelibrary.steadyleafs.model.User;
-import com.onlinelibrary.steadyleafs.model.dto.LibrarianReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.RegistrationDto;
 import com.onlinelibrary.steadyleafs.model.dto.UserReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.UserUpdateDto;
+import com.onlinelibrary.steadyleafs.repository.BookRepository;
 import com.onlinelibrary.steadyleafs.repository.LibrarianRepository;
 import com.onlinelibrary.steadyleafs.repository.MemberRepository;
 import com.onlinelibrary.steadyleafs.repository.UserRepository;
@@ -29,6 +30,7 @@ public class UserService {
 	private final LibrarianService librarianService;
 	private final LibrarianRepository librarianRepository;
 	private final MemberRepository memberRepository;
+	private final BookRepository bookRepository;
 
 	@Autowired
 	SecurityConfig securityConfig;
@@ -146,7 +148,23 @@ public class UserService {
 			throw new IllegalArgumentException("ID cannot be negative");
 		}
 
-		getUserById(id);
+		User user = userRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException("User with id " + id + " does not exists"));
+
+		Member member = null;
+		if (user.getMember() != null) {
+			member = user.getMember();
+			List<Book> memberBookList = member.getBorrowedBooks();
+			if (memberBookList != null) {
+				for(Book book :memberBookList) {
+					book.setBorrowedBy(null);
+					bookRepository.save(book);
+				}
+				member.getBorrowedBooks().clear();
+				memberRepository.save(member);
+			}
+		}
+
 		userRepository.deleteById(id);
 	}
 

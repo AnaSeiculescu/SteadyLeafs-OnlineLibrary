@@ -5,6 +5,7 @@ import com.onlinelibrary.steadyleafs.model.Librarian;
 import com.onlinelibrary.steadyleafs.model.Member;
 import com.onlinelibrary.steadyleafs.model.dto.MemberReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.MemberUpdateDto;
+import com.onlinelibrary.steadyleafs.repository.BookRepository;
 import com.onlinelibrary.steadyleafs.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.List;
 public class MemberService {
 
 	private final MemberRepository memberRepository;
+	private final BookRepository bookRepository;
 
 	public List<MemberReturnDto> getAllMembers() {
 		List<Member> membersFromDatabase = memberRepository.findAll();
@@ -51,7 +53,6 @@ public class MemberService {
 				.orElseThrow(() -> new RuntimeException("Member with id " + memberUpdateDto.getId() + " does not exists"));
 
 		memberRepository.save(memberUpdateDto.mapToMember(memberFromDatabase));
-//		MemberUpdateDto updatedMember = MemberUpdateDto.mapFromMember(memberFromDatabase);
 
 		return memberUpdateDto;
 	}
@@ -91,6 +92,16 @@ public class MemberService {
 
 		Member member = memberRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Member with id " + id + " does not exists"));
+
+		if (member.getBorrowedBooks() != null) {
+			for(Book book :member.getBorrowedBooks()) {
+				book.setBorrowedBy(null);
+				bookRepository.save(book);
+			}
+			member.getBorrowedBooks().clear();
+			memberRepository.save(member);
+		}
+
 		memberRepository.deleteById(member.getId());
 	}
 

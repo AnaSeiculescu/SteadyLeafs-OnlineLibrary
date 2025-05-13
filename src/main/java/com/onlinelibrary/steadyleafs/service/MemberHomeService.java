@@ -42,7 +42,6 @@ public class MemberHomeService {
 			throw new RuntimeException("Borrower not found");
 		}
 
-
 		bookToReturn.getBorrowedBy().getBorrowedBooks().remove(bookToReturn);
 
 		bookToReturn.setBorrowedBy(null);
