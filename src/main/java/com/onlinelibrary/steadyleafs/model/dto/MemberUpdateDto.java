@@ -2,7 +2,6 @@ package com.onlinelibrary.steadyleafs.model.dto;
 
 import com.onlinelibrary.steadyleafs.model.Book;
 import com.onlinelibrary.steadyleafs.model.Member;
-import com.onlinelibrary.steadyleafs.model.User;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;

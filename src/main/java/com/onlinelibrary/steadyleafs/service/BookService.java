@@ -1,7 +1,6 @@
 package com.onlinelibrary.steadyleafs.service;
 
 import com.onlinelibrary.steadyleafs.model.Book;
-import com.onlinelibrary.steadyleafs.model.User;
 import com.onlinelibrary.steadyleafs.model.dto.BookCreateDto;
 import com.onlinelibrary.steadyleafs.model.dto.BookReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.BookUpdateDto;
@@ -63,7 +62,6 @@ public class BookService {
 		}
 		bookRepository.save(bookUpdateDto.mapToBook(bookFromDatabase));
 
-//		return BookUpdateDto.mapFromBook(bookFromDatabase);
 		return bookUpdateDto;
 	}
 
@@ -77,7 +75,6 @@ public class BookService {
 
 		Book book = bookRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Book with id " + id + " does not exists"));
-//		return new BookReturnDto().mapFromBook(book);
 		return book;
 	}
 

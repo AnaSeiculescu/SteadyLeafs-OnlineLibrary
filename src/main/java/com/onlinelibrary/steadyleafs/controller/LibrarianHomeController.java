@@ -2,7 +2,6 @@ package com.onlinelibrary.steadyleafs.controller;
 
 import com.onlinelibrary.steadyleafs.model.Book;
 import com.onlinelibrary.steadyleafs.model.Librarian;
-import com.onlinelibrary.steadyleafs.model.Member;
 import com.onlinelibrary.steadyleafs.model.User;
 import com.onlinelibrary.steadyleafs.model.dto.*;
 import com.onlinelibrary.steadyleafs.service.BookService;
@@ -92,7 +91,6 @@ public class LibrarianHomeController {
 	public String getUpdateBookForm(Model model, @RequestParam int id, Authentication authentication) {
 		Librarian currentLibrarian = getLoggedInLibrarian(authentication);
 
-//		BookReturnDto book = bookService.getBookById(id);
 		Book bookFromDatabase = bookService.getBookById(id);
 		BookReturnDto book = new BookReturnDto().mapFromBook(bookFromDatabase);
 

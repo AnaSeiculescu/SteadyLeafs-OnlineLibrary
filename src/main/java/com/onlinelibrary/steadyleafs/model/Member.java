@@ -28,7 +28,6 @@ public class Member {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-//	@OneToMany(mappedBy = "borrowedBy", cascade = CascadeType.ALL, orphanRemoval = true)
 	@OneToMany(mappedBy = "borrowedBy")
 	private List<Book> borrowedBooks = new ArrayList<>();
 

@@ -51,12 +51,10 @@
         <h3 class="text-center p-5">Books statistics</h3>
 
         <table border="1" class="table table-hover table-light shadow p-3 mb-5 rounded" style="text-align:center">
-
             <tr>
                 <th>Category</th>
                 <th>Quantity</th>
             </tr>
-
             <tbody>
             <tr th:each="entry : ${bookStats}">
                 <td th:text="${entry.key}"></td>

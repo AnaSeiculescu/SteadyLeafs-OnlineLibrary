@@ -1,6 +1,5 @@
 package com.onlinelibrary.steadyleafs.controller;
 
-import com.onlinelibrary.steadyleafs.model.Librarian;
 import com.onlinelibrary.steadyleafs.model.UserRole;
 import com.onlinelibrary.steadyleafs.model.dto.LibrarianReturnDto;
 import com.onlinelibrary.steadyleafs.model.dto.UserReturnDto;

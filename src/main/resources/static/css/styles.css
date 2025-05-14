@@ -18,20 +18,16 @@ body::before {
   background-repeat: no-repeat;
   filter: opacity(0.5);
   z-index: -1;
-  /*opacity: 0.5;*/
 }
 
 .book-tab {
     color: #F8EEDF;
-    /*color: #DFD0B8;*/
     background-color: #222831;
     border: none;
 }
 
 .book-tab.active {
     color: #222831;
-    /*background-color: #D7D3BF !important;*/
-    /*background-color: #fff !important;*/
     font-weight: bold;
 }
 
@@ -42,44 +38,4 @@ body::before {
 
 .my-background {
     background-color: #e8e6dc;
-    /*color: #F8EEDF;
-    background-color: #393E46;*/
 }
-
-
-/*body {
-  background-image: url('../images/background.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  opacity: 0.5;
-}*/
-
-/*
-.background-image {
-  position: relative;
-  background-attachment: fixed;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  z-index: 1;
-}
-
-.background-image::before {
-  content: "";
-  position: absolute;
-  height: 100vh;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-image: url('../images/background.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  opacity: 0.4;
-  z-index: -1;
-}
-*/

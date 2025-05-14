@@ -46,7 +46,6 @@ public class RegistrationDto {
 		Member member = new Member();
 		member.setFirstName(this.firstName);
 		member.setLastName(this.lastName);
-//		member.setUser(this.user);
 		member.setBorrowedBooks(new ArrayList<>());
 		return member;
 	}
