@@ -3,6 +3,18 @@
 
 This is a Java web application I built with Spring Boot and Thymeleaf. Members can browse and borrow books and librarians manage the books and the members. The login functionality is differentiated by roles, so members, librarians and admin each see their own custom dashboard with actions they are allowed to do.  
 
+## Screenshots
+### Home Page
+![Home Page](screenshots/appHomePage.png)
+
+### Member Login Page
+![Member Login Page](screenshots/loginMember.png)
+
+### Member Dashboard
+![Member Dashboard](screenshots/memberDashboard.png)
+
+### Librarian Dashboard
+![Librarian Dashboard](screenshots/librarianDashboard.png)
 
 ## Features
 - Member registration and login;
