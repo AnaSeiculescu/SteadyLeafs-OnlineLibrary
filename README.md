@@ -1,40 +1,41 @@
 # SteadyLeafs
-## ~online library~
+## online library
 
-A web app built with Java, Spring Boot and Thymeleaf where members can borrow books and librarians manage the system.
+This is a Java web application I built with Spring Boot and Thymeleaf. Members can browse and borrow books and librarians manage the books and the members. The login functionality is differentiated by roles, so members, librarians and admin each see their own custom dashboard with actions they are allowed to do.  
+
 
 ## Features
 - Member registration and login;
-- Role-based access: member / librarian|admin;
+- Role-based access: member/librarian|admin;
 - Member's panel - view available and borrowed books;
 - Librarian's panel for managing books and members;
 - Admin panel for managing users and librarians;
 - Responsive frontend with bootstrap;
 
 
-- ️👤 Member can:
-  - view all books;
-  - borrow available books (one at the time);
-  - view their borrowed books;
-- 📚 Librarian can:
-  - create books;
-  - view and manage all books / loaned books / available books;
-  - check book statistics (by category and quantity);
-  - view and manage members;
-  - view a member's book list;
-- 🛠 Admin can:
-  - view and manage users;
-  - change a user's role;
-  - view and delete librarians;
+- **Member can:**
+  - View all books;
+  - Borrow available books (one at a time);
+  - View their borrowed books;
+- **Librarian can:**
+  - Create books;
+  - View and manage all books / loaned books / available books;
+  - Check book statistics (by category and quantity);
+  - View and manage members;
+  - View a member's book list;
+- **Admin can:**
+  - View and manage users;
+  - Change a user's role;
+  - View and delete librarians;
   
 
 - When created or updated, a book receives its cover from OpenLibrary external API;
-- When a member is deleted, the corresponding user is also removed, and their borrowed books are returned to the library as available;
+- When a member is deleted, the corresponding user is also removed, and their borrowed books are returned to the library as available.
 
 ## Tech Stack
 - Java 21
 - Spring Boot
-- PostgreSql
+- PostgreSQL
 - Thymeleaf
 - Bootstrap
 
