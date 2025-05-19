@@ -71,4 +71,14 @@ public class MemberHomeController {
 		return "redirect:/memberHome";
 	}
 
+	@GetMapping("/search")
+	public String searchBooks(Model model, @RequestParam String title, @RequestParam String author) {
+		List<BookReturnDto> booksByTitle = bookService.getBookByTitle(title);
+		List<BookReturnDto> booksByAuthor = bookService.getBookByAuthor(author);
+		model.addAttribute("booksByTitle", booksByTitle);
+		model.addAttribute("booksByAuthor", booksByAuthor);
+
+		return "members/books/bookSearchResult";
+	}
+
 }

@@ -11,8 +11,8 @@ import java.util.List;
 public interface BookRepository extends JpaRepository<Book, Integer> {
 
 	List<Book> findByBorrowedByIsNull(Sort sort);
-
 	List<Book> findByBorrowedByIsNotNull(Sort sort);
-
 	List<Book> findByBorrowedBy_Id(Integer memberId);
+	List<Book> findByTitleContainingIgnoreCase(String title);
+	List<Book> findByAuthorContainingIgnoreCase(String author);
 }
