@@ -72,11 +72,13 @@ public class MemberHomeController {
 	}
 
 	@GetMapping("/search")
-	public String searchBooks(Model model, @RequestParam String title, @RequestParam String author) {
+	public String searchBooks(Model model, Authentication authentication, @RequestParam String title) {
+		SignedInMemberDto currentMember = getLoggedInMember(authentication);
 		List<BookReturnDto> booksByTitle = bookService.getBookByTitle(title);
-		List<BookReturnDto> booksByAuthor = bookService.getBookByAuthor(author);
+//		List<BookReturnDto> booksByAuthor = bookService.getBookByAuthor(author);
+		model.addAttribute("currentMember", currentMember);
 		model.addAttribute("booksByTitle", booksByTitle);
-		model.addAttribute("booksByAuthor", booksByAuthor);
+//		model.addAttribute("booksByAuthor", booksByAuthor);
 
 		return "members/books/bookSearchResult";
 	}
