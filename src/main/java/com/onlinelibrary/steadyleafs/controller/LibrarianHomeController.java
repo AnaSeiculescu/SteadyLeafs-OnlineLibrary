@@ -48,7 +48,7 @@ public class LibrarianHomeController {
 			case "loaned":
 				bookList = bookService.getLoanedBooks();
 				break;
-			case "available" :
+			case "available":
 				bookList = bookService.getAvailableBooks();
 				break;
 			default:

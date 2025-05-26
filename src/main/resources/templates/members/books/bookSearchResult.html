@@ -43,7 +43,7 @@
 
     <div class="container">
       <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 m-5 g-4">
-        <div class="col" th:each="book : ${booksByTitle}">
+        <div class="col" th:each="book : ${bookList}">
           <div class="card h-100 shadow rounded my-background">
             <div class="row py-2 g-0 h-100 p-1">
 
@@ -81,7 +81,7 @@
 
     <br/>
 
-    <button type="button" class="btn btn-secondary" onclick="window.location.href='/memberHome'"><i class="bi bi-arrow-left" style="margin-right:5px"></i>Back to my List</button>
+    <button type="button" class="btn btn-secondary" onclick="window.location.href='/memberHome/seeAllBooks'"><i class="bi bi-arrow-left" style="margin-right:5px"></i>Back to Books</button>
 
   </div>
 

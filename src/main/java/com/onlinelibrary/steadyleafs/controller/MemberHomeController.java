@@ -1,6 +1,7 @@
 package com.onlinelibrary.steadyleafs.controller;
 
 import com.onlinelibrary.steadyleafs.model.Book;
+import com.onlinelibrary.steadyleafs.model.BookSearchFilter;
 import com.onlinelibrary.steadyleafs.model.Member;
 import com.onlinelibrary.steadyleafs.model.User;
 import com.onlinelibrary.steadyleafs.model.dto.BookReturnDto;
@@ -50,6 +51,7 @@ public class MemberHomeController {
 		model.addAttribute("currentMember", currentMember);
 		model.addAttribute("bookList", bookList);
 		model.addAttribute("activePage", "allBooks");
+		model.addAttribute("filterOptions", BookSearchFilter.values());
 
 		return "members/books/allBooksForMembers";
 	}
@@ -72,13 +74,25 @@ public class MemberHomeController {
 	}
 
 	@GetMapping("/search")
-	public String searchBooks(Model model, Authentication authentication, @RequestParam String title) {
+	public String searchBooks(Model model, Authentication authentication, @RequestParam String filter, @RequestParam String value) {
 		SignedInMemberDto currentMember = getLoggedInMember(authentication);
-		List<BookReturnDto> booksByTitle = bookService.getBookByTitle(title);
-//		List<BookReturnDto> booksByAuthor = bookService.getBookByAuthor(author);
+
+		List<BookReturnDto> bookList;
+
+		switch (filter) {
+			case "TITLE":
+				bookList = bookService.getBookByTitle(value);
+				break;
+			case "AUTHOR":
+				bookList = bookService.getBookByAuthor(value);
+				break;
+			default:
+				bookList = bookService.getAllBooks();
+		}
+
 		model.addAttribute("currentMember", currentMember);
-		model.addAttribute("booksByTitle", booksByTitle);
-//		model.addAttribute("booksByAuthor", booksByAuthor);
+		model.addAttribute("bookList", bookList);
+		model.addAttribute("filter", filter);
 
 		return "members/books/bookSearchResult";
 	}

@@ -43,8 +43,20 @@
 <!--    <h4 class="text-center p-5">All Books</h4>-->
 
     <form class="d-flex justify-content-center m-5" action="/memberHome/search" method="get">
-      <input class="form-control w-50 me-2" type="search" name="title" placeholder="Search book" aria-label="Search" th:value="${title}">
-      <button class="btn btn-success" type="submit">Search</button>
+
+<!--      <label for="search">Search book by...</label><br>-->
+      <select class="form-control bg-dark text-white text-start me-5" id="search" name="filter">
+        <option value="" disabled selected>Select search criterion</option>
+        <option
+                th:each="criterion : ${filterOptions}"
+                th:value="${criterion.name()}"
+                th:text="${criterion.name()}">
+        </option>
+      </select>
+
+      <input class="form-control w-50 me-2" type="search" name="value" placeholder="Search book" aria-label="Search" th:value="${value}">
+
+      <button class="btn btn-dark text-white" type="submit">Search</button>
     </form>
 
     <div class="container">
