@@ -32,8 +32,8 @@
                 <input type="password" id="password" th:field="*{password}"
                        class="form-control bg-dark text-white text-start" aria-describedby="togglePassword">
                 <span class="input-group-text bg-dark" id="togglePassword" style="cursor: pointer;">
-                <i class="bi bi-eye text-white"></i>
-            </span>
+                    <i class="bi bi-eye text-white"></i>
+                </span>
             </div>
             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color:red"></p>
 
