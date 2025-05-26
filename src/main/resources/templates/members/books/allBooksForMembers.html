@@ -45,7 +45,7 @@
     <form class="d-flex justify-content-center m-5" action="/memberHome/search" method="get">
 
 <!--      <label for="search">Search book by...</label><br>-->
-      <select class="form-control bg-dark text-white text-start me-5" id="search" name="filter">
+      <select class="form-control bg-dark text-white text-start me-5 w-50" id="filter" name="filter">
         <option value="" disabled selected>Select search criterion</option>
         <option
                 th:each="criterion : ${filterOptions}"
@@ -54,9 +54,19 @@
         </option>
       </select>
 
-      <input class="form-control w-50 me-2" type="search" name="value" placeholder="Search book" aria-label="Search" th:value="${value}">
+      <input
+              class="form-control w-50 me-2"
+              id="searchValue"
+              type="search"
+              name="value"
+              placeholder="Search book"
+              aria-label="Search" th:value="${value}">
 
-      <button class="btn btn-dark text-white" type="submit">Search</button>
+      <button
+              class="btn btn-dark text-white"
+              id="searchButton"
+              type="submit"
+              disabled>Search</button>
     </form>
 
     <div class="container">
@@ -104,6 +114,8 @@
   </div>
 
 </div>
+
+<script type="module" src="/js/filterBooks.js"></script>
 
 </body>
 </html>

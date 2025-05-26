@@ -37,5 +37,6 @@ body::before {
 }
 
 .my-background {
-    background-color: #e8e6dc;
+    /*background-color: #e8e6dc;*/
+    background-color: white;
 }

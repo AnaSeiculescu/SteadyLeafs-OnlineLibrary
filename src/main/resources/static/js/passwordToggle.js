@@ -1,5 +1,6 @@
 
 document.addEventListener('DOMContentLoaded', () => {
+
     const togglePassword = document.querySelector('#togglePassword');
     const passwordInput = document.querySelector('#password');
 
@@ -10,4 +11,5 @@ document.addEventListener('DOMContentLoaded', () => {
         togglePassword.querySelector('i').classList.toggle('bi-eye');
         togglePassword.querySelector('i').classList.toggle('bi-eye-slash');
     });
+
 });
