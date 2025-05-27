@@ -10,6 +10,10 @@ import com.onlinelibrary.steadyleafs.service.BookService;
 import com.onlinelibrary.steadyleafs.service.MemberHomeService;
 import com.onlinelibrary.steadyleafs.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,14 +48,26 @@ public class MemberHomeController {
 	}
 
 	@GetMapping("/seeAllBooks")
-	public String getAllBooks(Model model, Authentication authentication) {
+	public String getAllBooks(
+			Model model,
+			Authentication authentication,
+			@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "15") int size
+	) {
 		SignedInMemberDto currentMember = getLoggedInMember(authentication);
-		List<BookReturnDto> bookList = bookService.getAllBooks();
+
+		Pageable pageable = PageRequest.of(page, size, Sort.by("title").ascending());
+		Page<BookReturnDto> bookPage = bookService.getAllBooks(pageable);
 
 		model.addAttribute("currentMember", currentMember);
-		model.addAttribute("bookList", bookList);
 		model.addAttribute("activePage", "allBooks");
 		model.addAttribute("filterOptions", BookSearchFilter.values());
+
+		model.addAttribute("bookPage", bookPage);
+		model.addAttribute("bookList", bookPage.getContent());
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages", bookPage.getTotalPages());
+		model.addAttribute("pageSize", size);
 
 		return "members/books/allBooksForMembers";
 	}

@@ -7,6 +7,8 @@ import com.onlinelibrary.steadyleafs.model.dto.BookUpdateDto;
 import com.onlinelibrary.steadyleafs.repository.BookRepository;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -119,5 +121,20 @@ public class BookService {
 		return booksByAuthor.stream()
 				.map(book -> new BookReturnDto().mapFromBook(book))
 				.toList();
+	}
+
+	public Page<BookReturnDto> getAllBooks(Pageable pageable) {
+		Page<Book> bookPageFromDb = bookRepository.findAll(pageable);
+		return bookPageFromDb.map(book -> new BookReturnDto().mapFromBook(book));
+	}
+
+	public Page<BookReturnDto> getAvailableBooks(Pageable pageable) {
+		Page<Book> availableBookPageFromDb = bookRepository.findByBorrowedByIsNull(pageable);
+		return availableBookPageFromDb.map(book -> new BookReturnDto().mapFromBook(book));
+	}
+
+	public Page<BookReturnDto> getLoanedBooks(Pageable pageable) {
+		Page<Book> loanedBookPageFromDb = bookRepository.findByBorrowedByIsNotNull(pageable);
+		return loanedBookPageFromDb.map(book -> new BookReturnDto().mapFromBook(book));
 	}
 }

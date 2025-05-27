@@ -9,6 +9,10 @@ import com.onlinelibrary.steadyleafs.service.MemberService;
 import com.onlinelibrary.steadyleafs.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,32 +41,40 @@ public class LibrarianHomeController {
 	public String getLibrarianHomePage(
 			Model model,
 			Authentication authentication,
-			@RequestParam(required = false, defaultValue = "all") String filter
+			@RequestParam(required = false, defaultValue = "all") String filter,
+			@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "15") int size
 	) {
 
 		Librarian currentLibrarian = getLoggedInLibrarian(authentication);
 
-		List<BookReturnDto> bookList;
+		Pageable pageable = PageRequest.of(page, size, Sort.by("title").ascending());
+		Page<BookReturnDto> bookPage;
 
 		switch (filter) {
 			case "loaned":
-				bookList = bookService.getLoanedBooks();
+				bookPage = bookService.getLoanedBooks(pageable);
 				break;
 			case "available":
-				bookList = bookService.getAvailableBooks();
+				bookPage = bookService.getAvailableBooks(pageable);
 				break;
 			default:
-				bookList = bookService.getAllBooks();
+				bookPage = bookService.getAllBooks(pageable);
 		}
 
-		for (BookReturnDto book : bookList) {
+		for (BookReturnDto book : bookPage) {
 			if (book.getBorrowedById() != null) {
 				MemberReturnDto member = memberService.getMemberById(book.getBorrowedById());
 				book.setMemberReturnDto(member);
 			}
 		}
 
-		model.addAttribute("bookList", bookList);
+		model.addAttribute("bookPage", bookPage);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("bookList", bookPage.getContent());
+		model.addAttribute("totalPages", bookPage.getTotalPages());
+		model.addAttribute("pageSize", size);
+
 		model.addAttribute("filter", filter);
 		model.addAttribute("currentLibrarian", currentLibrarian);
 		model.addAttribute("activePage", "home");
