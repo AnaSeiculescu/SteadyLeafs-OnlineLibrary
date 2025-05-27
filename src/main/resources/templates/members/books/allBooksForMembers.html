@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<div style="background-color: white; border-bottom: 2px solid black; width: 100%; display: flex; justify-content: space-between; align-items: center" class="container-fluid d-flex justify-content-between align-items-center fixed-top" >
+<div style="background-color: white; border-bottom: 1px solid black; width: 100%; display: flex; justify-content: space-between; align-items: center" class="container-fluid d-flex justify-content-between align-items-center fixed-top" >
 
   <div class="d-flex justify-content-between align-items-center mb-0 py-1" style="margin-left: 20px">
     <h5 class="text-center mb-0 mb-0 py-1">Welcome, <span th:text="${currentMember.firstName + ' ' + currentMember.lastName}"></span></h5>
@@ -42,10 +42,9 @@
   <div class="container table.responsive w-75 d-flex flex-column align-items-center mb-5">
 <!--    <h4 class="text-center p-5">All Books</h4>-->
 
-    <form class="d-flex justify-content-center m-5" action="/memberHome/search" method="get">
+    <form class="d-flex justify-content-center m-5 w-50" action="/memberHome/search" method="get">
 
-<!--      <label for="search">Search book by...</label><br>-->
-      <select class="form-control bg-dark text-white text-start me-5 w-50" id="filter" name="filter">
+      <select class="form-control bg-dark text-white text-start me-3 w-50" id="filter" name="filter">
         <option value="" disabled selected>Select search criterion</option>
         <option
                 th:each="criterion : ${filterOptions}"
@@ -53,20 +52,23 @@
                 th:text="${criterion.name()}">
         </option>
       </select>
+      <div class="input-group w-75">
+          <input
+                  class="form-control w-50 pe-5"
+                  id="searchValue"
+                  type="search"
+                  name="value"
+                  placeholder="Search book(s)"
+                  aria-label="Search" th:value="${value}">
 
-      <input
-              class="form-control w-50 me-2"
-              id="searchValue"
-              type="search"
-              name="value"
-              placeholder="Search book"
-              aria-label="Search" th:value="${value}">
+          <button
+                  class="btn border-0 bg-transparent"
+                  id="searchButton"
+                  type="submit"
+                  style="margin-left: -40px; z-index: 10;"
+                  disabled><i class="bi bi-search"></i></button>
+      </div>
 
-      <button
-              class="btn btn-dark text-white"
-              id="searchButton"
-              type="submit"
-              disabled>Search</button>
     </form>
 
     <div class="container">
