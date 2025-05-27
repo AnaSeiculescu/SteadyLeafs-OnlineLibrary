@@ -40,3 +40,22 @@ body::before {
     /*background-color: #e8e6dc;*/
     background-color: white;
 }
+
+.pagination .page-link {
+    color: black; /* text color */
+  }
+
+  .pagination .page-link:hover {
+    color: #000;
+    background-color: #e9ecef; /* optional hover background */
+  }
+
+  .pagination .page-item.active .page-link {
+    background-color: black; /* active background */
+    border-color: black;
+    color: white; /* active text color */
+  }
+
+  .pagination .page-link:focus {
+    box-shadow: none; /* remove blue outline */
+  }

@@ -114,13 +114,15 @@
                     <input type="hidden" name="page" th:value="${currentPage}" />
                     <input type="hidden" name="filter" th:value="${filter}" />
 
-                    <label for="pageSizeSelect">Items per page:</label>
-                    <select name="size" id="pageSizeSelect" onchange="document.getElementById('pageSizeForm').submit()">
-                        <option th:value="6"  th:selected="${pageSize == 6}">6</option>
-                        <option th:value="12" th:selected="${pageSize == 12}">12</option>
-                        <option th:value="15" th:selected="${pageSize == 15}">15</option>
-                        <option th:value="21" th:selected="${pageSize == 21}">21</option>
-                    </select>
+
+<!--                        <label for="pageSizeSelect" class="w-75">Items per page:</label>-->
+                        <select name="size" id="pageSizeSelect" onchange="document.getElementById('pageSizeForm').submit()" class="dropdown btn bg-dark text-white text-start me-3">
+                            <option th:value="6"  th:selected="${pageSize == 6}">6  items per page</option>
+                            <option th:value="12" th:selected="${pageSize == 12}">12  items per page</option>
+                            <option th:value="15" th:selected="${pageSize == 15}">15  items per page</option>
+                            <option th:value="21" th:selected="${pageSize == 21}">21  items per page</option>
+                        </select>
+
                 </form>
 
                 <nav aria-label="Book pagination" class="mt-4">
