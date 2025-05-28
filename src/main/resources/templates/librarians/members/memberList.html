@@ -69,13 +69,18 @@
         <td>
           <form th:action="@{/librarianHome/members/borrowedBooks}" class="d-inline">
             <input type="hidden" name="id" th:value="${member.id}">
-            <button type="submit" class="btn btn-secondary btn-sm"><i class="bi bi-book m-2"></i></button>
+            <button type="submit" class="btn btn-secondary btn-sm">
+              <span class="ms-1" th:text="${member.borrowedBooks.size()}"></span>
+              <i class="bi bi-book m-2"></i>
+            </button>
           </form>
         </td>
         <td>
           <form th:action="@{/librarianHome/members/updateForm}" class="d-inline">
             <input type="hidden" name="id" th:value="${member.id}">
-            <button type="submit" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-down-up m-2"></i></button>
+            <button type="submit" class="btn btn-secondary btn-sm">
+              <i class="bi bi-arrow-down-up m-2"></i>
+            </button>
           </form>
         </td>
         <td>
