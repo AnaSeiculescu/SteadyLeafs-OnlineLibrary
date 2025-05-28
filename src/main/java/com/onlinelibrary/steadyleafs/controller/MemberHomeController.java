@@ -93,12 +93,11 @@ public class MemberHomeController {
 	public String searchBooks(
 			Model model,
 			Authentication authentication,
-			@RequestParam(required = false) String filter,
 			@RequestParam(required = false) String value)
 	{
 		SignedInMemberDto currentMember = getLoggedInMember(authentication);
 
-		if (filter == null || filter.isEmpty() || value == null || value.trim().isEmpty()) {
+		if (value == null || value.trim().isEmpty()) {
 			List<BookReturnDto> bookList = bookService.getAllBooks();
 
 			model.addAttribute("currentMember", currentMember);
@@ -109,22 +108,22 @@ public class MemberHomeController {
 			return "members/books/allBooksForMembers";
 		}
 
-		List<BookReturnDto> bookList;
+		List<BookReturnDto> bookList = bookService.getBookByTitleOrAuthor(value);
 
-		switch (filter) {
-			case "TITLE":
-				bookList = bookService.getBookByTitle(value);
-				break;
-			case "AUTHOR":
-				bookList = bookService.getBookByAuthor(value);
-				break;
-			default:
-				bookList = bookService.getAllBooks();
-		}
+//		switch (filter) {
+//			case "TITLE":
+//				bookList = bookService.getBookByTitle(value);
+//				break;
+//			case "AUTHOR":
+//				bookList = bookService.getBookByAuthor(value);
+//				break;
+//			default:
+//				bookList = bookService.getAllBooks();
+//		}
 
 		model.addAttribute("currentMember", currentMember);
 		model.addAttribute("bookList", bookList);
-		model.addAttribute("filter", filter);
+//		model.addAttribute("filter", filter);
 
 		return "members/books/bookSearchResult";
 	}

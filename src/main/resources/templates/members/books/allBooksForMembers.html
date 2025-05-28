@@ -42,25 +42,24 @@
 <div class="container-fluid d-flex align-items-center pt-5">
 
     <div class="container table.responsive w-75 d-flex flex-column align-items-center mb-5">
-        <!--    <h4 class="text-center p-5">All Books</h4>-->
 
         <form class="d-flex justify-content-center m-5 w-50" action="/memberHome/search" method="get">
 
-            <select class="dropdown btn bg-dark text-white text-start me-3 w-50" id="filter" name="filter">
-                <option value="" disabled selected>Select search criterion</option>
-                <option
-                        th:each="criterion : ${filterOptions}"
-                        th:value="${criterion.name()}"
-                        th:text="${criterion.name()}">
-                </option>
-            </select>
+<!--            <select class="dropdown btn bg-dark text-white text-start me-3 w-50" id="filter" name="filter">-->
+<!--                <option value="" disabled selected>Select search criterion</option>-->
+<!--                <option-->
+<!--                        th:each="criterion : ${filterOptions}"-->
+<!--                        th:value="${criterion.name()}"-->
+<!--                        th:text="${criterion.name()}">-->
+<!--                </option>-->
+<!--            </select>-->
             <div class="input-group w-75">
                 <input
                         class="form-control w-50 pe-5"
                         id="searchValue"
                         type="search"
                         name="value"
-                        placeholder="Search book(s)"
+                        placeholder="Search by title or author"
                         aria-label="Search" th:value="${value}">
 
                 <button
@@ -152,12 +151,6 @@
           </div>
 
         </div>
-
-<!--        <br/>-->
-
-<!--        <button type="button" class="btn btn-secondary" onclick="window.location.href='/memberHome'"><i-->
-<!--                class="bi bi-arrow-left" style="margin-right:5px"></i>Back to my List-->
-<!--        </button>-->
 
     </div>
 
