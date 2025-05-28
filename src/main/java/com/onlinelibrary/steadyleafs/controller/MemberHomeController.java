@@ -107,23 +107,10 @@ public class MemberHomeController {
 
 			return "members/books/allBooksForMembers";
 		}
-
 		List<BookReturnDto> bookList = bookService.getBookByTitleOrAuthor(value);
-
-//		switch (filter) {
-//			case "TITLE":
-//				bookList = bookService.getBookByTitle(value);
-//				break;
-//			case "AUTHOR":
-//				bookList = bookService.getBookByAuthor(value);
-//				break;
-//			default:
-//				bookList = bookService.getAllBooks();
-//		}
 
 		model.addAttribute("currentMember", currentMember);
 		model.addAttribute("bookList", bookList);
-//		model.addAttribute("filter", filter);
 
 		return "members/books/bookSearchResult";
 	}

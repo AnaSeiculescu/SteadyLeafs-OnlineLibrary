@@ -77,21 +77,27 @@
 
                             <div class="col-md-8 d-flex flex-column ps-4">
                                 <div class="card-body pb-0">
-                                    <h5 class="card-title" th:text="${book.title}">Book Title</h5>
-                                    <p class="card-text mb-1" style="font-size: 14px">
-                                        <span th:text="${book.author}"></span><br>
+                                    <h6 class="card-title mb-0" th:text="${book.title}">Book Title</h6>
+                                    <div class="card-text mb-1" style="font-size: 13px">
+                                        <div class="mb-1" th:text="${book.author}"></div><br>
                                         <span th:if="${book.borrowedById != null and book.memberReturnDto != null}">
                                             <a th:href="@{/librarianHome/members/borrowedBooks(id=${book.borrowedById})}"
                                                th:text="${book.memberReturnDto.firstName + ' ' + book.memberReturnDto.lastName}">Member Name</a>
                                         </span>
                                         <span th:if="${book.borrowedById == null}" class="text-muted">
                                             Not borrowed
+                                        </span><br>
+                                        <span th:if="${book.status == 'BORROWED'}">
+                                            <span th:if="${book.isOverdue()}" class="text-danger">Overdue!</span>
+                                            <span
+                                                    th:unless="${book.isOverdue()}"
+                                                    th:text="'Due: ' + ${#temporals.format(book.dueDate, 'dd MMM yyyy')}"></span>
                                         </span>
 
-                                    </p>
+                                    </div>
                                 </div>
 
-                                <div class="mt-auto px-3 pb-3">
+                                <div class="mt-auto px-3 pb-3 pt-3">
                                     <form th:action="@{/librarianHome/books/updateForm}" method="get" class="d-inline me-1">
                                         <input type="hidden" name="id" th:value="${book.id}">
                                         <button type="submit" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-down-up m-1"></i></button>

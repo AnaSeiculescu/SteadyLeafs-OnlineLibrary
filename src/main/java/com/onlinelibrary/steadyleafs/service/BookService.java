@@ -109,20 +109,6 @@ public class BookService {
 		return getAvailableBooks().size();
 	}
 
-//	public List<BookReturnDto> getBookByTitle(String title) {
-//		List<Book> booksByTitle = bookRepository.findByTitleContainingIgnoreCase(title);
-//		return booksByTitle.stream()
-//				.map(book -> new BookReturnDto().mapFromBook(book))
-//				.toList();
-//	}
-
-//	public List<BookReturnDto> getBookByAuthor(String author) {
-//		List<Book> booksByAuthor = bookRepository.findByAuthorContainingIgnoreCase(author);
-//		return booksByAuthor.stream()
-//				.map(book -> new BookReturnDto().mapFromBook(book))
-//				.toList();
-//	}
-
 	public List<BookReturnDto> getBookByTitleOrAuthor(String searchString) {
 		List<Book> booksByTitleOrAuthor = bookRepository.searchByTitleOrAuthor(searchString);
 		return booksByTitleOrAuthor.stream()

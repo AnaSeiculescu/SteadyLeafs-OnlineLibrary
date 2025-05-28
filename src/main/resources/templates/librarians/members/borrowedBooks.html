@@ -66,10 +66,16 @@
 
                             <div class="col-md-8 d-flex flex-column ps-4">
                                 <div class="card-body pb-0">
-                                    <h5 class="card-title" th:text="${book.title}">Book Title</h5>
-                                    <p class="card-text mb-1" style="font-size: 14px">
-                                        <span th:text="${book.author}"></span><br>
-                                    </p>
+                                    <h6 class="card-title mb-0" th:text="${book.title}">Book Title</h6>
+                                    <div class="card-text mb-1" style="font-size: 13px">
+                                        <div class="mb-3" th:text="${book.author}"></div>
+                                        <span th:if="${book.status == 'BORROWED'}">
+                                            <span th:if="${book.isOverdue()}" class="text-danger">Overdue!</span>
+                                            <span
+                                                    th:unless="${book.isOverdue()}"
+                                                    th:text="'Due: ' + ${#temporals.format(book.dueDate, 'dd MMM yyyy')}"></span>
+                                        </span>
+                                    </div>
                                 </div>
 
                             </div>

@@ -3,7 +3,7 @@ package com.onlinelibrary.steadyleafs.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-//import java.time.LocalDate;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "books")
@@ -20,7 +20,7 @@ public class Book {
 	private String author;
 	private String coverUrl;
 	private String status;
-//	private LocalDate dueDate;
+	private LocalDate dueDate;
 
 	@ManyToOne
 	@JoinColumn(name = "member_id")

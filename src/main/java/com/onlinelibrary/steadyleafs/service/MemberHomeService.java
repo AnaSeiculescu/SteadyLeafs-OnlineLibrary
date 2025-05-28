@@ -9,6 +9,7 @@ import com.onlinelibrary.steadyleafs.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 
@@ -22,6 +23,8 @@ public class MemberHomeService {
 
 	public void borrowBook(BookReturnDto book, SignedInMemberDto signedInMemberDto) {
 		Book bookFromDatabase = bookService.getBookById(book.getId());
+
+		bookFromDatabase.setDueDate(LocalDate.now().plusDays(7));
 
 		Member member = memberRepository.findById(signedInMemberDto.getId())
 				.orElseThrow(() -> new RuntimeException("Signed in member not found"));

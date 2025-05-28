@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Setter
 @Getter
 @NoArgsConstructor
@@ -18,6 +20,7 @@ public class BookReturnDto {
 	private String status;
 	private Integer borrowedById;
 	private MemberReturnDto memberReturnDto;
+	private LocalDate dueDate;
 
 	public BookReturnDto mapFromBook(Book book) {
 		BookReturnDto bookReturnDto = new BookReturnDto();
@@ -26,6 +29,7 @@ public class BookReturnDto {
 		bookReturnDto.setAuthor(book.getAuthor());
 		bookReturnDto.setCoverUrl(book.getCoverUrl());
 		bookReturnDto.setStatus(book.getStatus());
+		bookReturnDto.setDueDate(book.getDueDate());
 
 		if (book.getBorrowedBy() != null) {
 			bookReturnDto.setBorrowedById(book.getBorrowedBy().getId());
@@ -36,5 +40,9 @@ public class BookReturnDto {
 		}
 
 		return bookReturnDto;
+	}
+
+	public Boolean isOverdue() {
+		return dueDate != null && dueDate.isBefore(LocalDate.now());
 	}
 }
