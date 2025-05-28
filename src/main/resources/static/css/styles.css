@@ -2,7 +2,7 @@ body {
   position: relative;
   margin: 0;
   padding: 0;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 body::before {
@@ -16,7 +16,7 @@ body::before {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: opacity(0.3);
+  filter: opacity(0.2);
   z-index: -1;
 }
 
@@ -38,11 +38,11 @@ body::before {
 
 .my-background {
     /*background-color: #e8e6dc;*/
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.3);
 }
 
 .pagination .page-link {
-    color: black; /* text color */
+    color: #222831; /* text color */
   }
 
   .pagination .page-link:hover {
@@ -51,8 +51,8 @@ body::before {
   }
 
   .pagination .page-item.active .page-link {
-    background-color: black; /* active background */
-    border-color: black;
+    background-color: #222831; /* active background */
+    border-color: #222831;
     color: white; /* active text color */
   }
 

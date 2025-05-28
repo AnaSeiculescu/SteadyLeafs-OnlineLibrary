@@ -10,110 +10,153 @@
 </head>
 <body>
 
-<div style="background-color: white; border-bottom: 1px solid black; width: 100%; display: flex; justify-content: space-between; align-items: center" class="container-fluid d-flex justify-content-between align-items-center fixed-top" >
+<div style="background-color: white; border-bottom: 1px solid black; width: 100%; display: flex; justify-content: space-between; align-items: center"
+     class="container-fluid d-flex justify-content-between align-items-center fixed-top">
 
-  <div class="d-flex justify-content-between align-items-center mb-0 py-1" style="margin-left: 20px">
-    <h5 class="text-center mb-0 mb-0 py-1">Welcome, <span th:text="${currentMember.firstName + ' ' + currentMember.lastName}"></span></h5>
-  </div>
+    <div class="d-flex justify-content-between align-items-center mb-0 py-1" style="margin-left: 20px">
+        <h5 class="text-center mb-0 mb-0 py-1">Welcome, <span
+                th:text="${currentMember.firstName + ' ' + currentMember.lastName}"></span></h5>
+    </div>
 
-  <ul class="nav nav-tabs mb-0 py-1" style="margin-right: 20px">
-    <li class="nav-item">
-      <a class="nav-link" th:classappend="${activePage == 'home'} ? ' active'"
-         th:href="@{/memberHome}"><i class="bi bi-house-fill" style="margin-right:8px"></i>Home</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" th:classappend="${activePage == 'allBooks'} ? ' active'"
-         th:href="@{/memberHome/seeAllBooks}"><i class="bi bi-book" style="margin-right:8px"></i>Books</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link"
-         th:href="@{/logout}"
-         onclick="return confirm('Are you sure you want to leave?');">
-        <i class="bi bi-box-arrow-left" style="margin-right:8px; margin-left: 15px"></i>
-        Logout
-      </a>
-    </li>
-  </ul>
+    <ul class="nav nav-tabs mb-0 py-1" style="margin-right: 20px">
+        <li class="nav-item">
+            <a class="nav-link" th:classappend="${activePage == 'home'} ? ' active'"
+               th:href="@{/memberHome}"><i class="bi bi-house-fill" style="margin-right:8px"></i>Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:classappend="${activePage == 'allBooks'} ? ' active'"
+               th:href="@{/memberHome/seeAllBooks}"><i class="bi bi-book" style="margin-right:8px"></i>Books</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link"
+               th:href="@{/logout}"
+               onclick="return confirm('Are you sure you want to leave?');">
+                <i class="bi bi-box-arrow-left" style="margin-right:8px; margin-left: 15px"></i>
+                Logout
+            </a>
+        </li>
+    </ul>
 
 </div>
 
 <div class="container-fluid d-flex align-items-center pt-5">
 
-  <div class="container table.responsive w-75 d-flex flex-column align-items-center mb-5">
-<!--    <h4 class="text-center p-5">All Books</h4>-->
+    <div class="container table.responsive w-75 d-flex flex-column align-items-center mb-5">
+        <!--    <h4 class="text-center p-5">All Books</h4>-->
 
-    <form class="d-flex justify-content-center m-5 w-50" action="/memberHome/search" method="get">
+        <form class="d-flex justify-content-center m-5 w-50" action="/memberHome/search" method="get">
 
-      <select class="dropdown btn bg-dark text-white text-start me-3 w-50" id="filter" name="filter">
-        <option value="" disabled selected>Select search criterion</option>
-        <option
-                th:each="criterion : ${filterOptions}"
-                th:value="${criterion.name()}"
-                th:text="${criterion.name()}">
-        </option>
-      </select>
-      <div class="input-group w-75">
-          <input
-                  class="form-control w-50 pe-5"
-                  id="searchValue"
-                  type="search"
-                  name="value"
-                  placeholder="Search book(s)"
-                  aria-label="Search" th:value="${value}">
+            <select class="dropdown btn bg-dark text-white text-start me-3 w-50" id="filter" name="filter">
+                <option value="" disabled selected>Select search criterion</option>
+                <option
+                        th:each="criterion : ${filterOptions}"
+                        th:value="${criterion.name()}"
+                        th:text="${criterion.name()}">
+                </option>
+            </select>
+            <div class="input-group w-75">
+                <input
+                        class="form-control w-50 pe-5"
+                        id="searchValue"
+                        type="search"
+                        name="value"
+                        placeholder="Search book(s)"
+                        aria-label="Search" th:value="${value}">
 
-          <button
-                  class="btn border-0 bg-transparent"
-                  id="searchButton"
-                  type="submit"
-                  style="margin-left: -40px; z-index: 10;"
-                  disabled><i class="bi bi-search"></i></button>
-      </div>
-
-    </form>
-
-    <div class="container">
-      <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
-        <div class="col" th:each="book : ${bookList}">
-          <div class="card h-100 shadow rounded my-background">
-            <div class="row py-2 g-0 h-100 p-1">
-
-              <div class="col-md-4 p-3 d-flex align-items-center my-background">
-                <img th:src="${book.coverUrl}" class="img-fluid rounded" alt="Book Cover" style="max-height: 150px; object-fit: cover;">
-              </div>
-
-              <div class="col-md-8 d-flex flex-column">
-                <div class="card-body">
-                  <h5 class="card-title" th:text="${book.title}">Book Title</h5>
-                  <p class="card-text mb-1" style="font-size: 14px">
-                    <strong>Author:</strong> <span th:text="${book.author}"></span><br>
-                    <strong>Status:</strong> <span th:text="${book.status}"></span><br>
-                  </p>
-                </div>
-
-                <div class="mt-auto px-3 pb-3">
-                  <form th:action="@{/memberHome/add}" method="post" class="d-inline">
-                    <input type="hidden" name="id" th:value="${book.id}">
-                    <div th:attr="title=${book.status == 'BORROWED'} ? 'Already borrowed' : 'Borrow this book'">
-                      <button type="submit"
-                              class="btn btn-success btn-sm"
-                              th:attr="disabled=${book.status == 'BORROWED'}">
-                        Borrow
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
+                <button
+                        class="btn border-0 bg-transparent"
+                        id="searchButton"
+                        type="submit"
+                        style="margin-left: -40px; z-index: 10;"
+                        disabled><i class="bi bi-search"></i></button>
             </div>
+
+        </form>
+
+        <div class="container">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+                <div class="col" th:each="book : ${bookList}">
+                    <div class="card border-0 shadow rounded my-background">
+                        <div class="row g-0"  style="height: 180px">
+
+                            <div class="col-md-4 d-flex align-items-stretch" style="height: 180px">
+                                <img th:src="${book.coverUrl}" class="img-fluid rounded-start w-100" alt="Book Cover">
+                            </div>
+
+                            <div class="col-md-8 d-flex flex-column ps-4">
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${book.title}">Book Title</h5>
+                                    <p class="card-text mb-1" style="font-size: 14px">
+                                        <strong>Author:</strong> <span th:text="${book.author}"></span><br>
+                                        <strong>Status:</strong> <span th:text="${book.status}"></span><br>
+                                    </p>
+                                </div>
+
+                                <div class="mt-auto px-3 pb-3">
+                                    <form th:action="@{/memberHome/add}" method="post" class="d-inline">
+                                        <input type="hidden" name="id" th:value="${book.id}">
+                                        <div th:attr="title=${book.status == 'BORROWED'} ? 'Already borrowed' : 'Borrow this book'">
+                                            <button type="submit"
+                                                    class="btn btn-success btn-sm"
+                                                    th:attr="disabled=${book.status == 'BORROWED'}">
+                                                Borrow
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <form th:action="@{/memberHome/seeAllBooks}" id="pageSizeForm" method="get">
+              <!--                    <input type="hidden" name="page" th:value="${currentPage}" />-->
+              <input type="hidden" name="page" th:value="0" />
+              <input type="hidden" name="filter" th:value="${filter}" />
+
+
+              <!--                        <label for="pageSizeSelect" class="w-75">Items per page:</label>-->
+              <select name="size" id="pageSizeSelect" onchange="document.getElementById('pageSizeForm').submit()" class="dropdown btn bg-dark text-white text-start me-3">
+                <option th:value="6"  th:selected="${pageSize == 6}">6  items per page</option>
+                <option th:value="12" th:selected="${pageSize == 12}">12  items per page</option>
+                <option th:value="15" th:selected="${pageSize == 15}">15  items per page</option>
+                <option th:value="21" th:selected="${pageSize == 21}">21  items per page</option>
+              </select>
+
+            </form>
+
+            <nav aria-label="Book pagination" class="mt-4">
+              <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                  <a class="page-link" th:href="@{/memberHome/seeAllBooks(filter=${filter}, page=${currentPage - 1}, size=${pageSize})}">Previous</a>
+                </li>
+
+                <li class="page-item"
+                    th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                    th:classappend="${i == currentPage} ? 'active'">
+                  <a class="page-link"
+                     th:href="@{/memberHome/seeAllBooks(filter=${filter}, page=${i}, size=${pageSize})}"
+                     th:text="${i + 1}">1</a>
+                </li>
+
+                <li class="page-item" th:classappend="${currentPage + 1 >= totalPages} ? 'disabled'">
+                  <a class="page-link" th:href="@{/memberHome/seeAllBooks(filter=${filter}, page=${currentPage + 1}, size=${pageSize})}">Next</a>
+                </li>
+              </ul>
+            </nav>
           </div>
+
         </div>
-      </div>
+
+<!--        <br/>-->
+
+<!--        <button type="button" class="btn btn-secondary" onclick="window.location.href='/memberHome'"><i-->
+<!--                class="bi bi-arrow-left" style="margin-right:5px"></i>Back to my List-->
+<!--        </button>-->
+
     </div>
-
-    <br/>
-
-    <button type="button" class="btn btn-secondary" onclick="window.location.href='/memberHome'"><i class="bi bi-arrow-left" style="margin-right:5px"></i>Back to my List</button>
-
-  </div>
 
 </div>
 
