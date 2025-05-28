@@ -68,15 +68,15 @@
         <div class="container">
             <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
                 <div class="col" th:each="book : ${bookList}">
-                    <div class="card border-0 shadow rounded my-background">
-                        <div class="row g-0" style="height: 180px">
+                    <div class="card border-0 shadow rounded my-background h-100">
+                        <div class="row g-0 h-100">
 
-                            <div class="col-md-4 d-flex align-items-stretch" style="height: 180px">
-                                <img th:src="${book.coverUrl}" class="img-fluid rounded-start w-100" alt="Book Cover">
+                            <div class="col-md-4">
+                                <img th:src="${book.coverUrl}" class="img-fluid rounded-start w-100 h-100" style="object-fit: cover; aspect-ratio: 2 / 3;" alt="Book Cover">
                             </div>
 
-                            <div class="col-md-8 d-flex flex-column">
-                                <div class="card-body m-1">
+                            <div class="col-md-8 d-flex flex-column ps-4">
+                                <div class="card-body pb-0">
                                     <h5 class="card-title" th:text="${book.title}">Book Title</h5>
                                     <p class="card-text mb-1" style="font-size: 14px">
                                         <span th:text="${book.author}"></span><br>
@@ -91,7 +91,7 @@
                                     </p>
                                 </div>
 
-                                <div class="mt-auto px-3 pb-3 ms-1">
+                                <div class="mt-auto px-3 pb-3">
                                     <form th:action="@{/librarianHome/books/updateForm}" method="get" class="d-inline me-1">
                                         <input type="hidden" name="id" th:value="${book.id}">
                                         <button type="submit" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-down-up m-1"></i></button>

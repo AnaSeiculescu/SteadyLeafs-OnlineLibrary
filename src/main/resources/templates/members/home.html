@@ -50,14 +50,18 @@
         <div class="container">
             <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
                 <div class="col" th:each="book : ${currentMember.borrowedBooks}">
-                    <div class="card h-100 shadow rounded my-background">
-                        <div class="row py-2 g-0 h-100 p-1">
+                    <div class="card border-0 shadow rounded my-background h-100">
+                        <div class="row g-0 h-100">
 
-                            <div class="col-md-4 p-3 d-flex align-items-center my-background">
-                                <img th:src="${book.coverUrl}" class="img-fluid rounded" alt="Book Cover" style="max-height: 150px; object-fit: cover;">
+                            <div class="col-md-4">
+                                <img
+                                        th:src="${book.coverUrl}"
+                                        class="img-fluid rounded-start w-100 h-100"
+                                        style="object-fit: cover; aspect-ratio: 2 / 3;"
+                                        alt="Book Cover">
                             </div>
 
-                            <div class="col-md-8 d-flex flex-column">
+                            <div class="col-md-8 d-flex flex-column ps-4">
                                 <div class="card-body">
                                     <h5 class="card-title" th:text="${book.title}">Book Title</h5>
                                     <p class="card-text mb-1" style="font-size: 14px">
