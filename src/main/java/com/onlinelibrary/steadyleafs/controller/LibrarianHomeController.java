@@ -195,15 +195,15 @@ public class LibrarianHomeController {
 	}
 
 	@PostMapping("/members/borrowedBooks/return")
-	public String returnBook(@ModelAttribute Book book) {
+	public String returnBook(@ModelAttribute BookReturnDto bookReturnDto) {
 //		Librarian currentLibrarian = getLoggedInLibrarian(authentication);
 
 //		MemberReturnDto memberReturnDto = memberService.getMemberById(book.getBorrowedBy().getId());
 
 
-		memberHomeService.returnMyBook(book.getId());
+		memberHomeService.returnMyBook(bookReturnDto.getId());
 
-		return "redirect:/librarianHome/members/borrowedBooks";
+		return "redirect:/librarianHome/members/borrowedBooks?id=" + bookReturnDto.getBorrowedById();
 	}
 
 }

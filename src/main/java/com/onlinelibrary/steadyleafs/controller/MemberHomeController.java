@@ -82,9 +82,9 @@ public class MemberHomeController {
 	}
 
 	@PostMapping("/delete")
-	public String returnMyBook(@ModelAttribute Book book) {
+	public String returnMyBook(@ModelAttribute BookReturnDto bookReturnDto) {
 //		SignedInMemberDto currentMember = getLoggedInMember(authentication);
-		memberHomeService.returnMyBook(book.getId());
+		memberHomeService.returnMyBook(bookReturnDto.getId());
 
 		return "redirect:/memberHome";
 	}
