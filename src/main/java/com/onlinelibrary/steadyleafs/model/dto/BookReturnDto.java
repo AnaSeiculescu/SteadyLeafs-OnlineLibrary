@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -20,7 +21,7 @@ public class BookReturnDto {
 	private String status;
 	private Integer borrowedById;
 	private MemberReturnDto memberReturnDto;
-	private LocalDate dueDate;
+	private LocalDateTime dueDate;
 
 	public BookReturnDto mapFromBook(Book book) {
 		BookReturnDto bookReturnDto = new BookReturnDto();
@@ -43,6 +44,6 @@ public class BookReturnDto {
 	}
 
 	public Boolean isOverdue() {
-		return dueDate != null && dueDate.isBefore(LocalDate.now());
+		return dueDate != null && dueDate.isBefore(LocalDateTime.now());
 	}
 }

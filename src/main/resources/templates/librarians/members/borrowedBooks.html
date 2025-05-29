@@ -70,12 +70,17 @@
                                     <div class="card-text mb-1" style="font-size: 13px">
                                         <div class="mb-3" th:text="${book.author}"></div>
                                         <span th:if="${book.status == 'BORROWED'}">
-                                            <span th:if="${book.isOverdue()}" class="text-danger">Overdue!</span>
-                                            <span
-                                                    th:unless="${book.isOverdue()}"
-                                                    th:text="'Due: ' + ${#temporals.format(book.dueDate, 'dd MMM yyyy')}"></span>
+                                            <span th:if="${book.isOverdue()}" class="text-danger">Overdue!</span><br>
+                                            <span th:text="'Due: ' + ${#temporals.format(book.dueDate, 'dd MMM yyyy')}"></span>
                                         </span>
                                     </div>
+                                </div>
+
+                                <div class="mt-auto px-3 pb-3">
+                                    <form th:action="@{/librarianHome/members/borrowedBooks/return}" method="post" class="d-inline">
+                                        <input type="hidden" name="id" th:value="${book.id}">
+                                        <button type="submit" class="btn btn-warning btn-sm" onclick="return confirm('Are you sure you want to return this book?');">Return book</button>
+                                    </form>
                                 </div>
 
                             </div>

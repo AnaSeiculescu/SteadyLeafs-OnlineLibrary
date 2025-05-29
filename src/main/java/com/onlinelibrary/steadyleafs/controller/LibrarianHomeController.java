@@ -5,6 +5,7 @@ import com.onlinelibrary.steadyleafs.model.Librarian;
 import com.onlinelibrary.steadyleafs.model.User;
 import com.onlinelibrary.steadyleafs.model.dto.*;
 import com.onlinelibrary.steadyleafs.service.BookService;
+import com.onlinelibrary.steadyleafs.service.MemberHomeService;
 import com.onlinelibrary.steadyleafs.service.MemberService;
 import com.onlinelibrary.steadyleafs.service.UserService;
 import jakarta.validation.Valid;
@@ -30,6 +31,7 @@ public class LibrarianHomeController {
 	private final UserService userService;
 	private final BookService bookService;
 	private final MemberService memberService;
+	private final MemberHomeService memberHomeService;
 
 	private Librarian getLoggedInLibrarian(Authentication authentication) {
 		User currentUser = userService.getLoggedInUser(authentication);
@@ -191,4 +193,17 @@ public class LibrarianHomeController {
 
 		return "librarians/members/borrowedBooks";
 	}
+
+	@PostMapping("/members/borrowedBooks/return")
+	public String returnBook(@ModelAttribute Book book) {
+//		Librarian currentLibrarian = getLoggedInLibrarian(authentication);
+
+//		MemberReturnDto memberReturnDto = memberService.getMemberById(book.getBorrowedBy().getId());
+
+
+		memberHomeService.returnMyBook(book.getId());
+
+		return "redirect:/librarianHome/members/borrowedBooks";
+	}
+
 }

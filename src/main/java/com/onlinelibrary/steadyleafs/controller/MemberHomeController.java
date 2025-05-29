@@ -82,8 +82,8 @@ public class MemberHomeController {
 	}
 
 	@PostMapping("/delete")
-	public String returnMyBook(@ModelAttribute Book book, Authentication authentication) {
-		SignedInMemberDto currentMember = getLoggedInMember(authentication);
+	public String returnMyBook(@ModelAttribute Book book) {
+//		SignedInMemberDto currentMember = getLoggedInMember(authentication);
 		memberHomeService.returnMyBook(book.getId());
 
 		return "redirect:/memberHome";

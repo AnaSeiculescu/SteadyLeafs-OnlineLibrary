@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "books")
@@ -20,7 +21,7 @@ public class Book {
 	private String author;
 	private String coverUrl;
 	private String status;
-	private LocalDate dueDate;
+	private LocalDateTime dueDate;
 
 	@ManyToOne
 	@JoinColumn(name = "member_id")
