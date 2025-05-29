@@ -129,10 +129,10 @@
 
             const legendContainer = document.getElementById('chart-legend');
             legendContainer.innerHTML = labels.map((label, i) => `
-                <span class="d-flex align-items-center mb-2">
-                    <span class="me-2" style="width: 40px; height: 16px; background-color: ${backgroundColors[i]}; display: inline-block; border-radius: 3px;"></span>
-                    ${label}
-                </span>
+                <div class="d-inline-flex align-items-center me-4 mb-2">
+                        <span class="me-1" style="width: 40px; height: 16px; background-color: ${backgroundColors[i]}; display: inline-block; border-radius: 3px;"></span>
+                        ${label}
+                </div>
             `).join('');
         </script>
 
