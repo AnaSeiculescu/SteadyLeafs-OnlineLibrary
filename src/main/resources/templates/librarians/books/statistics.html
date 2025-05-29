@@ -65,14 +65,12 @@
             </tbody>
         </table>
 
-<!--        <div class="container table.responsive w-50 d-flex flex-column align-items-center mt-4">-->
-<!--            <canvas id="bookPieChart" style="max-width:600px;"></canvas>-->
-<!--        </div>-->
-
-        <div class="d-flex flex-column align-items-center">
-            <div style="max-width: 700px; margin: 0 auto;">
+        <div class="container d-flex flex-column align-items-center">
+            <div id="chart-container" style="max-width: 500px;">
                 <canvas id="bookPieChart"></canvas>
             </div>
+
+            <div id="chart-legend" class="mt-4 d-flex flex-wrap justify-content-center gap-3" style="max-width: 700px;"></div>
         </div>
 
         <script th:inline="javascript">
@@ -81,17 +79,19 @@
 
             const ctx = document.getElementById('bookPieChart').getContext('2d');
 
-            new Chart(ctx, {
+            const backgroundColors = [
+                'rgba(54, 162, 235, 0.7)',
+                'rgba(41, 150, 76, 0.7)',
+                'rgba(255, 159, 64, 0.7)'
+            ];
+
+            const chart = new Chart(ctx, {
                 type: 'pie',
                 data: {
                     labels: labels,
                     datasets: [{
                         data: values,
-                        backgroundColor: [
-                            'rgba(54, 162, 235, 0.7)',   // Blue
-                            'rgba(152, 200, 83, 0.7)',   // Some kind of purple
-                            'rgba(255, 159, 64, 0.7)'    // Orange
-                        ],
+                        backgroundColor: backgroundColors,
                         borderColor: 'white',
                         borderWidth: 2
                     }]
@@ -99,6 +99,9 @@
                 options: {
                     responsive: true,
                     plugins: {
+                        legend: {
+                            display: false
+                        },
                         datalabels: {
                             formatter: (value, ctx) => {
                                 let sum = 0;
@@ -113,13 +116,6 @@
                                 size: 14
                             }
                         },
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                padding: 20,
-                                font: { size: 14 }
-                            }
-                        },
                         tooltip: {
                             enabled: true,
                             callbacks: {
@@ -128,8 +124,16 @@
                         }
                     }
                 },
-                plugins: [ChartDataLabels]
+                plugins: [ChartDataLabels],
             });
+
+            const legendContainer = document.getElementById('chart-legend');
+            legendContainer.innerHTML = labels.map((label, i) => `
+                <span class="d-flex align-items-center mb-2">
+                    <span class="me-2" style="width: 40px; height: 16px; background-color: ${backgroundColors[i]}; display: inline-block; border-radius: 3px;"></span>
+                    ${label}
+                </span>
+            `).join('');
         </script>
 
     </div>
