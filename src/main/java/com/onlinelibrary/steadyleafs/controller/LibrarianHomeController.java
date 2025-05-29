@@ -137,7 +137,12 @@ public class LibrarianHomeController {
 		statsMap.put("Loaned books", bookService.getNumberOfLoanedBooks());
 		statsMap.put("Available books", bookService.getNumberOfAvailableBooks());
 
+		List<String> statsKeys = new ArrayList<>(statsMap.keySet());
+		List<Integer> statsValues = new ArrayList<>(statsMap.values());
+
 		model.addAttribute("currentLibrarian", currentLibrarian);
+		model.addAttribute("bookStatsKeys", statsKeys);
+		model.addAttribute("bookStatsValues", statsValues);
 		model.addAttribute("bookStats", statsMap);
 		model.addAttribute("activePage", "statistics");
 

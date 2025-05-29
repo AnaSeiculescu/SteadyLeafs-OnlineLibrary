@@ -50,7 +50,7 @@
 <div class="container-fluid d-flex align-items-center pt-5 background-image">
 
     <div class="container table.responsive w-50 d-flex flex-column align-items-center mt-5">
-        <h3 class="text-center p-5">Book statistics</h3>
+        <h5 class="text-center mb-4">Book statistics</h5>
 
         <table border="1" class="table table-hover table-light shadow p-3 mb-5 rounded" style="text-align:center">
             <tr>
@@ -65,27 +65,19 @@
             </tbody>
         </table>
 
-        <div class="container table.responsive w-50 d-flex flex-column align-items-center mt-5">
+<!--        <div class="container table.responsive w-50 d-flex flex-column align-items-center mt-4">-->
+<!--            <canvas id="bookPieChart" style="max-width:600px;"></canvas>-->
+<!--        </div>-->
 
-            <table border="1" class="table table-hover table-light shadow p-3 mb-5 rounded" style="text-align:center">
-                <tr>
-                    <th>Category</th>
-                    <th>Quantity</th>
-                </tr>
-                <tbody>
-                <tr th:each="entry : ${bookStats}">
-                    <td th:text="${entry.key}"></td>
-                    <td th:text="${entry.value}"></td>
-                </tr>
-                </tbody>
-            </table>
-
-            <canvas id="bookPieChart" style="max-width:400px;"></canvas>
+        <div class="d-flex flex-column align-items-center">
+            <div style="max-width: 700px; margin: 0 auto;">
+                <canvas id="bookPieChart"></canvas>
+            </div>
         </div>
 
         <script th:inline="javascript">
-            const labels = /*[[${#lists.arrayList(bookStats.keySet())}]]*/ [];
-            const values = /*[[${#lists.arrayList(bookStats.values())}]]*/ [];
+            const labels = /*[[${bookStatsKeys}]]*/ [];
+            const values = /*[[${bookStatsValues}]]*/ [];
 
             const ctx = document.getElementById('bookPieChart').getContext('2d');
 
@@ -97,7 +89,7 @@
                         data: values,
                         backgroundColor: [
                             'rgba(54, 162, 235, 0.7)',   // Blue
-                            'rgba(75, 192, 192, 0.7)',   // Teal
+                            'rgba(152, 200, 83, 0.7)',   // Some kind of purple
                             'rgba(255, 159, 64, 0.7)'    // Orange
                         ],
                         borderColor: 'white',
@@ -124,6 +116,7 @@
                         legend: {
                             position: 'bottom',
                             labels: {
+                                padding: 20,
                                 font: { size: 14 }
                             }
                         },
