@@ -7,6 +7,8 @@
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
 </head>
 <body>
 
@@ -62,6 +64,80 @@
             </tr>
             </tbody>
         </table>
+
+        <div class="container table.responsive w-50 d-flex flex-column align-items-center mt-5">
+
+            <table border="1" class="table table-hover table-light shadow p-3 mb-5 rounded" style="text-align:center">
+                <tr>
+                    <th>Category</th>
+                    <th>Quantity</th>
+                </tr>
+                <tbody>
+                <tr th:each="entry : ${bookStats}">
+                    <td th:text="${entry.key}"></td>
+                    <td th:text="${entry.value}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <canvas id="bookPieChart" style="max-width:400px;"></canvas>
+        </div>
+
+        <script th:inline="javascript">
+            const labels = /*[[${#lists.arrayList(bookStats.keySet())}]]*/ [];
+            const values = /*[[${#lists.arrayList(bookStats.values())}]]*/ [];
+
+            const ctx = document.getElementById('bookPieChart').getContext('2d');
+
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: values,
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.7)',   // Blue
+                            'rgba(75, 192, 192, 0.7)',   // Teal
+                            'rgba(255, 159, 64, 0.7)'    // Orange
+                        ],
+                        borderColor: 'white',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        datalabels: {
+                            formatter: (value, ctx) => {
+                                let sum = 0;
+                                const dataArr = ctx.chart.data.datasets[0].data;
+                                dataArr.forEach(val => sum += val);
+                                const percentage = (value * 100 / sum).toFixed(1) + '%';
+                                return percentage;
+                            },
+                            color: '#fff',
+                            font: {
+                                weight: 'bold',
+                                size: 14
+                            }
+                        },
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: { size: 14 }
+                            }
+                        },
+                        tooltip: {
+                            enabled: true,
+                            callbacks: {
+                                label: ctx => `${ctx.label}: ${ctx.parsed} books`
+                            }
+                        }
+                    }
+                },
+                plugins: [ChartDataLabels]
+            });
+        </script>
 
     </div>
 
