@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/librarianHome")
@@ -137,8 +138,13 @@ public class LibrarianHomeController {
 		statsMap.put("Loaned books", bookService.getNumberOfLoanedBooks());
 		statsMap.put("Available books", bookService.getNumberOfAvailableBooks());
 
-		List<String> statsKeys = new ArrayList<>(statsMap.keySet());
-		List<Integer> statsValues = new ArrayList<>(statsMap.values());
+//		List<String> statsKeys = new ArrayList<>(statsMap.keySet());
+//		List<Integer> statsValues = new ArrayList<>(statsMap.values());
+
+		List<String> statsKeys = List.of("Loaned books", "Available books");
+		List<Integer> statsValues = statsKeys.stream()
+						.map(statsMap::get)
+						.collect(Collectors.toList());
 
 		model.addAttribute("currentLibrarian", currentLibrarian);
 		model.addAttribute("bookStatsKeys", statsKeys);
