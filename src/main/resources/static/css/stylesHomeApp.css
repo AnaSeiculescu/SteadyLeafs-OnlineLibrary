@@ -26,6 +26,7 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 body::before {
@@ -46,7 +47,7 @@ body::before {
     top: 0;
     left: 0;
     right: 0;
-    bottom: 33vh;
+    bottom: 80vh;
     margin: 0;
     background-color: #ffffff;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);

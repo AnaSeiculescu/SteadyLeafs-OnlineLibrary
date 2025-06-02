@@ -10,59 +10,97 @@
 <body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-<!--<div class="container table.responsive w-50 d-flex flex-column align-items-center">-->
-<!--  <h2 class="text-center mb-2" style="margin-top:80px">Welcome to SteadyLeafs!</h2>-->
-<!--  <h5>~ your online library ~</h5>-->
+<!--    <div class="main-card p-4">-->
+<!--        <div class="d-flex justify-content-between align-items-start">-->
+<!--            <h3 class="mb-2 mt-4">Welcome to SteadyLeafs!</h3>-->
 
-<!--  <hr style="width:100%">-->
-<!--  <div style="text-align:center">-->
-<!--    <h3>Sign in</h3>-->
+<!--            <div class="d-flex">-->
 
-<!--    <form action="/login-member">-->
-<!--      <button type="submit" class="btn btn-dark shadow p-3 mb-3 rounded"><i class="bi bi-person-fill" style="margin-right:8px"></i>Member</button>-->
-<!--    </form>-->
+<!--                <form action="/login-member" class="me-2">-->
+<!--                    <button type="submit" class="btn btn-sm btn-dark shadow p-2 rounded">-->
+<!--                        <i class="bi bi-person-fill me-2"></i>Member-->
+<!--                    </button>-->
+<!--                </form>-->
 
-<!--    <form action="/login-librarian">-->
-<!--      <button type="submit" class="btn btn-dark shadow p-3 mb-3 rounded"><i class="bi bi-person-fill" style="margin-right:8px"></i>Librarian</button>-->
-<!--    </form>-->
-<!--  </div>-->
-<!--  <hr style="width:100%">-->
+<!--                <form action="/login-librarian" class="me-5">-->
+<!--                    <button type="submit" class="btn btn-sm btn-dark shadow p-2 rounded">-->
+<!--                        <i class="bi bi-person-fill me-2"></i>Librarian-->
+<!--                    </button>-->
+<!--                </form>-->
 
-<!--  <form action="/register" style="margin-top:30px">-->
-<!--    <button type="submit" class="btn btn-dark shadow p-3 mb-3 rounded"><i class="bi bi-person-plus-fill" style="margin-right:8px"></i>Register</button>-->
-<!--  </form>-->
+<!--                <form action="/register">-->
+<!--                    <button type="submit" class="btn btn-sm btn-dark shadow p-2 rounded">-->
+<!--                        <i class="bi bi-person-plus-fill me-2"></i>Register-->
+<!--                    </button>-->
+<!--                </form>-->
+<!--            </div>-->
+
+<!--        </div>-->
+
+<!--    </div>-->
+
+<div class="main-card p-4">
+    <div class="d-flex justify-content-between w-75 flex-column align-items-center m-3">
+        <div>
+            <h3 class="mb-0">Welcome to SteadyLeafs!</h3>
+        </div>
+
+        <hr class="w-75">
+
+        <div class="d-flex">
+            <form action="/login-member" class="me-2">
+                <button type="submit" class="btn btn-sm btn-dark shadow p-2 rounded">
+                    <i class="bi bi-person-fill me-2"></i>Member
+                </button>
+            </form>
+
+            <form action="/login-librarian" class="me-5">
+                <button type="submit" class="btn btn-sm btn-dark shadow p-2 rounded">
+                    <i class="bi bi-person-fill me-2"></i>Librarian
+                </button>
+            </form>
+
+            <form action="/register">
+                <button type="submit" class="btn btn-sm btn-dark shadow p-2 rounded">
+                    <i class="bi bi-person-plus-fill me-2"></i>Register
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--<div class="main-card p-4">-->
+<!--    <div class="container-fluid">-->
+<!--        <div class="row align-items-start">-->
+<!--            &lt;!&ndash; Left column: Heading &ndash;&gt;-->
+<!--            <div class="col">-->
+<!--                <h3 class="mb-2 mt-4">Welcome to SteadyLeafs!</h3>-->
+<!--            </div>-->
+
+<!--            &lt;!&ndash; Right column: Buttons aligned right &ndash;&gt;-->
+<!--            <div class="col text-end">-->
+<!--                <form action="/login-member" class="d-inline me-2">-->
+<!--                    <button type="submit" class="btn btn-sm btn-dark shadow p-2 rounded">-->
+<!--                        <i class="bi bi-person-fill me-2"></i>Member-->
+<!--                    </button>-->
+<!--                </form>-->
+
+<!--                <form action="/login-librarian" class="d-inline me-4">-->
+<!--                    <button type="submit" class="btn btn-sm btn-dark shadow p-2 rounded">-->
+<!--                        <i class="bi bi-person-fill me-2"></i>Librarian-->
+<!--                    </button>-->
+<!--                </form>-->
+
+<!--                <form action="/register" class="d-inline">-->
+<!--                    <button type="submit" class="btn btn-sm btn-dark shadow p-2 rounded">-->
+<!--                        <i class="bi bi-person-plus-fill me-2"></i>Register-->
+<!--                    </button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 <!--</div>-->
 
-<div class="main-card">
-    <h2 class="mb-2 mt-4">Welcome to SteadyLeafs!</h2>
-    <h5 class="mb-4">~ your online library ~</h5>
-
-    <hr class="w-75">
-
-    <div class="text-center">
-        <h3>Sign in</h3>
-
-        <form action="/login-member">
-            <button type="submit" class="btn btn-dark shadow p-3 mb-3 rounded">
-                <i class="bi bi-person-fill me-2"></i>Member
-            </button>
-        </form>
-
-        <form action="/login-librarian">
-            <button type="submit" class="btn btn-dark shadow p-3 mb-3 rounded">
-                <i class="bi bi-person-fill me-2"></i>Librarian
-            </button>
-        </form>
-    </div>
-
-    <hr class="w-75">
-
-    <form action="/register" class="mt-4">
-        <button type="submit" class="btn btn-dark shadow p-3 mb-3 rounded">
-            <i class="bi bi-person-plus-fill me-2"></i>Register
-        </button>
-    </form>
-</div>
 
 </body>
 </html>
