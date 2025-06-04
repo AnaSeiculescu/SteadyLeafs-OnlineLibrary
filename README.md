@@ -54,5 +54,5 @@ This is a Java web application I built with Spring Boot and Thymeleaf. Members c
 
 ## To Do
 - [ ] Confirm book creation + show spinner;
-- [ ] Add pagination to book list;
-- [ ] Implement search functionality in the book list (by title or author);
+- [x] Add pagination to book list;
+- [x] Implement search functionality in the book list (by title and author);
