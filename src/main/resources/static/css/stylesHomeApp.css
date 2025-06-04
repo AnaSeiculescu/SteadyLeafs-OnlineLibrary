@@ -36,7 +36,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('/images/background4.jpg') no-repeat center center fixed;
+    background: url('/images/background8.jpg') no-repeat center center fixed;
     background-size: cover;
     filter: opacity(0.5);
     z-index: -1;
@@ -47,7 +47,7 @@ body::before {
     top: 0;
     left: 0;
     right: 0;
-    bottom: 80vh;
+    bottom: 75vh;
     margin: 0;
     background-color: #ffffff;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
@@ -60,4 +60,8 @@ body::before {
 
  h2, h5, h3 {
     text-align: center;
+}
+
+.title-font {
+    font-family: "Caveat", sans-serif;
 }
