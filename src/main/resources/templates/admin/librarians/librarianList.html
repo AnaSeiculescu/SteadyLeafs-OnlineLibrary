@@ -60,7 +60,7 @@
                 <td>
                     <form th:action="@{/adminHome/librarians/delete}" method="post" class="d-inline">
                         <input type="hidden" name="id" th:value="${librarian.id}">
-                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this librarian?');">Delete</button>
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this librarian?');"><i class="bi bi-trash m-1"></i></button>
                     </form>
                 </td>
 

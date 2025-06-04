@@ -100,7 +100,7 @@
                                 <div class="mt-auto px-3 pb-3 pt-3">
                                     <form th:action="@{/librarianHome/books/updateForm}" method="get" class="d-inline me-1">
                                         <input type="hidden" name="id" th:value="${book.id}">
-                                        <button type="submit" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-down-up m-1"></i></button>
+                                        <button type="submit" class="btn btn-secondary btn-sm"><i class="bi bi-pencil m-1"></i></button>
                                     </form>
                                     <form th:action="@{/librarianHome/books/delete}" method="post" class="d-inline">
                                         <input type="hidden" name="id" th:value="${book.id}">
