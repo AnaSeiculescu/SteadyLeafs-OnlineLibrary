@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class EmailController {
@@ -23,12 +23,12 @@ public class EmailController {
 	}
 
 	@PostMapping("/sendEmail")
-	public String sendEmail(@RequestBody ContactFormDto contactFormdto) {
+	public String sendEmail(@ModelAttribute ContactFormDto form) {
 		String toEmail = "anaseiculescu@gmail.com";
-		String subject = contactFormdto.getSubject();
-		String body = "Name " + contactFormdto.getName() + "\n"
-					+ "Email " + contactFormdto.getEmail() + "\n"
-					+ "Message " + contactFormdto.getMessage();
+		String subject = form.getSubject();
+		String body = "Name " + form.getName() + "\n"
+					+ "Email " + form.getEmail() + "\n"
+					+ "Message " + form.getMessage();
 
 		emailService.sendContactEmail(toEmail, subject, body);
 
