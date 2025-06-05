@@ -4,6 +4,8 @@ import com.onlinelibrary.steadyleafs.model.dto.ContactFormDto;
 import com.onlinelibrary.steadyleafs.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -12,6 +14,13 @@ public class EmailController {
 
 	@Autowired
 	private EmailService emailService;
+
+	@GetMapping("/contact")
+	public String getSendEmailForm(Model model) {
+		model.addAttribute("form", new ContactFormDto());
+
+		return "onlineLibrary/contact";
+	}
 
 	@PostMapping("/sendEmail")
 	public String sendEmail(@RequestBody ContactFormDto contactFormdto) {
@@ -23,7 +32,7 @@ public class EmailController {
 
 		emailService.sendContactEmail(toEmail, subject, body);
 
-		return "Email sent successfully!";
+		return "redirect:/";
 	}
 
 }
