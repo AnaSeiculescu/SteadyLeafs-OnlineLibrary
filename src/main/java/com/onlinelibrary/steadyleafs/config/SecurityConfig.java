@@ -41,7 +41,7 @@ public class SecurityConfig {
 				.authorizeHttpRequests(authorize -> authorize
 								.requestMatchers("/").permitAll()
 								.requestMatchers("/css/**", "/js/**", "/images/**", "/favicon.ico", "/webjars/**").permitAll()
-								.requestMatchers("/login-member", "/login-librarian", "/register/**", "/contact", "/sendEmail").permitAll()
+								.requestMatchers("/login-member", "/login-librarian", "/register/**", "/email/contact", "/email/send").permitAll()
 								.requestMatchers("/adminHome/**").hasRole("ADMIN")
 								.requestMatchers("/librarianHome/**").hasAnyRole("LIBRARIAN", "ADMIN")
 								.requestMatchers("/memberHome/**").hasRole("MEMBER")

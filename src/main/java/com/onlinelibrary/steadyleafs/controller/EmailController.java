@@ -8,8 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/email")
 public class EmailController {
 
 	@Autowired
@@ -22,7 +24,7 @@ public class EmailController {
 		return "onlineLibrary/contact";
 	}
 
-	@PostMapping("/sendEmail")
+	@PostMapping("/send")
 	public String sendEmail(@ModelAttribute ContactFormDto form) {
 		String toEmail = "anaseiculescu@gmail.com";
 		String subject = form.getSubject();
