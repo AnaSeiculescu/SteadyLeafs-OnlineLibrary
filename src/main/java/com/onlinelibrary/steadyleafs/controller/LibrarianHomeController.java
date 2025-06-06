@@ -97,9 +97,19 @@ public class LibrarianHomeController {
 
 	@PostMapping()
 	public String createBook(Model model, @ModelAttribute @Valid BookCreateDto bookCreateDto) {
-		bookService.createBook(bookCreateDto);
-		model.addAttribute("bookList", bookService.getAllBooks());
-		return "redirect:/librarianHome";
+		try {
+			bookService.createBook(bookCreateDto);
+			model.addAttribute("bookList", bookService.getAllBooks());
+
+			return "redirect:/librarianHome?createSuccess=true";
+
+		} catch (Exception e) {
+			model.addAttribute("errorMessage", "Oops! Failed to create the Book. Please try again.");
+			model.addAttribute("book", new BookCreateDto());
+
+			return "librarians/books/createBookForm";
+		}
+
 	}
 
 	@GetMapping("/books/updateForm")

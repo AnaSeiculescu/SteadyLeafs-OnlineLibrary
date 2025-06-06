@@ -36,6 +36,7 @@ public class EmailController {
 			emailService.sendContactEmail(toEmail, subject, body);
 
 			return "redirect:/?emailSuccess=true";
+
 		} catch (Exception e) {
 			model.addAttribute("errorMessage", "Oops! Failed to send the message. Please try again.");
 			model.addAttribute("form", new ContactFormDto());

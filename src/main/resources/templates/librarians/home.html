@@ -115,12 +115,10 @@
 
             <div class="d-flex justify-content-between align-items-center mb-3 mt-5">
                 <form th:action="@{/librarianHome}" id="pageSizeForm" method="get">
-<!--                    <input type="hidden" name="page" th:value="${currentPage}" />-->
+
                     <input type="hidden" name="page" th:value="0" />
                     <input type="hidden" name="filter" th:value="${filter}" />
 
-
-<!--                        <label for="pageSizeSelect" class="w-75">Items per page:</label>-->
                         <select name="size" id="pageSizeSelect" onchange="document.getElementById('pageSizeForm').submit()" class="dropdown btn bg-dark text-white text-start me-3">
                             <option th:value="6"  th:selected="${pageSize == 6}">6  items per page</option>
                             <option th:value="12" th:selected="${pageSize == 12}">12  items per page</option>
@@ -155,6 +153,10 @@
     </div>
 
 </div>
+
+<script th:if="${param.createSuccess}" type="text/javascript">
+    alert('Your book was created successfully!');
+</script>
 
 </body>
 </html>
