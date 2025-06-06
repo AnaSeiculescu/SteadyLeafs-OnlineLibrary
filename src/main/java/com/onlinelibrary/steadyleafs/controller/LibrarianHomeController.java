@@ -20,7 +20,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -138,9 +137,6 @@ public class LibrarianHomeController {
 		statsMap.put("Loaned books", bookService.getNumberOfLoanedBooks());
 		statsMap.put("Available books", bookService.getNumberOfAvailableBooks());
 
-//		List<String> statsKeys = new ArrayList<>(statsMap.keySet());
-//		List<Integer> statsValues = new ArrayList<>(statsMap.values());
-
 		List<String> statsKeys = List.of("Loaned books", "Available books");
 		List<Integer> statsValues = statsKeys.stream()
 						.map(statsMap::get)
@@ -208,11 +204,6 @@ public class LibrarianHomeController {
 
 	@PostMapping("/members/borrowedBooks/return")
 	public String returnBook(@ModelAttribute BookReturnDto bookReturnDto) {
-//		Librarian currentLibrarian = getLoggedInLibrarian(authentication);
-
-//		MemberReturnDto memberReturnDto = memberService.getMemberById(book.getBorrowedBy().getId());
-
-
 		memberHomeService.returnMyBook(bookReturnDto.getId());
 
 		return "redirect:/librarianHome/members/borrowedBooks?id=" + bookReturnDto.getBorrowedById();

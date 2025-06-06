@@ -1,6 +1,5 @@
 package com.onlinelibrary.steadyleafs.controller;
 
-import com.onlinelibrary.steadyleafs.model.Book;
 import com.onlinelibrary.steadyleafs.model.BookSearchFilter;
 import com.onlinelibrary.steadyleafs.model.Member;
 import com.onlinelibrary.steadyleafs.model.User;
@@ -83,7 +82,6 @@ public class MemberHomeController {
 
 	@PostMapping("/delete")
 	public String returnMyBook(@ModelAttribute BookReturnDto bookReturnDto) {
-//		SignedInMemberDto currentMember = getLoggedInMember(authentication);
 		memberHomeService.returnMyBook(bookReturnDto.getId());
 
 		return "redirect:/memberHome";
