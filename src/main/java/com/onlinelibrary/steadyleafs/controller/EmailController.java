@@ -2,7 +2,7 @@ package com.onlinelibrary.steadyleafs.controller;
 
 import com.onlinelibrary.steadyleafs.model.dto.ContactFormDto;
 import com.onlinelibrary.steadyleafs.service.EmailService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/email")
+@RequiredArgsConstructor
 public class EmailController {
 
-	@Autowired
-	private EmailService emailService;
+	private final EmailService emailService;
 
 	@GetMapping("/contact")
 	public String getSendEmailForm(Model model) {
@@ -25,16 +25,24 @@ public class EmailController {
 	}
 
 	@PostMapping("/send")
-	public String sendEmail(@ModelAttribute ContactFormDto form) {
+	public String sendEmail(@ModelAttribute ContactFormDto form, Model model) {
 		String toEmail = "anaseiculescu@gmail.com";
 		String subject = form.getSubject();
-		String body = "Name " + form.getName() + "\n"
-					+ "Email " + form.getEmail() + "\n"
-					+ "Message " + form.getMessage();
+		String body = "Name: " + form.getName() + "\n"
+					+ "Email: " + form.getEmail() + "\n"
+					+ "Message: " + form.getMessage();
 
-		emailService.sendContactEmail(toEmail, subject, body);
+		try {
+			emailService.sendContactEmail(toEmail, subject, body);
 
-		return "redirect:/";
+			return "redirect:/?emailSuccess=true";
+		} catch (Exception e) {
+			model.addAttribute("errorMessage", "Oops! Failed to send the message. Please try again.");
+			model.addAttribute("form", new ContactFormDto());
+
+			return "onlineLibrary/contact";
+		}
+
 	}
 
 }

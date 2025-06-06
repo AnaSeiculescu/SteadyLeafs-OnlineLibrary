@@ -76,40 +76,10 @@
             </form>
         </div>
     </div>
-<!--</div>-->
 
-<!--<div class="main-card p-4">-->
-<!--    <div class="container-fluid">-->
-<!--        <div class="row align-items-start">-->
-<!--            &lt;!&ndash; Left column: Heading &ndash;&gt;-->
-<!--            <div class="col">-->
-<!--                <h3 class="mb-2 mt-4">Welcome to SteadyLeafs!</h3>-->
-<!--            </div>-->
-
-<!--            &lt;!&ndash; Right column: Buttons aligned right &ndash;&gt;-->
-<!--            <div class="col text-end">-->
-<!--                <form action="/login-member" class="d-inline me-2">-->
-<!--                    <button type="submit" class="btn btn-sm btn-dark shadow p-2 rounded">-->
-<!--                        <i class="bi bi-person-fill me-2"></i>Member-->
-<!--                    </button>-->
-<!--                </form>-->
-
-<!--                <form action="/login-librarian" class="d-inline me-4">-->
-<!--                    <button type="submit" class="btn btn-sm btn-dark shadow p-2 rounded">-->
-<!--                        <i class="bi bi-person-fill me-2"></i>Librarian-->
-<!--                    </button>-->
-<!--                </form>-->
-
-<!--                <form action="/register" class="d-inline">-->
-<!--                    <button type="submit" class="btn btn-sm btn-dark shadow p-2 rounded">-->
-<!--                        <i class="bi bi-person-plus-fill me-2"></i>Register-->
-<!--                    </button>-->
-<!--                </form>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
+<script th:if="${param.emailSuccess}" type="text/javascript">
+    alert('Your message was sent successfully!');
+</script>
 
 </body>
 </html>
