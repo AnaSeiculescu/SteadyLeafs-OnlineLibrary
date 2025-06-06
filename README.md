@@ -19,22 +19,25 @@ This is a Java web application I built with Spring Boot and Thymeleaf. Members c
 ## Features
 - Member registration and login;
 - Role-based access: member/librarian|admin;
-- Member's panel - view available and borrowed books;
-- Librarian's panel for managing books and members;
-- Admin panel for managing users and librarians;
-- Responsive frontend with bootstrap;
+- Member panel — view available and borrowed books;
+- Librarian panel — manage books and members;
+- Admin panel — manage users and librarians;
+- *Contact Us* functionality — send an email;
+- Responsive frontend with Bootstrap;
 
 
 - **Member can:**
   - View all books;
+  - Search books by title or author;
   - Borrow available books (one at a time);
-  - View their borrowed books;
+  - View their borrowed books, with due date;
 - **Librarian can:**
   - Create books;
   - View and manage all books / loaned books / available books;
   - Check book statistics (by category and quantity);
   - View and manage members;
-  - View a member's book list;
+  - View a member's book list, with due date;
+  - Return an overdue book from a specific member;
 - **Admin can:**
   - View and manage users;
   - Change a user's role;
