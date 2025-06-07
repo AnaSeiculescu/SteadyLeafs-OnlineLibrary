@@ -57,8 +57,11 @@
 
                 <label for="firstName">Member first name</label><br>
                 <input type="text" id="firstName" name="firstName" th:field="*{firstName}" class="form-control bg-dark text-white text-start"><br>
+                <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" style="color:red"></p>
+
                 <label for="lastName">Member last name</label><br>
                 <input type="text" id="lastName" name="lastName" th:field="*{lastName}" class="form-control bg-dark text-white text-start"><br>
+                <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" style="color:red"></p>
 
                 <input type="hidden" id="id" name="id" th:value="*{id}"><br>
 

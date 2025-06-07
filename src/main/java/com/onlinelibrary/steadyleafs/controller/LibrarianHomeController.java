@@ -208,7 +208,12 @@ public class LibrarianHomeController {
 	}
 
 	@GetMapping("/members/updateForm")
-	public String getUpdateMemberForm(Model model, @RequestParam int id, Authentication authentication) {
+	public String getUpdateMemberForm(
+			Model model,
+			@RequestParam int id,
+			Authentication authentication
+	) {
+
 		Librarian currentLibrarian = getLoggedInLibrarian(authentication);
 
 		MemberReturnDto memberReturnDto = memberService.getMemberById(id);
@@ -221,7 +226,21 @@ public class LibrarianHomeController {
 	}
 
 	@PostMapping("/members/update")
-	public String updateMember(@ModelAttribute MemberUpdateDto memberUpdateDto, BindingResult bindingResult) {
+	public String updateMember(
+			Model model,
+			@ModelAttribute @Valid MemberUpdateDto memberUpdateDto,
+			BindingResult bindingResult,
+			Authentication authentication
+	) {
+
+		if (bindingResult.hasErrors()) {
+			Librarian currentLibrarian = getLoggedInLibrarian(authentication);
+			model.addAttribute("currentLibrarian", currentLibrarian);
+			model.addAttribute("memberUpdateDto", memberUpdateDto);
+
+			return "librarians/members/updateMemberForm";
+		}
+
 		memberService.updateMember(memberUpdateDto);
 		return "redirect:/librarianHome/members";
 	}
