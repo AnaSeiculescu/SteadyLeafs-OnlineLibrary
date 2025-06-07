@@ -95,8 +95,24 @@ public class LibrarianHomeController {
 		return "librarians/books/createBookForm";
 	}
 
-	@PostMapping()
-	public String createBook(Model model, @ModelAttribute @Valid BookCreateDto bookCreateDto) {
+	@PostMapping("/books/create")
+	public String createBook(
+			Model model,
+			@ModelAttribute("book") @Valid BookCreateDto bookCreateDto,
+			BindingResult bindingResult,
+			Authentication authentication
+	) {
+
+		Librarian currentLibrarian = getLoggedInLibrarian(authentication);
+
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("currentLibrarian", currentLibrarian);
+			model.addAttribute("activePage", "createBook");
+			model.addAttribute("book", bookCreateDto);
+
+			return "librarians/books/createBookForm";
+		}
+
 		try {
 			bookService.createBook(bookCreateDto);
 			model.addAttribute("bookList", bookService.getAllBooks());
@@ -106,6 +122,8 @@ public class LibrarianHomeController {
 		} catch (Exception e) {
 			model.addAttribute("errorMessage", "Oops! Failed to create the Book. Please try again.");
 			model.addAttribute("book", new BookCreateDto());
+			model.addAttribute("currentLibrarian", currentLibrarian);
+			model.addAttribute("activePage", "createBook");
 
 			return "librarians/books/createBookForm";
 		}

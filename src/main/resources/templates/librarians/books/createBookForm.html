@@ -58,7 +58,7 @@
         <p th:text="${errorMessage}"></p>
       </div>
 
-      <form action="/librarianHome" method="post" th:object="${book}">
+      <form th:action="@{/librarianHome/books/create}" method="post" th:object="${book}">
 
         <label for="title">Title</label><br>
         <input type="text" id="title" th:field="*{title}" class="form-control bg-dark text-white text-start"><br>
