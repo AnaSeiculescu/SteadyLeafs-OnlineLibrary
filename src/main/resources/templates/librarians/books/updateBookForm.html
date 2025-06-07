@@ -57,9 +57,13 @@
 
         <label for="title">Title</label><br>
         <input type="text" id="title" name="title" th:field="*{title}" class="form-control bg-dark text-white text-start"><br>
+        <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color:red"></p>
+
         <label for="author">Author</label><br>
         <input type="text" id="author" name="author" th:field="*{author}"
                class="form-control bg-dark text-white text-start"><br>
+        <p th:if="${#fields.hasErrors('author')}" th:errors="*{author}" style="color:red"></p>
+
         <input type="hidden" id="id" name="id" th:value="*{id}"><br>
 
         <div class="d-flex flex-row justify-content-between" style="margin-top: 20px">

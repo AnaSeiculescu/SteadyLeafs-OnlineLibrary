@@ -144,7 +144,22 @@ public class LibrarianHomeController {
 	}
 
 	@PostMapping("/books/update")
-	public String updateBook(@RequestParam int id, @ModelAttribute @Valid BookUpdateDto bookUpdateDto) {
+	public String updateBook(
+			Model model,
+			@RequestParam int id,
+			@ModelAttribute("book") @Valid BookUpdateDto bookUpdateDto,
+			BindingResult bindingResult,
+			Authentication authentication
+	) {
+
+		if (bindingResult.hasErrors()) {
+			Librarian currentLibrarian = getLoggedInLibrarian(authentication);
+			model.addAttribute("currentLibrarian", currentLibrarian);
+			model.addAttribute("book", bookUpdateDto);
+
+			return "librarians/books/updateBookForm";
+		}
+
 		bookService.updateBook(bookUpdateDto);
 		return "redirect:/librarianHome";
 	}
