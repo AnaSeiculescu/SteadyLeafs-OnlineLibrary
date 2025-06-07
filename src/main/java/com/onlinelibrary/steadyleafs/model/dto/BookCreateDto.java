@@ -15,11 +15,11 @@ import lombok.Setter;
 public class BookCreateDto {
 
 	@NotBlank(message = "Title is required")
-	@Pattern(regexp = "^[A-Za-z0-9 .,'!?-]{1,100}$", message = "Title must use valid characters")
+	@Pattern(regexp = "^[A-Za-z0-9 .,&'!?-]{1,100}$", message = "Title must use valid characters")
 	private String title;
 
 	@NotBlank(message = "Author is required")
-	@Pattern(regexp = "^[A-Za-z .,'-]{1,100}$", message = "Author must use valid characters")
+	@Pattern(regexp = "^[A-Za-z .,&'-]{1,100}$", message = "Author must use valid characters")
 	private String author;
 
 	private String coverUrl;

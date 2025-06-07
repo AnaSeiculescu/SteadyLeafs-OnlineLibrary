@@ -62,9 +62,11 @@
 
         <label for="title">Title</label><br>
         <input type="text" id="title" th:field="*{title}" class="form-control bg-dark text-white text-start"><br>
+        <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color:red"></p>
 
         <label for="author">Author</label><br>
         <input type="text" id="author" th:field="*{author}" class="form-control bg-dark text-white text-start"><br>
+        <p th:if="${#fields.hasErrors('author')}" th:errors="*{author}" style="color:red"></p>
 
         <div class="d-flex flex-row justify-content-between" style="margin-top:20px">
           <button type="button" class="btn btn-secondary" onclick="window.location.href='/librarianHome'"><i class="bi bi-arrow-left" style="margin-right:5px"></i>Home</button>
