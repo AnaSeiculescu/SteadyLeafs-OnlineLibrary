@@ -5,16 +5,22 @@ This is a Java web application I built with Spring Boot and Thymeleaf. Members c
 
 ## Screenshots
 ### Home Page
-![Home Page](screenshots/appHomePage.png)
+![Home Page](screenshots/appHomePage02.png)
 
 ### Member Login Page
-![Member Login Page](screenshots/loginMember.png)
+![Member Login Page](screenshots/loginMember02.png)
 
 ### Member Dashboard
-![Member Dashboard](screenshots/memberDashboard.png)
+![Member Dashboard](screenshots/memberDashboard02.png)
 
 ### Librarian Dashboard
-![Librarian Dashboard](screenshots/librarianDashboard.png)
+![Librarian Dashboard](screenshots/librarianDashboard02.png)
+
+### Librarian Dashboard - member list
+![Librarian Dashboard](screenshots/memberList.png)
+
+### Librarian Dashboard - book statistics
+![Librarian Dashboard](screenshots/statistics.png)
 
 ## Features
 - Member registration and login;
