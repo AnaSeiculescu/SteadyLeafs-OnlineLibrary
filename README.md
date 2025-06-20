@@ -50,7 +50,8 @@ This is a Java web application I built with Spring Boot and Thymeleaf. Members c
   - View and delete librarians;
   
 
-- When created or updated, a book receives its cover from OpenLibrary external API;
+- When created or updated, a book receives its cover from OpenLibrary external API
+[Open Library Covers API](https://openlibrary.org/dev/docs/api/covers);
 - When a member is deleted, the corresponding user is also removed, and their borrowed books are returned to the library as available.
 
 ## Tech Stack
